@@ -147,20 +147,24 @@ fi
 
 macdeployqt $BUNDLE
 
-### install Info.plist and app icon #################################
+### install app icons ###############################################
 # NOTE: this must run AFTER macdeployqt, not before. macdeployqt
 # rewrites/regenerates parts of Contents/Resources, and files copied
 # there beforehand (e.g. the .icns icons) do not reliably survive it
 # and end up missing from the final bundle, causing the app to show
-# the generic placeholder icon instead of the real one. Info.plist
-# itself lives directly in Contents/ and happens to survive either
-# way, but keep it here too so this whole "final metadata" step stays
-# in one place, after macdeployqt is done touching the bundle.
+# the generic placeholder icon instead of the real one. So even though
+# the CMake build already puts them in Contents/Resources, copy them
+# again here.
+#
+# Contents/Info.plist is no longer copied from misc/Info.plist: the
+# CMake build generates it from misc/MacOSXBundleInfo.plist.in, with
+# the same identifier, icon and .qet/.elmt/.titleblock document types,
+# and it survives macdeployqt untouched. misc/Info.plist is now only
+# for the older qmake scripts (MacQetDeploy.sh, MacQetDeploy_arm64.sh).
 echo
 echo "______________________________________________________________"
-echo "Install Info.plist and app icon:"
+echo "Install app icons:"
 
-cp -R ${current_dir}/misc/Info.plist $BUNDLE/Contents/
 cp -R ${current_dir}/ico/mac_icon/*.icns $BUNDLE/Contents/Resources/
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION r$HEAD" "$BUNDLE/Contents/Info.plist"
 

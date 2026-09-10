@@ -163,6 +163,30 @@ else()
 endif()
 
 if(APPLE)
+    # The .icns files must live in Contents/Resources: CFBundleIconFile
+    # names the app icon, and each CFBundleDocumentTypes entry in the
+    # Info.plist template names one of the document icons. Listing them as
+    # sources with MACOSX_PACKAGE_LOCATION is what actually copies them --
+    # MACOSX_BUNDLE_ICON_FILE only writes the key, it does not install the
+    # file, so on its own it leaves the app showing the generic icon.
+    set(QET_MACOS_ICNS
+        ${QET_DIR}/ico/mac_icon/qelectrotech.icns
+        ${QET_DIR}/ico/mac_icon/qet.icns
+        ${QET_DIR}/ico/mac_icon/elmt.icns
+        ${QET_DIR}/ico/mac_icon/titleblock.icns
+    )
+    set_source_files_properties(${QET_MACOS_ICNS} PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources
+    )
+    target_sources(${PROJECT_NAME} PRIVATE ${QET_MACOS_ICNS})
+
+    # Used by misc/MacOSXBundleInfo.plist.in for LSMinimumSystemVersion.
+    if(CMAKE_OSX_DEPLOYMENT_TARGET)
+        set(QET_MACOSX_MINIMUM_SYSTEM_VERSION "${CMAKE_OSX_DEPLOYMENT_TARGET}")
+    else()
+        set(QET_MACOSX_MINIMUM_SYSTEM_VERSION "12.3.0")
+    endif()
+
     # CFBundleIdentifier must not be empty. CMake's default Info.plist
     # template fills it from MACOSX_BUNDLE_GUI_IDENTIFIER; with that unset
     # the bundle ships an empty identifier, LaunchServices never registers
@@ -171,12 +195,19 @@ if(APPLE)
     # QFileDialog::getOpenFileName()/getSaveFileName() call returns an empty
     # string without a panel ever appearing, so File > Open and File > Save
     # as do nothing at all.
+    #
+    # MACOSX_BUNDLE_INFO_PLIST replaces CMake's default template, which has
+    # no slot for CFBundleDocumentTypes (so Finder offers no "Open With
+    # QElectroTech" for .qet / .elmt / .titleblock) nor for the font path
+    # the deploy scripts rely on.
     set_target_properties(${PROJECT_NAME} PROPERTIES
         MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${QET_DIR}/misc/MacOSXBundleInfo.plist.in"
         MACOSX_BUNDLE_GUI_IDENTIFIER "org.qelectrotech.QElectroTech"
         MACOSX_BUNDLE_BUNDLE_NAME "QElectroTech"
         MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_ICON_FILE "qelectrotech"
         MACOSX_BUNDLE_COPYRIGHT "Copyright 2006-2026 The QElectroTech Team"
     )
 endif()
