@@ -489,6 +489,27 @@ qet_add_test(tst_xrefpos
   SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
   LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# TitleBlockTemplate: the templates in titleblocks/ load and save back the
+# same; the grid's rows and cols descriptions; a cell's text with its
+# variables; a file which is not a template is refused. Rendered on Qt's
+# offscreen platform into a paint device which keeps the texts drawn.
+# diagram.h (for Diagram::background_color) reaches diagramcontent.h, which
+# needs a directory one level below sources/ (any will do) for its
+# "../qetgraphicsitem/" includes; createdxf.cpp is for renderDxf(), not run.
+qet_add_test(tst_titleblocktemplate OFFSCREEN
+  SOURCES
+    titleblocktemplate.cpp
+    titleblockcell.cpp
+    titleblock/dimension.cpp
+    createdxf.cpp
+    diagramcontext.cpp
+    NameList/nameslist.cpp
+    utils/qetutils.cpp
+    ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS} Qt::Svg
+  DEFINES "QET_TITLEBLOCKS_DIR=\"${QET_DIR}/titleblocks\""
+  INCLUDES ${QET_DIR}/sources/NameList)
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
