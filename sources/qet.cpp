@@ -48,6 +48,7 @@
 	@return l'orientation designee par la chaine de caractere
 */
 Qet::Orientation Qet::orientationFromString(const QString &s) {
+	if (s.isEmpty()) return(Qet::North);
 	QChar c = s[0];
 	if (c == 'e') return(Qet::East);
 	else if (c == 's') return(Qet::South);

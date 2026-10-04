@@ -256,6 +256,10 @@ private slots:
 		// unknown or upper case: North
 		QTest::newRow("x") << "x" << Qet::North;
 		QTest::newRow("E") << "E" << Qet::North;
+		// a <terminal> without an orientation attribute: read past the
+		// end of the string before
+		QTest::newRow("empty") << "" << Qet::North;
+		QTest::newRow("null") << QString() << Qet::North;
 	}
 
 	void orientationFromString()
