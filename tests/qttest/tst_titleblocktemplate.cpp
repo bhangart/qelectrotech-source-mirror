@@ -335,6 +335,8 @@ private slots:
 		QTest::newRow("absolute")  << "100;50px;20PX" << QStringList{"100px;", "50px;", "20px;"};
 		QTest::newRow("relative to total") << "t22%;t100%" << QStringList{"t22%;", "t100%;"};
 		QTest::newRow("relative to remaining") << "r100%;R30%" << QStringList{"r100%;", "r30%;"};
+		// the letter is read in either case, like px
+		QTest::newRow("upper case T") << "T22%;R30%" << QStringList{"t22%;", "r30%;"};
 		QTest::newRow("mixed") << "t22%;r100%;80;t22%;" << QStringList{"t22%;", "r100%;", "80px;", "t22%;"};
 		// a percentage needs t or r, and r or t a percentage
 		QTest::newRow("invalid entries") << "20%;r20;x10%;t-5%;;abc;40" << QStringList{"40px;"};

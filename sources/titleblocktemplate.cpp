@@ -449,7 +449,7 @@ void TitleBlockTemplate::parseColumns(const QString &cols_string) {
 		} else if (match_rel.hasMatch()) {
 			int col_size = match_rel.captured(2).toInt(&conv_ok);
 			QET::TitleBlockColumnLength col_type = match_rel.captured(1)
-					== "t"
+					.compare(QLatin1String("t"), Qt::CaseInsensitive) == 0
 					? QET::RelativeToTotalLength
 					: QET::RelativeToRemainingLength;
 			if (conv_ok)
