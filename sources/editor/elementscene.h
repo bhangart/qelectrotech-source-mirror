@@ -134,6 +134,7 @@ class ElementScene : public QGraphicsScene
 		static bool clipboardMayContainElement();
 		bool wasCopiedFromThisElement(const QString &);
 		void cut();
+		void updateTextResizeHandles();
 		void copy();
 		QETElementEditor* editor() const;
 		void addItems(QVector<QGraphicsItem *> items);

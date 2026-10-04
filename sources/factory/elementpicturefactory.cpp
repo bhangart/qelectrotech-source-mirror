@@ -647,6 +647,18 @@ void ElementPictureFactory::parseText(const QDomElement &dom, QPainter &painter,
 		}
 	}
 
+		//Optional width, the text wraps to it as in the element editor.
+		//The saved width includes the margins of the editor's text
+		//document, this one has none.
+	const qreal text_width = dom.attribute("text_width", "-1").toDouble();
+	if (qIsFinite(text_width) && text_width > 0) {
+		QTextOption option = text_document.defaultTextOption();
+		option.setWrapMode(QTextOption::WordWrap);
+		text_document.setDefaultTextOption(option);
+		const qreal editor_margins = 2 * QTextDocument().documentMargin();
+		text_document.setTextWidth(qMax(text_width - editor_margins, qreal(0)));
+	}
+
 	painter.translate(qpainter_offset);
 
 		// force the palette used to render the QTextDocument

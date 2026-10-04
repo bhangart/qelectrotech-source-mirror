@@ -762,6 +762,16 @@ add_test(NAME tst_xrefpos COMMAND tst_xrefpos)
 target_include_directories(tst_xrefpos PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_xrefpos PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# A static text of a symbol with a width is drawn wrapped on the folio.
+add_executable(
+  tst_statictextwidth
+  tst_statictextwidth.cpp)
+add_test(NAME tst_statictextwidth COMMAND tst_statictextwidth)
+add_dependencies(tst_statictextwidth qelectrotech)
+target_link_libraries(tst_statictextwidth PRIVATE Qt::Test)
+target_compile_definitions(tst_statictextwidth PRIVATE
+  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed

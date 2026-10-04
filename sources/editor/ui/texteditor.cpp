@@ -62,6 +62,7 @@ void TextEditor::updateForm()
 	m_y_sb -> setValue(m_text -> pos().y());
 	m_rotation_sb -> setValue(m_text -> rotation());
 	m_size_sb -> setValue(m_text -> font().pointSize());
+	m_width_sb -> setValue(m_text -> userTextWidth() > 0 ? qRound(m_text -> userTextWidth()) : -1);
 	m_font_pb -> setText(m_text -> font().family());
 #ifdef BUILD_WITHOUT_KF
 #else
@@ -81,6 +82,7 @@ void TextEditor::setUpChangeConnection(QPointer<PartText> part)
 	m_change_connection << connect(part, &PartText::rotationChanged,  this, &TextEditor::updateForm);
 	m_change_connection << connect(part, &PartText::fontChanged,      this, &TextEditor::updateForm);
 	m_change_connection << connect(part, &PartText::colorChanged,     this, &TextEditor::updateForm);
+	m_change_connection << connect(part, &PartText::textWidthChanged, this, &TextEditor::updateForm);
 }
 
 void TextEditor::disconnectChangeConnection()
@@ -247,6 +249,22 @@ void TextEditor::setUpEditConnection()
 		}
 		m_size_sb->setFocus();
 	});
+
+	m_edit_connection << connect(m_width_sb, QOverload<int>::of(&QSpinBox::valueChanged), [this]() {
+		const qreal width = m_width_sb -> value();
+		for (int i=0; i < m_parts.length(); i++) {
+			PartText* partText = m_parts[i];
+				//The box shows whole pixels, -1 for the automatic width
+			const int shown = partText -> userTextWidth() > 0 ? qRound(partText -> userTextWidth()) : -1;
+			if (m_width_sb -> value() != shown) {
+				QPropertyUndoCommand *undo = new QPropertyUndoCommand(
+					partText, "textWidth", partText -> userTextWidth(), width);
+				undo -> setText(tr("Modifier la largeur d'un texte"));
+				undoStack().push(undo);
+			}
+		}
+		m_width_sb->setFocus();
+	});
 }
 
 /**
@@ -397,6 +415,19 @@ void TextEditor::setUpWidget(QWidget *parent)
 	});
 
 	gridLayout->addWidget(alignment_pb, 3, 0, 1, 2);
+
+	QLabel *width_label = new QLabel(tr("Largeur :"), parent);
+	gridLayout->addWidget(width_label, 3, 2, 1, 1);
+
+	m_width_sb = new QSpinBox(parent);
+	m_width_sb->setObjectName(QString::fromUtf8("m_width_sb"));
+	m_width_sb->setRange(-1, 10000);
+	m_width_sb->setValue(-1);
+	m_width_sb->setSuffix(tr(" px"));
+	m_width_sb->setSpecialValueText(tr("Auto"));
+	m_width_sb->setToolTip(tr("Largeur du texte, le texte passe à la ligne. "
+							  "Auto : pas de retour à la ligne automatique"));
+	gridLayout->addWidget(m_width_sb, 3, 3, 1, 1);
 
 	QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 

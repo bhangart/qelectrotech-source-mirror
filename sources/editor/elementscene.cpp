@@ -1504,6 +1504,16 @@ void ElementScene::managePrimitivesGroups()
 }
 
 /**
+	@brief ElementScene::updateTextResizeHandles
+	Show or hide the corner handles of the selected text, called when the
+	inline edition of a text starts or ends.
+*/
+void ElementScene::updateTextResizeHandles()
+{
+	manageTextResizeHandles(zItems(ElementScene::Selected | ElementScene::IncludeTerminals));
+}
+
+/**
 	@brief ElementScene::manageTextResizeHandles
 	Show the corner handles that change the width of a text field when it
 	is the only selected item, and it is not being typed in.
@@ -1515,10 +1525,13 @@ void ElementScene::managePrimitivesGroups()
 void ElementScene::manageTextResizeHandles(const QList<QGraphicsItem *> &selected_items)
 {
 	QGraphicsTextItem *text = nullptr;
-	if (selected_items.size() == 1 &&
-		selected_items.first()->type() == PartDynamicTextField::Type)
+	if (selected_items.size() == 1)
 	{
-		text = static_cast<PartDynamicTextField *>(selected_items.first());
+		QGraphicsItem *item = selected_items.first();
+		if (item->type() == PartDynamicTextField::Type)
+			text = static_cast<PartDynamicTextField *>(item);
+		else if (item->type() == PartText::Type)
+			text = static_cast<PartText *>(item);
 	}
 	if (text && (text->textInteractionFlags() & Qt::TextEditable))
 		text = nullptr;

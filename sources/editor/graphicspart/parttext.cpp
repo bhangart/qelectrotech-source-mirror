@@ -19,6 +19,7 @@
 
 #include "../../QPropertyUndoCommand/qpropertyundocommand.h"
 #include <QApplication>
+#include <QtCore/qnumeric.h>
 #include "../../qetapp.h"
 #include "../elementprimitivedecorator.h"
 #include "../elementscene.h"
@@ -146,6 +147,10 @@ void PartText::fromXml(const QDomElement &xml_element) {
 	}
 
 	setDefaultTextColor(QColor(xml_element.attribute("color", "#000000")));
+		// Optional width (absent = automatic width, the only kind older
+		// versions know: they draw such a text unwrapped).
+	const qreal text_width = xml_element.attribute("text_width", "-1").toDouble();
+	m_text_width = (qIsFinite(text_width) && text_width > 0) ? text_width : -1;
 	setPlainText(xml_element.attribute("text"));
 
 		// Optional alignment (absent = historical behaviour: top-left anchor,
@@ -197,6 +202,8 @@ const QDomElement PartText::toXml(QDomDocument &xml_document) const
 		xml_element.setAttribute("Valignment", me.valueToKey(Qt::AlignBottom));
 	else if (m_alignment & Qt::AlignVCenter)
 		xml_element.setAttribute("Valignment", me.valueToKey(Qt::AlignVCenter));
+	if (m_text_width > 0)
+		xml_element.setAttribute("text_width", QString::number(m_text_width));
 
 	return(xml_element);
 }
@@ -376,20 +383,45 @@ void PartText::setAlignment(const Qt::Alignment &alignment)
 }
 
 /**
+	@brief PartText::setUserTextWidth
+	Set the width of this text (-1 = automatic width): the text wraps to
+	it. The point of the text chosen by its alignment stays in place.
+	@param width
+*/
+void PartText::setUserTextWidth(qreal width)
+{
+	if (!qIsFinite(width) || width <= 0)
+		width = -1;
+	if (qFuzzyCompare(width, m_text_width))
+		return;
+
+	prepareAlignment();
+	m_text_width = width;
+	applyLineAlignment();
+	finishAlignment();
+	emit textWidthChanged(m_text_width);
+}
+
+/**
 	@brief PartText::applyLineAlignment
 	Align the lines of a multi-line text relative to each other according
-	to the horizontal part of the alignment property. QGraphicsTextItem
-	only honors the document text option when a text width is set, hence
-	the idealWidth() dance; -1 restores the free (historical) layout.
+	to the horizontal part of the alignment property, and wrap the text to
+	the width given by the user, if any. QGraphicsTextItem only honors the
+	document text option when a text width is set, hence the idealWidth()
+	dance; -1 restores the free (historical) layout.
 */
 void PartText::applyLineAlignment()
 {
 	QTextOption option = document()->defaultTextOption();
 	option.setAlignment(m_alignment & Qt::AlignHorizontal_Mask);
+		//A word longer than the width goes past it rather than being cut
+	option.setWrapMode(QTextOption::WordWrap);
 	document()->setDefaultTextOption(option);
 
 	setTextWidth(-1);
-	if (m_alignment & (Qt::AlignHCenter | Qt::AlignRight))
+	if (m_text_width > 0)
+		setTextWidth(m_text_width);
+	else if (m_alignment & (Qt::AlignHCenter | Qt::AlignRight))
 		setTextWidth(document()->idealWidth());
 }
 
@@ -543,9 +575,13 @@ void PartText::startEdition()
 	previous_text = toPlainText();
 
 	// Anchor the aligned point across the whole inline edition; free the
-	// text width so typing is not wrapped at the previous block width.
+	// text width so typing is not wrapped at the previous block width,
+	// unless the user gave the text a width: it wraps to it while typing.
 	prepareAlignment();
-	setTextWidth(-1);
+	setTextWidth(m_text_width);
+
+	if (auto *scene_ = qobject_cast<ElementScene *>(scene()))
+		scene_->updateTextResizeHandles();
 }
 
 /**
@@ -577,4 +613,7 @@ void PartText::endEdition()
 		applyLineAlignment();
 		finishAlignment();
 	}
+
+	if (auto *scene_ = qobject_cast<ElementScene *>(scene()))
+		scene_->updateTextResizeHandles();
 }

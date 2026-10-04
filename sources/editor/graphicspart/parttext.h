@@ -35,12 +35,14 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 	Q_PROPERTY(QString text READ toPlainText WRITE setPlainText NOTIFY plainTextChanged)
 	Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
 	Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
+	Q_PROPERTY(qreal textWidth READ userTextWidth WRITE setUserTextWidth NOTIFY textWidthChanged)
 
 	signals:
 		void fontChanged(const QFont &font);
 		void colorChanged(const QColor &color);
 		void plainTextChanged(const QString &text);
 		void alignmentChanged(Qt::Alignment alignment);
+		void textWidthChanged(qreal width);
 
 		// constructors, destructor
 	public:
@@ -85,6 +87,8 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 		void setFont(const QFont &font);
 		void setAlignment(const Qt::Alignment &alignment);
 		Qt::Alignment alignment() const {return m_alignment;}
+		qreal userTextWidth() const {return m_text_width;}
+		void setUserTextWidth(qreal width);
 
 	public slots:
 		void adjustItemPosition(int = 0);
@@ -116,6 +120,8 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 		QGraphicsItem *decorator_;
 		QPointF m_origin_pos;
 		Qt::Alignment m_alignment = (Qt::AlignTop | Qt::AlignLeft);
+			///The width given by the user, the text wraps to it; -1 = automatic
+		qreal m_text_width = -1;
 		QRectF m_alignment_rect;
 };
 #endif
