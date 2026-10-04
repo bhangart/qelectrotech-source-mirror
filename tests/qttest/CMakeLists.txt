@@ -489,6 +489,27 @@ qet_add_test(tst_xrefpos
   SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
   LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# toXml() -> fromXml() and toSettings() -> fromSettings() of the properties
+# saved to projects, element files and the settings: BorderProperties,
+# TitleBlockProperties, ConductorProperties with SingleLineProperties,
+# NamesList (both readers, and the language fallback), DiagramContext and
+# ElementData. Every field set apart from its default must come back, and a
+# file without the attributes must give the defaults. The property files
+# are compiled alone; NamesList's language comes from a stub in the test.
+# OFFSCREEN: ElementData holds fonts, which need a QGuiApplication.
+qet_add_test(tst_propertiesxml OFFSCREEN
+  SOURCES
+    borderproperties.cpp
+    titleblockproperties.cpp
+    conductorproperties.cpp
+    diagramcontext.cpp
+    NameList/nameslist.cpp
+    properties/elementdata.cpp
+    properties/propertiesinterface.cpp
+    qetxml.cpp
+    ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS})
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
