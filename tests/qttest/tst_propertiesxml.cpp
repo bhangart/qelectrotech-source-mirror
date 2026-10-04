@@ -418,6 +418,30 @@ private slots:
 		QCOMPARE(read.m_bus, written.m_bus);
 	}
 
+		// The editor sets the default wire size in steps of 0.2 from 0.4;
+		// the reader used to read it as an integer, and "1.5" came back
+		// as 0.
+	void conductorSettingsFractionalSize_data()
+	{
+		QTest::addColumn<double>("size");
+		QTest::newRow("1.5")  << 1.5;
+		QTest::newRow("0.4")  << 0.4;
+		QTest::newRow("2")    << 2.0;
+	}
+
+	void conductorSettingsFractionalSize()
+	{
+		QFETCH(double, size);
+		ConductorProperties written;
+		written.cond_size = size;
+		const QString path = newSettingsFile();
+		written.toSettings(*settings(path), QStringLiteral("diagrameditor/defaultconductor"));
+
+		ConductorProperties read;
+		read.fromSettings(*settings(path), QStringLiteral("diagrameditor/defaultconductor"));
+		QCOMPARE(read.cond_size, size);
+	}
+
 		// A new installation: nothing stored
 	void conductorSettingsMissing()
 	{
