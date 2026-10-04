@@ -592,6 +592,39 @@ private slots:
 		QVERIFY(seq == before);
 	}
 
+	void tenAndMoreSequences_data()
+	{
+		QTest::addColumn<QString>("formula");
+		QTest::addColumn<QString>("label");
+
+		QTest::newRow("first and tenth")  << "%sequ_1|%sequ_10" << "A|J";
+		QTest::newRow("tenth first")      << "%sequ_10|%sequ_1" << "J|A";
+		QTest::newRow("ten and alpha")    << "%seqt_1%seqt_10/%seqa_1%seqa_10" << "0110/ab";
+		QTest::newRow("folio")            << "%sequf_10" << "j";
+		QTest::newRow("missing twelfth kept") << "%seqt_12" << "%seqt_12";
+	}
+
+	// %sequ_1 was replaced inside %sequ_10, so the tenth value of a
+	// sequence and beyond showed as the first one followed by a digit
+	// ("A0"); a token now only stands for its own number.
+	void tenAndMoreSequences()
+	{
+		QFETCH(QString, formula);
+		QFETCH(QString, label);
+
+		autonum::sequentialNumbers seq;
+		for (char c = 'A'; c <= 'J'; ++c) {
+			seq.unit << QString(QLatin1Char(c));
+			seq.unit_folio << QString(QLatin1Char(c)).toLower();
+		}
+		for (int i = 1; i <= 10; ++i)
+			seq.ten << QStringLiteral("%1").arg(i, 2, 10, QLatin1Char('0'));
+		seq.alpha = QStringList{"a", "", "", "", "", "", "", "", "", "b"};
+
+		QCOMPARE(autonum::AssignVariables::formulaToLabel(formula, seq, autonum::FormulaContext()),
+			 label);
+	}
+
 	void elementAndConductorVariables_data()
 	{
 		QTest::addColumn<bool>("columnsFromZero");

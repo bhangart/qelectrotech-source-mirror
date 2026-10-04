@@ -27,6 +27,7 @@
 #include "../ElementsCollection/qetlabelsfile.h"
 #include <QDir>
 #include <QDomDocument>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QVariant>
 #include <utility>
@@ -482,32 +483,31 @@ namespace autonum
 								 m_seq_struct.wrap.size()))
 					);
 
+			//A token stands for its own number only: %sequ_1 is not
+			//replaced inside %sequ_10, which keeps its own value.
+		auto assign = [this](const QString &name, int i, const QStringList &values) {
+			if (values.size() < i)
+				return;
+			const QRegularExpression token(name + QString::number(i) + "(?![0-9])");
+			const QString &value = values.at(i-1);
+			QRegularExpressionMatch match;
+			int from = 0;
+			while ((from = m_assigned_label.indexOf(token, from, &match)) != -1) {
+				m_assigned_label.replace(from, match.capturedLength(), value);
+				from += value.size();
+			}
+		};
+
 		for (int i=1; i<=max ; i++)
 		{
-			if (m_assigned_label.contains("%sequ_" + QString::number(i)) && m_seq_struct.unit.size() >= i) {
-				m_assigned_label.replace("%sequ_" + QString::number(i),m_seq_struct.unit.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqw_" + QString::number(i)) && m_seq_struct.wrap.size() >= i) {
-				m_assigned_label.replace("%seqw_" + QString::number(i),m_seq_struct.wrap.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqt_" + QString::number(i)) && m_seq_struct.ten.size() >= i) {
-				m_assigned_label.replace("%seqt_" + QString::number(i),m_seq_struct.ten.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqh_" + QString::number(i)) && m_seq_struct.hundred.size() >= i) {
-				m_assigned_label.replace("%seqh_" + QString::number(i),m_seq_struct.hundred.at(i-1));
-			}
-			if (m_assigned_label.contains("%sequf_" + QString::number(i)) && m_seq_struct.unit_folio.size() >= i) {
-				m_assigned_label.replace("%sequf_" + QString::number(i),m_seq_struct.unit_folio.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqtf_" + QString::number(i)) && m_seq_struct.ten_folio.size() >= i) {
-				m_assigned_label.replace("%seqtf_" + QString::number(i),m_seq_struct.ten_folio.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqhf_" + QString::number(i)) && m_seq_struct.hundred_folio.size() >= i) {
-				m_assigned_label.replace("%seqhf_" + QString::number(i),m_seq_struct.hundred_folio.at(i-1));
-			}
-			if (m_assigned_label.contains("%seqa_" + QString::number(i)) && m_seq_struct.alpha.size() >= i) {
-				m_assigned_label.replace("%seqa_" + QString::number(i),m_seq_struct.alpha.at(i-1));
-			}
+			assign("%sequ_",  i, m_seq_struct.unit);
+			assign("%seqw_",  i, m_seq_struct.wrap);
+			assign("%seqt_",  i, m_seq_struct.ten);
+			assign("%seqh_",  i, m_seq_struct.hundred);
+			assign("%sequf_", i, m_seq_struct.unit_folio);
+			assign("%seqtf_", i, m_seq_struct.ten_folio);
+			assign("%seqhf_", i, m_seq_struct.hundred_folio);
+			assign("%seqa_",  i, m_seq_struct.alpha);
 		}
 	}
 
