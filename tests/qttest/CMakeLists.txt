@@ -489,6 +489,24 @@ qet_add_test(tst_xrefpos
   SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
   LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# SearchAndReplaceWorker::applyChange() -- what the Search and replace dialog
+# writes into each field found: empty keeps, the erase marker clears, a
+# wire's out-of-range values keep. The worker's header and replace*()
+# functions reach into the whole scene, so the test compiles the worker with
+# its headers and stubs the dozen scene symbols those functions call; only
+# the static helpers run. OFFSCREEN for setupLineEdit()'s widgets.
+qet_add_test(tst_searchandreplace OFFSCREEN
+  SOURCES
+    SearchAndReplace/searchandreplaceworker.cpp
+    conductorproperties.cpp
+    titleblockproperties.cpp
+    diagramcontext.cpp
+    QPropertyUndoCommand/qpropertyundocommand.cpp
+    ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS} Qt::Sql
+  INCLUDES ${QET_DIR}/sources/ui ${QET_DIR}/sources/ui/nokde
+  DEFINES BUILD_WITHOUT_KF)
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
