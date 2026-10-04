@@ -1005,7 +1005,7 @@ void alignmentToAttribute(const Qt::Alignment &alignment, QDomElement &element)
         al.append(QStringLiteral("Top"));
     if (alignment &Qt::AlignBottom)
         al.append(QStringLiteral("Bottom"));
-    if (alignment &Qt::AlignBottom)
+    if (alignment &Qt::AlignVCenter)
         al.append(QStringLiteral("VCenter"));
     if (alignment &Qt::AlignBaseline)
         al.append(QStringLiteral("Baseline"));

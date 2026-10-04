@@ -454,9 +454,6 @@ private slots:
 	{
 		QTest::addColumn<int>("alignment");
 
-		// Qt::AlignBottom and Qt::AlignVCenter are left out: see the
-		// report with this test (alignmentToAttribute() writes VCenter
-		// for AlignBottom and nothing for AlignVCenter).
 		QTest::newRow("left")          << int(Qt::AlignLeft);
 		QTest::newRow("right")         << int(Qt::AlignRight);
 		QTest::newRow("hcenter")       << int(Qt::AlignHCenter);
@@ -466,6 +463,13 @@ private slots:
 		QTest::newRow("left | top")    << int(Qt::AlignLeft | Qt::AlignTop);
 		QTest::newRow("right | top")   << int(Qt::AlignRight | Qt::AlignTop);
 		QTest::newRow("none")          << 0;
+		// alignmentToAttribute() used to write VCenter for AlignBottom and
+		// nothing for AlignVCenter, which terminal strips use by default
+		QTest::newRow("bottom")        << int(Qt::AlignBottom);
+		QTest::newRow("vcenter")       << int(Qt::AlignVCenter);
+		QTest::newRow("center")        << int(Qt::AlignCenter);
+		QTest::newRow("right | vcenter") << int(Qt::AlignRight | Qt::AlignVCenter);
+		QTest::newRow("left | bottom") << int(Qt::AlignLeft | Qt::AlignBottom);
 	}
 
 	void alignmentRoundTrips()
