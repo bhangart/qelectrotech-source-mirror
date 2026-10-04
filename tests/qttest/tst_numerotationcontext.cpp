@@ -697,6 +697,20 @@ private slots:
 		QCOMPARE(read.alpha, seq.alpha);
 		QCOMPARE(read.wrap, seq.wrap);
 
+		// A kind of sequence the element has no value of is not written,
+		// and read back as no value at all, not as one empty value: the
+		// struct read compared unequal to the one written, and a label's
+		// %seqw_1 was replaced by nothing instead of staying as it is.
+		autonum::sequentialNumbers some;
+		some.unit = QStringList{"3"};
+		autonum::sequentialNumbers someRead;
+		someRead.fromXml(some.toXml(doc));
+		QCOMPARE(someRead.wrap, QStringList());
+		QVERIFY(someRead == some);
+		QCOMPARE(autonum::AssignVariables::formulaToLabel(
+				 QStringLiteral("%sequ_1[%seqw_1]"), someRead, autonum::FormulaContext()),
+			 QStringLiteral("3[%seqw_1]"));
+
 		autonum::sequentialNumbers copy;
 		copy = seq;
 		QVERIFY(!(copy != seq));

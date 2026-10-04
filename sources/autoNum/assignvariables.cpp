@@ -163,33 +163,25 @@ namespace autonum
 		if (!element.hasChildNodes())
 			return;
 
-		QDomElement from;
+			//A list toXml() did not write, because it was empty, reads
+			//as an empty list again, not as one empty value.
+		auto read = [&element](const QString &tag_name) {
+			const QString text = element.firstChildElement(tag_name).text();
+			return text.isEmpty() ? QStringList() : text.split(";");
+		};
 
-		from = element.firstChildElement("unit");
-		unit = from.text().split(";");
+		unit = read("unit");
 
 			//Absent from files written before cyclic parts could be
 			//rendered; an empty list is the correct reading of that.
-		from = element.firstChildElement("wrap");
-		wrap = from.text().split(";");
+		wrap = read("wrap");
 
-		from = element.firstChildElement("unitFolio");
-		unit_folio = from.text().split(";");
-
-		from = element.firstChildElement("ten");
-		ten = from.text().split(";");
-
-		from = element.firstChildElement("tenFolio");
-		ten_folio = from.text().split(";");
-
-		from = element.firstChildElement("hundred");
-		hundred = from.text().split(";");
-
-		from = element.firstChildElement("hundredFolio");
-		hundred_folio = from.text().split(";");
-
-		from = element.firstChildElement("alpha");
-		alpha = from.text().split(";");
+		unit_folio = read("unitFolio");
+		ten = read("ten");
+		ten_folio = read("tenFolio");
+		hundred = read("hundred");
+		hundred_folio = read("hundredFolio");
+		alpha = read("alpha");
 	}
 	
 		//Clear this sequence
