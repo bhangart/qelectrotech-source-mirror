@@ -129,6 +129,19 @@ private slots:
 		QCOMPARE(text.textWidth(), 60.0);
 	}
 
+
+	// The minimum width never cuts a word, even for a document that would
+	// otherwise break a word anywhere.
+	void minimumWidthKeepsWords()
+	{
+		QGraphicsTextItem text(QStringLiteral("a Motorschutzschalter"));
+		QTextOption option = text.document()->defaultTextOption();
+		option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+		text.document()->setDefaultTextOption(option);
+
+		QGraphicsTextItem word(QStringLiteral("Motorschutzschalter"));
+		QVERIFY(qAbs(TextResize::minimumWidth(text.document()) - word.boundingRect().width()) < 0.5);
+	}
 };
 
 QTEST_MAIN(tst_textresize)

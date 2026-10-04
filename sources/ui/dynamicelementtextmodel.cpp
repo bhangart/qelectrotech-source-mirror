@@ -1763,9 +1763,10 @@ QWidget *DynamicTextItemDelegate::createEditor(
 		{
 			QSpinBox *sb = new QSpinBox(parent);
 			sb->setObjectName("width_spinbox");
-			sb->setRange(-1, 500);
+			sb->setRange(-1, 10000);
 			sb->setFrame(false);
 			sb->setSuffix(" px");
+			sb->setSpecialValueText(tr("Auto"));
 			return sb;
 		}
 		case DynamicElementTextModel::grpAlignment:

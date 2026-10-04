@@ -26,7 +26,6 @@
 #include "../qetinformation.h"
 #include "../utils/qetutils.h"
 #include "../textresize.h"
-#include "../QetGraphicsItemModeler/qetgraphicshandleritem.h"
 #include "crossrefitem.h"
 #include "element.h"
 #include "elementtextitemgroup.h"
@@ -35,7 +34,6 @@
 #include <QDomElement>
 #include <QtCore/qnumeric.h>
 #include <QGraphicsSceneMouseEvent>
-#include <QAbstractTextDocumentLayout>
 
 /**
 	@brief DynamicElementTextItem::DynamicElementTextItem
@@ -837,13 +835,10 @@ QVariant DynamicElementTextItem::itemChange(QGraphicsItem::GraphicsItemChange ch
 		updateXref();
 		updateXref();
 	}
-	else if (change == QGraphicsItem::ItemSelectedHasChanged)
+	else if (change == QGraphicsItem::ItemSelectedHasChanged ||
+			 change == QGraphicsItem::ItemSceneHasChanged)
 	{
-		refreshResizeHandlesVisibility();
-	}
-	else if (change == QGraphicsItem::ItemSceneHasChanged && !scene())
-	{
-		removeResizeHandles();
+		return DiagramTextItem::itemChange(change, value);
 	}
 
 	return QGraphicsObject::itemChange(change, value);
@@ -851,24 +846,6 @@ QVariant DynamicElementTextItem::itemChange(QGraphicsItem::GraphicsItemChange ch
 
 bool DynamicElementTextItem::sceneEventFilter(QGraphicsItem *watched, QEvent *event)
 {
-	if (watched == m_left_resize_handle || watched == m_right_resize_handle)
-	{
-		auto *handle = static_cast<QetGraphicsHandlerItem *>(watched);
-		if (event->type() == QEvent::GraphicsSceneMousePress) {
-			handlerMousePressEvent(handle, static_cast<QGraphicsSceneMouseEvent *>(event));
-			return true;
-		}
-		else if (event->type() == QEvent::GraphicsSceneMouseMove) {
-			handlerMouseMoveEvent(handle, static_cast<QGraphicsSceneMouseEvent *>(event));
-			return true;
-		}
-		else if (event->type() == QEvent::GraphicsSceneMouseRelease) {
-			handlerMouseReleaseEvent(handle, static_cast<QGraphicsSceneMouseEvent *>(event));
-			return true;
-		}
-		return false;
-	}
-
 	if(watched != m_slave_Xref_item)
 		return false;
 
@@ -889,166 +866,24 @@ bool DynamicElementTextItem::sceneEventFilter(QGraphicsItem *watched, QEvent *ev
 }
 
 /**
-	@brief DynamicElementTextItem::refreshResizeHandlesVisibility
-	Show the resize handles when this text is selected directly, OR when its
-	parent element is -- which is what an ordinary click without Shift
-	selects (DynamicElementTextItem::mousePressEvent() forwards a plain
+	@brief DynamicElementTextItem::resizeHandlesWanted
+	The corner handles to change the width are shown when this text is
+	selected directly, OR when its parent element is -- which is what an
+	ordinary click without Shift selects (mousePressEvent() forwards a plain
 	click to the parent, so dragging a symbol by its label moves the whole
-	symbol; a pre-existing, unrelated behaviour, left untouched here).
-	Without this, the handles were reachable only via Shift+click or a
-	right-click's context menu, neither of which a user reaches for to
+	symbol). Without this, the handles were reachable only via Shift+click
+	or a right-click's context menu, neither of which a user reaches for to
 	resize a text field (qelectrotech#591, reported by @arummler).
-
-	Called from itemChange() -- both this item's own ItemSelectedHasChanged,
-	below, and Element::itemChange() on the parent's, which calls this on
-	every one of its texts. Not from paint(): see the comment there for why
-	that crashed.
+	Element::itemChange() refreshes its texts when its own selection
+	changes.
+	Not for a text in a group: the group places its texts itself.
+	@return
 */
-void DynamicElementTextItem::refreshResizeHandlesVisibility()
+bool DynamicElementTextItem::resizeHandlesWanted() const
 {
-	const bool handles_wanted = isSelected() || (m_parent_element && m_parent_element->isSelected());
-	if (handles_wanted && !m_left_resize_handle)
-		addResizeHandles();
-	else if (!handles_wanted && m_left_resize_handle)
-		removeResizeHandles();
-}
-
-/**
-	@brief DynamicElementTextItem::addResizeHandles
-	Create and show the two width-resize handles (left/right edge of
-	frameRect()), reusing QetGraphicsHandlerItem the same way QetShapeItem
-	does for its own resize handles.
-*/
-void DynamicElementTextItem::addResizeHandles()
-{
-	if (m_left_resize_handle || !scene())
-		return;
-
-	qreal size = QETUtils::graphicsHandlerSize(this);
-	m_left_resize_handle = new QetGraphicsHandlerItem(size);
-	m_right_resize_handle = new QetGraphicsHandlerItem(size);
-
-	for (QetGraphicsHandlerItem *handle : {m_left_resize_handle, m_right_resize_handle})
-	{
-			//Children of this text, not free scene items: Qt then carries
-			//them along when the parent element moves, rotates or is
-			//zoomed, and repaints their old and new area in the same
-			//update as this text. Moving free items from paint() instead
-			//left green fragments behind (qelectrotech#1002).
-		handle->setParentItem(this);
-		handle->setColor(Qt::darkGreen);
-		handle->installSceneEventFilter(this);
-	}
-	m_resize_handles_con = connect(document()->documentLayout(), &QAbstractTextDocumentLayout::documentSizeChanged,
-								   this, &DynamicElementTextItem::updateResizeHandlesPos);
-
-	updateResizeHandlesPos();
-}
-
-/**
-	@brief DynamicElementTextItem::removeResizeHandles
-*/
-void DynamicElementTextItem::removeResizeHandles()
-{
-	disconnect(m_resize_handles_con);
-	delete m_left_resize_handle;
-	delete m_right_resize_handle;
-	m_left_resize_handle = nullptr;
-	m_right_resize_handle = nullptr;
-}
-
-/**
-	@brief DynamicElementTextItem::updateResizeHandlesPos
-	Keep the two resize handles at the vertical middle of boundingRect()'s
-	left and right edges, in scene coordinates -- called on every paint() so
-	it stays correct across every kind of change that can move this item or
-	change its size (position, rotation, font, text, textWidth...) without
-	needing a dedicated hook for each one.
-
-	Deliberately boundingRect(), not frameRect(): frameRect() is a tight box
-	around the text's own natural (idealWidth()) size, re-centred inside
-	boundingRect() -- it does not grow with textWidth(). Once a text has
-	been widened, that leaves a growing gap between the tight frame and the
-	dashed selection outline QGraphicsView draws at boundingRect(), which is
-	the box a user actually sees and expects a resize handle to sit on
-	(qelectrotech#591, reported by @arummler: "the drag elements should be
-	on the border of the box"). boundingRect() reflects the full
-	textWidth() (it is QGraphicsTextItem's own, driven by the document's
-	laid-out size), so the handles now track the box that is visibly
-	resized rather than the text glyphs inside it.
-*/
-void DynamicElementTextItem::updateResizeHandlesPos()
-{
-	if (!m_left_resize_handle || !m_right_resize_handle)
-		return;
-
-	QRectF br = boundingRect();
-	m_left_resize_handle->setPos(br.left(), br.center().y());
-	m_right_resize_handle->setPos(br.right(), br.center().y());
-}
-
-/**
-	@brief DynamicElementTextItem::handlerMousePressEvent
-	@param handle
-	@param event
-*/
-void DynamicElementTextItem::handlerMousePressEvent(QetGraphicsHandlerItem *handle, QGraphicsSceneMouseEvent *event)
-{
-	Q_UNUSED(handle)
-
-		//The actual property value, kept as-is (possibly -1, meaning "auto")
-		//so a later undo restores the exact original state rather than a
-		//synthesized fixed width.
-	m_resize_original_width = textWidth();
-		//A concrete baseline for the live drag's delta math, which can't
-		//start from -1.
-	m_resize_baseline_width = (m_resize_original_width < 0) ? frameRect().width() : m_resize_original_width;
-	m_resize_start_local_x = mapFromScene(event->scenePos()).x();
-}
-
-/**
-	@brief DynamicElementTextItem::handlerMouseMoveEvent
-	Live-resize the text while dragging, exactly like the element editor's
-	resize handles live-update geometry during a drag (undo is only pushed
-	on release). The drag delta is resolved in this item's own local
-	coordinates (not scene coordinates) so a rotated text box still resizes
-	along its own baseline.
-	@param handle
-	@param event
-*/
-void DynamicElementTextItem::handlerMouseMoveEvent(QetGraphicsHandlerItem *handle, QGraphicsSceneMouseEvent *event)
-{
-	qreal local_x = mapFromScene(event->scenePos()).x();
-	qreal delta = local_x - m_resize_start_local_x;
-	if (handle == m_left_resize_handle)
-		delta = -delta;
-
-	qreal new_width = qMax(m_resize_baseline_width + delta, qreal(10));
-	setTextWidth(new_width);
-	updateResizeHandlesPos();
-}
-
-/**
-	@brief DynamicElementTextItem::handlerMouseReleaseEvent
-	Push the same QPropertyUndoCommand the properties-panel width spinbox
-	already pushes (sources/ui/dynamicelementtextmodel.cpp) -- the value is
-	already applied live from the drag, so this only makes it undoable.
-	@param handle
-	@param event
-*/
-void DynamicElementTextItem::handlerMouseReleaseEvent(QetGraphicsHandlerItem *handle, QGraphicsSceneMouseEvent *event)
-{
-	Q_UNUSED(handle)
-	Q_UNUSED(event)
-
-	qreal new_width = textWidth();
-	if (!qFuzzyCompare(m_resize_original_width, new_width) && m_parent_element && m_parent_element->diagram())
-	{
-		auto *undo = new QPropertyUndoCommand(this, "textWidth", QVariant(m_resize_original_width), QVariant(new_width));
-		undo->setAnimated(true, false);
-		undo->setText(tr("Redimensionner un texte d'élément"));
-		m_parent_element->diagram()->undoStack().push(undo);
-	}
+	return (isSelected() || (m_parent_element && m_parent_element->isSelected()))
+			&& !parentGroup()
+			&& !isEditing();
 }
 
 void DynamicElementTextItem::elementInfoChanged()

@@ -1764,8 +1764,8 @@ void Element::hoverLeaveEvent(QGraphicsSceneHoverEvent *e)
 	@brief Element::itemChange
 	On ItemSelectedHasChanged, tell each of this element's own dynamic texts
 	to re-check whether its resize handles should be showing --
-	DynamicElementTextItem::refreshResizeHandlesVisibility() shows them when
-	either the text itself or its parent (this) is selected. An ordinary
+	DynamicElementTextItem::resizeHandlesWanted() shows them when either
+	the text itself or its parent (this) is selected. An ordinary
 	click with no Shift selects the parent, not the text
 	(DynamicElementTextItem::mousePressEvent() forwards it), so without this
 	a plain click on a symbol never showed the resize handles this PR adds
