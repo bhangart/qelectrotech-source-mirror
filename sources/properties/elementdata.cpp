@@ -645,7 +645,7 @@ bool ElementData::operator==(const ElementData &data) const
 		return false;
 	}
 
-	if (m_drawing_information != m_drawing_information) {
+	if (data.m_drawing_information != m_drawing_information) {
 		return false;
 	}
 

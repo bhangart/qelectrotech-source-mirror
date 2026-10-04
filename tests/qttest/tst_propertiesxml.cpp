@@ -921,10 +921,24 @@ private slots:
 		QVERIFY(read.fromXml(reparse(definition)));
 		QVERIFY(read == written);
 			// operator==() does not compare these for every kind of
-			// element (nor the drawing information at all); compare them
+			// element; compare them
 		QCOMPARE(read.m_slave_contact_groups.size(), written.m_slave_contact_groups.size());
 		QVERIFY(read.m_plc_master_data == written.m_plc_master_data);
 		QCOMPARE(read.m_drawing_information, written.m_drawing_information);
+	}
+
+		// Two elements that differ only in their drawing information are
+		// different. operator==() compared the drawing information with
+		// itself, so a change to it alone went unnoticed.
+	void elementDataDrawingInformationCompared()
+	{
+		ElementData a;
+		a.m_drawing_information = QStringLiteral("Drawn after the datasheet, rev. 3");
+		ElementData b = a;
+		QVERIFY(a == b);
+		b.m_drawing_information = QStringLiteral("Drawn after the datasheet, rev. 4");
+		QVERIFY(!(a == b));
+		QVERIFY(a != b);
 	}
 
 		// The PLC table of an element placed on a folio, written and read
