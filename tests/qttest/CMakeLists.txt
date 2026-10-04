@@ -236,6 +236,14 @@ qet_add_test(tst_qetstrings
   SOURCES ${QET_TEST_QET_SOURCES}
   LIBS ${QET_TEST_QET_LIBS})
 
+# The rest of qet.cpp's small pure helpers (attribute checks, orientation
+# and diagram area strings, angles, point-on-segment geometry) and
+# QetVersion read from a file's version attribute. Built like
+# tst_qetstrings, with qetversion.cpp alongside.
+qet_add_test(tst_qetutils
+  SOURCES ${QET_TEST_QET_SOURCES} qetversion.cpp
+  LIBS ${QET_TEST_QET_LIBS})
+
 # CommandSearchPopup: accent-blind matching, ranking, and that Enter runs
 # only the owning window's highlighted, enabled command.
 qet_add_test(tst_commandsearch OFFSCREEN
