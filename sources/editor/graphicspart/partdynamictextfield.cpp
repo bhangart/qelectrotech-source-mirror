@@ -20,6 +20,7 @@
 #include "../../QPropertyUndoCommand/qpropertyundocommand.h"
 #include "../../qetapp.h"
 #include "../../textanchor.h"
+#include "../../textresize.h"
 #include "../elementscene.h"
 #include "../../utils/qetutils.h"
 #include <QApplication>
@@ -235,7 +236,9 @@ void PartDynamicTextField::fromXml(const QDomElement &dom_elmt) {
 
 	m_uuid = QUuid(dom_elmt.attribute("uuid", QUuid::createUuid().toString()));
 	setFrame(dom_elmt.attribute("frame", "false") == "true"? true : false);
+	m_block_alignment = true;
 	setTextWidth(dom_elmt.attribute("text_width", QString::number(-1)).toDouble());
+	m_block_alignment = false;
 
 	QMetaEnum me = DynamicElementTextItem::textFromMetaEnum();
 	m_text_from = DynamicElementTextItem::TextFrom(
@@ -431,12 +434,22 @@ bool PartDynamicTextField::frame() const
 	return m_frame;
 }
 
+/**
+	@brief PartDynamicTextField::setTextWidth
+	Set the width of this text (-1 = automatic width). The point of the text
+	chosen by its alignment stays in place, as when the text changes.
+	@param width
+*/
 void PartDynamicTextField::setTextWidth(qreal width) {
-	this -> document() -> setTextWidth(width);
-
 		//Adjust the width, to ideal width if needed
-	if(width > 0 && document() -> size().width() > width)
-		document() -> setTextWidth(document() -> idealWidth());
+	if (width > 0) {
+		QScopedPointer<QTextDocument> wrapped(document() -> clone());
+		wrapped -> setTextWidth(width);
+		if (wrapped -> size().width() > width)
+			width = wrapped -> idealWidth();
+	}
+
+	TextResize::applyWidth(this, width, m_alignment, !m_block_alignment, false);
 
 	m_text_width = document() -> textWidth();
 	emit textWidthChanged(m_text_width);
