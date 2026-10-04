@@ -720,7 +720,7 @@ QET::DiagramArea QET::diagramAreaFromString(const QString &string) {
 	For instance, epsilon = 10 will round to 1/10 = 0.1
 */
 qreal QET::round(qreal x, qreal epsilon) {
-	return(int(x * epsilon) / epsilon);
+	return(std::round(x * epsilon) / epsilon);
 }
 
 /**

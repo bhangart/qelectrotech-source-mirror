@@ -179,6 +179,33 @@ private slots:
 		QCOMPARE(QET::correctAngle(angle, positive), expected);
 	}
 
+	/// QET::round() goes to the nearest multiple of 1/epsilon, as the
+	/// element editor's scaling snap expects; it used to cut off instead
+	/// (1.19 became 1.1).
+	void round_data()
+	{
+		QTest::addColumn<qreal>("x");
+		QTest::addColumn<qreal>("epsilon");
+		QTest::addColumn<qreal>("rounded");
+
+		QTest::newRow("down")          << qreal(1.14)  << qreal(10)  << qreal(1.1);
+		QTest::newRow("up")            << qreal(1.19)  << qreal(10)  << qreal(1.2);
+		QTest::newRow("up below one")  << qreal(0.29)  << qreal(10)  << qreal(0.3);
+		QTest::newRow("exact")         << qreal(2.5)   << qreal(10)  << qreal(2.5);
+		QTest::newRow("negative")      << qreal(-1.19) << qreal(10)  << qreal(-1.2);
+		QTest::newRow("hundredths")    << qreal(0.456) << qreal(100) << qreal(0.46);
+		QTest::newRow("whole numbers") << qreal(2.6)   << qreal(1)   << qreal(3);
+	}
+
+	void round()
+	{
+		QFETCH(qreal, x);
+		QFETCH(qreal, epsilon);
+		QFETCH(qreal, rounded);
+
+		QCOMPARE(QET::round(x, epsilon), rounded);
+	}
+
 	void lineContainsPoint_data()
 	{
 		QTest::addColumn<QLineF>("line");
