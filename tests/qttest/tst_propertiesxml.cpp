@@ -214,6 +214,44 @@ private slots:
 		QVERIFY(other == BorderProperties());
 	}
 
+		// Column width and row height are decimal numbers (a script can set
+		// 62.5); the XML reader used to read them as integers, and "62.5"
+		// came back as 0, and the settings reader rounded them.
+	void borderFractionalSizes_data()
+	{
+		QTest::addColumn<double>("width");
+		QTest::addColumn<double>("height");
+		QTest::newRow("halves")   << 62.5 << 80.5;
+		QTest::newRow("quarters") << 10.25 << 30.75;
+		QTest::newRow("whole")    << 60.0 << 80.0;
+	}
+
+	void borderFractionalSizes()
+	{
+		QFETCH(double, width);
+		QFETCH(double, height);
+		BorderProperties written;
+		written.columns_width = width;
+		written.rows_height = height;
+
+		QDomDocument doc;
+		QDomElement e = doc.createElement(QStringLiteral("diagram"));
+		doc.appendChild(e);
+		written.toXml(e);
+		QDomElement read_from = reparse(e);
+		BorderProperties from_xml;
+		from_xml.fromXml(read_from);
+		QCOMPARE(from_xml.columns_width, width);
+		QCOMPARE(from_xml.rows_height, height);
+
+		const QString path = newSettingsFile();
+		written.toSettings(*settings(path), QStringLiteral("diagrameditor/default"));
+		BorderProperties from_settings;
+		from_settings.fromSettings(*settings(path), QStringLiteral("diagrameditor/default"));
+		QCOMPARE(from_settings.columns_width, width);
+		QCOMPARE(from_settings.rows_height, height);
+	}
+
 	// ---- TitleBlockProperties ------------------------------------------
 
 	void titleBlockXmlRoundTrip()

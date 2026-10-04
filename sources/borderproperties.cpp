@@ -117,9 +117,9 @@ void BorderProperties::toXml(QDomElement &e) const
 */
 void BorderProperties::fromXml(QDomElement &e) {
 	if (e.hasAttribute("cols"))        columns_count   = e.attribute("cols").toInt();
-	if (e.hasAttribute("colsize"))     columns_width   = e.attribute("colsize").toInt();
+	if (e.hasAttribute("colsize"))     columns_width   = e.attribute("colsize").toDouble();
 	if (e.hasAttribute("rows"))        rows_count      = e.attribute("rows").toInt();
-	if (e.hasAttribute("rowsize"))     rows_height     = e.attribute("rowsize").toInt();
+	if (e.hasAttribute("rowsize"))     rows_height     = e.attribute("rowsize").toDouble();
 	if (e.hasAttribute("displaycols")) display_columns = e.attribute("displaycols") == "true";
 	if (e.hasAttribute("displayrows")) display_rows    = e.attribute("displayrows") == "true";
 }
@@ -157,11 +157,11 @@ void BorderProperties::toSettings(QSettings &settings, const QString &prefix) co
 */
 void BorderProperties::fromSettings(QSettings &settings, const QString &prefix) {
 	columns_count   = settings.value(prefix % "cols",            columns_count).toInt();
-	columns_width   = qRound(settings.value(prefix % "colsize",  columns_width).toDouble());
+	columns_width   = settings.value(prefix % "colsize",         columns_width).toDouble();
 	display_columns = settings.value(prefix % "displaycols",     display_columns).toBool();
 	
 	rows_count      = settings.value(prefix % "rows",            rows_count).toInt();
-	rows_height     = qRound(settings.value(prefix % "rowsize",  rows_height).toDouble());
+	rows_height     = settings.value(prefix % "rowsize",         rows_height).toDouble();
 	display_rows    = settings.value(prefix % "displayrows",     display_rows).toBool();
 }
 
