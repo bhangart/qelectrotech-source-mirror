@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QFile>
@@ -34,12 +36,8 @@ class tst_scriptlayoutreads : public QObject
 		f.write(script.toUtf8());
 		f.close();
 
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home);
 		env.insert(QStringLiteral("QET_ENABLE_SCRIPTING"), QStringLiteral("1"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/data"));
 		QProcess proc;
 		proc.setProcessEnvironment(env);
 		proc.start(QStringLiteral(QET_TEST_BINARY_PATH),

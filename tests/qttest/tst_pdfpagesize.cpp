@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QDir>
@@ -29,12 +31,7 @@ class tst_pdfpagesize : public QObject
 		const QString out = m_dir.filePath(QStringLiteral("out.pdf"));
 		QDir().mkpath(home);
 		QDir().mkpath(tmp);
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/.config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/.local/share"));
-		env.insert(QStringLiteral("TMPDIR"), tmp);
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, tmp);
 
 		QProcess proc;
 		proc.setProcessEnvironment(env);

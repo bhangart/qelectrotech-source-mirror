@@ -1,5 +1,7 @@
 #include <QtTest>
 
+#include "qettesthelpers.h"
+
 #include <QDir>
 #include <QProcess>
 #include <QProcessEnvironment>
@@ -79,9 +81,10 @@ private slots:
 
 		QTemporaryDir out_dir;
 		QVERIFY(out_dir.isValid());
+		QTemporaryDir home_dir;
+		QVERIFY(home_dir.isValid());
 
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		const QProcessEnvironment env = QET::Test::sandboxEnvironment(home_dir.path());
 
 		QProcess proc;
 		proc.setProcessEnvironment(env);

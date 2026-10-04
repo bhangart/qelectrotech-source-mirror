@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QDomDocument>
@@ -97,11 +99,7 @@ class tst_derivedsymboluuid : public QObject
 		f.write(doc.toByteArray());
 		f.close();
 
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/data"));
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home);
 		QProcess proc;
 		proc.setProcessEnvironment(env);
 		proc.start(QStringLiteral(QET_TEST_BINARY_PATH),

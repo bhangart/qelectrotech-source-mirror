@@ -9,6 +9,7 @@
 #include <QTemporaryDir>
 
 #include "wiringrules.h"
+#include "qettesthelpers.h"
 
 	// The checks that drive QElectroTech through a script (--run) need a
 	// build with scripting; without it --run is not an option and the
@@ -50,14 +51,9 @@ class tst_wiringrules : public QObject
 						  .arg(master_off ? QStringLiteral("false") : QStringLiteral("true"))
 						  .arg(application_max_wires).toUtf8());
 		}
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, tmp);
 		env.insert(QStringLiteral("QET_ENABLE_SCRIPTING"), QStringLiteral("1"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/.config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/.local/share"));
 		env.insert(QStringLiteral("QET_SETTINGS_DIR"), settings);
-		env.insert(QStringLiteral("TMPDIR"), tmp);
 		return env;
 	}
 

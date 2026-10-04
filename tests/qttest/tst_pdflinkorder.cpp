@@ -5,6 +5,8 @@
 	the same project gave a different PDF in each run. Exported in separate
 	processes, since pointers only change between runs.
 */
+#include "qettesthelpers.h"
+
 #include <QDir>
 #include <QFile>
 #include <QProcess>
@@ -26,12 +28,7 @@ class tst_pdflinkorder : public QObject
 		const QString out = m_dir.filePath(QStringLiteral("out%1.pdf").arg(run));
 		QDir().mkpath(home);
 		QDir().mkpath(tmp);
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/.config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/.local/share"));
-		env.insert(QStringLiteral("TMPDIR"), tmp);
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, tmp);
 
 		QProcess proc;
 		proc.setProcessEnvironment(env);

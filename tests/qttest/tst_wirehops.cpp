@@ -8,6 +8,7 @@
 #include <QTemporaryDir>
 
 #include "wirehops.h"
+#include "qettesthelpers.h"
 
 // Hops where two wires cross (issue #436). The geometry is tested on its
 // own; the project setting is tested through the real binary: --resave
@@ -31,12 +32,7 @@ class tst_wirehops : public QObject
 		const QString out = m_dir.filePath(QStringLiteral("out%1.qet").arg(m_run++));
 		QDir().mkpath(home);
 		QDir().mkpath(tmp);
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/.config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/.local/share"));
-		env.insert(QStringLiteral("TMPDIR"), tmp);
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, tmp);
 
 		QProcess proc;
 		proc.setProcessEnvironment(env);

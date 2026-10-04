@@ -6,6 +6,8 @@
 	Without it the dates are the time of the export, as before. Exported in
 	separate processes, since what used to differ changed between runs.
 */
+#include "qettesthelpers.h"
+
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
@@ -35,12 +37,7 @@ class tst_pdfreproducible : public QObject
 			QDir().mkpath(m_dir.filePath(folder));
 		QDir().mkpath(home);
 		QDir().mkpath(tmp);
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/.config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/.local/share"));
-		env.insert(QStringLiteral("TMPDIR"), tmp);
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, tmp);
 		env.remove(QStringLiteral("QT_HASH_SEED"));
 		env.remove(QStringLiteral("SOURCE_DATE_EPOCH"));
 		if (!epoch.isEmpty())
