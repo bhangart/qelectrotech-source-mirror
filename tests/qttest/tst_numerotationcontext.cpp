@@ -409,6 +409,21 @@ private slots:
 			<< QStringList{"0", "23", "59"};
 		QTest::newRow("wrap back without underflow")
 			<< QStringList{"unit|1|0|0|0|", "wrap|5|2|0|10|"} << false << QStringList{"1", "3"};
+		// A step larger than the modulus overflows it several times; the
+		// counter before took only one of them (5 + 25 gave 1|0, not 3|0).
+		QTest::newRow("step past several moduli carries each")
+			<< QStringList{"unit|0|0|0|0|", "wrap|5|25|0|10|"} << true << QStringList{"3", "0"};
+		QTest::newRow("step back past several moduli borrows each")
+			<< QStringList{"unit|3|0|0|0|", "wrap|5|25|0|10|"} << false << QStringList{"1", "0"};
+		QTest::newRow("step back to a multiple of the modulus")
+			<< QStringList{"unit|3|0|0|0|", "wrap|5|15|0|10|"} << false << QStringList{"2", "0"};
+		// 0:59:50 + 130 s = 1:02:00
+		QTest::newRow("several carries chain")
+			<< QStringList{"unit|0|0|0|0|", "wrap|59|0|0|60|", "wrap|50|130|0|60|"} << true
+			<< QStringList{"1", "2", "0"};
+		QTest::newRow("several borrows chain")
+			<< QStringList{"unit|1|0|0|0|", "wrap|2|0|0|60|", "wrap|0|130|0|60|"} << false
+			<< QStringList{"0", "59", "50"};
 	}
 
 	// NumerotationContextCommands::next() and previous(): one step of a

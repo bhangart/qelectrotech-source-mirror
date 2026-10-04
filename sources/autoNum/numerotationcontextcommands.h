@@ -38,8 +38,8 @@ class NumerotationContextCommands
 
 	private:
 	void setNumStrategy (const QString &);
-	static void carry(NumerotationContext &contextnum, int from_index);
-	static void borrow(NumerotationContext &contextnum, int from_index);
+	static void carry(NumerotationContext &contextnum, int from_index, int count);
+	static void borrow(NumerotationContext &contextnum, int from_index, int count);
 
 	Diagram *diagram_;
 	NumerotationContext context_;

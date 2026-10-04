@@ -54,8 +54,10 @@ NumerotationContext NumerotationContextCommands::next()
 			//whether to wrap its own value back to 0.
 		if (str.at(0) == "wrap" && str.size() > 4) {
 			int modulus = str.at(4).toInt();
-			if (modulus > 0 && (str.at(1).toInt() + str.at(2).toInt()) >= modulus)
-				carry(contextnum, i - 1);
+			int sum = str.at(1).toInt() + str.at(2).toInt();
+				//a step larger than the modulus overflows it several times
+			if (modulus > 0 && sum >= modulus)
+				carry(contextnum, i - 1, sum / modulus);
 		}
 	}
 	return contextnum;
@@ -76,8 +78,9 @@ NumerotationContext NumerotationContextCommands::previous()
 
 		if (str.at(0) == "wrap" && str.size() > 4) {
 			int modulus = str.at(4).toInt();
-			if (modulus > 0 && (str.at(1).toInt() - str.at(2).toInt()) < 0)
-				borrow(contextnum, i - 1);
+			int difference = str.at(1).toInt() - str.at(2).toInt();
+			if (modulus > 0 && difference < 0)
+				borrow(contextnum, i - 1, (modulus - 1 - difference) / modulus);
 		}
 	}
 	return contextnum;
@@ -85,29 +88,31 @@ NumerotationContext NumerotationContextCommands::previous()
 
 /**
 	@brief NumerotationContextCommands::carry
-	Add one unit to the nearest numeric part at or before from_index in
+	Add count units to the nearest numeric part at or before from_index in
 	contextnum, skipping non-numeric parts (e.g. a "." string separator)
 	along the way. If that part is itself a wrap part and this pushes it
-	to (or past) its own modulus, it wraps back to 0 and the carry
+	to (or past) its own modulus, it wraps around and what overflows
 	cascades further back -- so wrap parts can be chained (e.g. seconds
 	wrapping into minutes wrapping into hours).
 	@param contextnum the context being built by next(); already contains
 	entries for every index <= from_index
 	@param from_index index to start looking from, going backwards
+	@param count number of units to add, the times the part after it
+	overflowed
 */
-void NumerotationContextCommands::carry(NumerotationContext &contextnum, int from_index)
+void NumerotationContextCommands::carry(NumerotationContext &contextnum, int from_index, int count)
 {
 	for (int j = from_index; j >= 0; --j) {
 		QStringList strl = contextnum.itemAt(j);
 		if (!contextnum.keyIsNumber(strl.at(0)))
 			continue;
 
-		int value = strl.at(1).toInt() + 1;
+		int value = strl.at(1).toInt() + count;
 		if (strl.at(0) == "wrap" && strl.size() > 4) {
 			int modulus = strl.at(4).toInt();
 			if (modulus > 0 && value >= modulus) {
-				contextnum.replaceValue(j, QString::number(value - modulus));
-				carry(contextnum, j - 1);
+				contextnum.replaceValue(j, QString::number(value % modulus));
+				carry(contextnum, j - 1, value / modulus);
 				return;
 			}
 		}
@@ -121,24 +126,25 @@ void NumerotationContextCommands::carry(NumerotationContext &contextnum, int fro
 
 /**
 	@brief NumerotationContextCommands::borrow
-	Inverse of carry(): subtract one unit from the nearest numeric part at
-	or before from_index. If that part is itself a wrap part and this
-	takes it below 0, it wraps to (modulus - 1) and the borrow cascades
-	further back.
+	Inverse of carry(): subtract count units from the nearest numeric part
+	at or before from_index. If that part is itself a wrap part and this
+	takes it below 0, it wraps around from (modulus - 1) and what
+	underflows cascades further back.
 */
-void NumerotationContextCommands::borrow(NumerotationContext &contextnum, int from_index)
+void NumerotationContextCommands::borrow(NumerotationContext &contextnum, int from_index, int count)
 {
 	for (int j = from_index; j >= 0; --j) {
 		QStringList strl = contextnum.itemAt(j);
 		if (!contextnum.keyIsNumber(strl.at(0)))
 			continue;
 
-		int value = strl.at(1).toInt() - 1;
+		int value = strl.at(1).toInt() - count;
 		if (strl.at(0) == "wrap" && strl.size() > 4) {
 			int modulus = strl.at(4).toInt();
 			if (modulus > 0 && value < 0) {
-				contextnum.replaceValue(j, QString::number(value + modulus));
-				borrow(contextnum, j - 1);
+				int borrowed = (modulus - 1 - value) / modulus;
+				contextnum.replaceValue(j, QString::number(value + borrowed * modulus));
+				borrow(contextnum, j - 1, borrowed);
 				return;
 			}
 		}
