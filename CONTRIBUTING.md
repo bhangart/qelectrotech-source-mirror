@@ -19,7 +19,7 @@ Start with the dependencies and platform-specific setup in
 The commands below use CMake/CTest 3.20 or newer (`--test-dir` needs 3.20),
 a C++17 compiler, and the Qt6 development packages, including GuiPrivate,
 Svg and LinguistTools. Configuration may download dependencies with
-FetchContent, including Catch2, so an initial build needs network access.
+FetchContent, so an initial build needs network access.
 
 Run the following commands from the repository root. Keep build products in
 a separate directory and use Debug for the regression tests:
@@ -89,28 +89,7 @@ The Linux shell regression scripts below do not run natively on Windows.
 
 ### Tests outside the CTest suite
 
-The Catch2 executable `C_unittests` is built with `PACKAGE_TESTS=ON`, but is
-currently not registered with CTest. Run it separately from the repository
-root after building:
-
-```sh
-./build/tests/catch/C_unittests
-```
-
-This executable creates a Qt GUI application too. On headless Linux, use:
-
-```sh
-xvfb-run -a ./build/tests/catch/C_unittests
-```
-
-For the Visual Studio example above, use this PowerShell command after
-setting up `PATH`:
-
-```powershell
-& ./build-msvc/tests/catch/Debug/C_unittests.exe
-```
-
-The Python MCP suite is also separate from CTest. Its unit and protocol
+The Python MCP suite is separate from CTest. Its unit and protocol
 tests can be run without a QElectroTech binary. Some fixtures launch POSIX
 shell scripts, so use a Unix-like environment for this suite:
 

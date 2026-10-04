@@ -51,6 +51,30 @@ private slots:
 		QVERIFY(!QET::splitWithSpaces(QStringLiteral("one.qet")).isEmpty());
 		QCOMPARE(QET::splitWithSpaces(QStringLiteral("a.qet b.qet")).count(), 2);
 	}
+
+	/// QET::stringToFileName(): lower case, characters a file name cannot
+	/// hold become dashes, spaces become underscores.
+	void stringToFileName_data()
+	{
+		QTest::addColumn<QString>("name");
+		QTest::addColumn<QString>("expected");
+
+		QTest::newRow("plain")      << "test"    << "test";
+		QTest::newRow("underscore") << "t_est"   << "t_est";
+		QTest::newRow("dash")       << "t-est"   << "t-est";
+		QTest::newRow("dot")        << "te.st"   << "te.st";
+		QTest::newRow("upper case") << "tesMt"   << "tesmt";
+		QTest::newRow("forbidden")  << "te<st"   << "te-st";
+		QTest::newRow("accent")     << QStringLiteral("t\u00e9<st") << QStringLiteral("t\u00e9-st");
+		QTest::newRow("space")      << "te st"   << "te_st";
+	}
+
+	void stringToFileName()
+	{
+		QFETCH(QString, name);
+		QFETCH(QString, expected);
+		QCOMPARE(QET::stringToFileName(name), expected);
+	}
 };
 
 QTEST_APPLESS_MAIN(tst_qetstrings)

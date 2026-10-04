@@ -23,8 +23,6 @@ message(". PROJECT_NAME              :" ${PROJECT_NAME})
 message(". PROJECT_SOURCE_DIR        :" ${PROJECT_SOURCE_DIR})
 
 # Add sub directories
-message(". Add sub directory catch")
-add_subdirectory(catch)
 message(". Add sub directory modal-quit-regression")
 add_subdirectory(modal-quit-regression)
 message(". Add sub directory qttest")
