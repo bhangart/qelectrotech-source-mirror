@@ -489,6 +489,36 @@ qet_add_test(tst_xrefpos
   SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
   LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# The autonumbering core: NumerotationContext (a scheme's parts, their XML
+# and settings, padding), NumerotationContextCommands (a step, with the
+# carry and borrow of wrap parts) and autonum:: formulas, rendered from a
+# FormulaContext rather than a built folio. assignvariables.cpp includes
+# qetproject.h, hence KAutoSaveFile, and diagramcontent.h, which needs a
+# directory one level below sources/ (any will do) for its
+# "../qetgraphicsitem/" includes. The Diagram, Element, Conductor,
+# QETProject and collection symbols it refers to on the paths not run here
+# are supplied by the test itself.
+if(BUILD_WITH_KF)
+  set(qet_numerotationcontext_kf LIBS ${KF_PRIVATE_LIBRARIES})
+else()
+  set(qet_numerotationcontext_kf DEFINES BUILD_WITHOUT_KF)
+endif()
+qet_add_test(tst_numerotationcontext
+  SOURCES
+    autoNum/numerotationcontext.cpp
+    autoNum/numerotationcontextcommands.cpp
+    autoNum/assignvariables.cpp
+    diagramcontext.cpp
+    diagramposition.cpp
+    conductorproperties.cpp
+    qetxml.cpp
+    NameList/nameslist.cpp
+    utils/qetutils.cpp
+    ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS} Qt::Sql
+  ${qet_numerotationcontext_kf}
+  INCLUDES ${QET_DIR}/sources/NameList)
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
