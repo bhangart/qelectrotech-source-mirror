@@ -702,6 +702,26 @@ target_link_libraries(tst_terminalclass PRIVATE Qt::Test)
 target_compile_definitions(tst_terminalclass PRIVATE
   "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
 
+# TerminalData::fromXml()/toXml(), the real reader and writer of an element
+# definition's <terminal>: the `class` attribute survives them. The few
+# QETApp symbols these sources need are supplied by the test itself.
+add_executable(
+  tst_terminaldata
+  tst_terminaldata.cpp
+  ${QET_DIR}/sources/properties/terminaldata.cpp
+  ${QET_DIR}/sources/properties/terminalclass.cpp
+  ${QET_DIR}/sources/properties/propertiesinterface.cpp
+  ${QET_DIR}/sources/utils/qetutils.cpp
+  ${QET_DIR}/sources/qet.cpp
+  ${QET_DIR}/sources/qeticons.cpp
+  ${QET_DIR}/sources/shortcutmanager.cpp)
+add_test(NAME tst_terminaldata COMMAND tst_terminaldata)
+set_tests_properties(tst_terminaldata PROPERTIES
+  ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+target_include_directories(tst_terminaldata PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_terminaldata PRIVATE
+  Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+
 # ConductorProperties::applyChanges() -- the Selection properties panel
 # writes only the fields the user edited.
 add_executable(

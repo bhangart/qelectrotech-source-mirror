@@ -104,6 +104,9 @@ private slots:
 	// keeps both values as written, the unknown one included, and adds the
 	// attribute nowhere else. Run against a build without the feature, the
 	// same steps show older releases open such a file.
+	// The attribute sits in the project's embedded symbol definitions,
+	// which a resave keeps as stored: this does not reach TerminalData's
+	// reader and writer. tst_terminaldata covers those.
 	void projectKeepsClassThroughResave()
 	{
 		const QString fixture = QFINDTESTDATA("fixtures/unlinked_contact_label.qet");
