@@ -236,6 +236,10 @@ void NumerotationContextCommands::setNumStrategy(const QString &str) {
 		strategy_ = new ElementPrefixNum (diagram_);
 		return;
 	}
+		//A type this engine does not know (hand-edited or foreign file):
+		//keep the part as it is and show its value as text, rather than
+		//leaving strategy_ pointing at the strategy deleted above.
+	strategy_ = new StringNum (diagram_);
 }
 
 

@@ -438,6 +438,25 @@ private slots:
 						    "alpha|d|1|0|0|"}));
 	}
 
+	// A part of a type the engine does not know (a hand-edited or foreign
+	// file, "Unit" for "unit") left no strategy to step or show it with:
+	// next(), previous() and the preview used a deleted or null one and
+	// crashed. Such a part stays as it is and shows its value as text;
+	// the carry of a wrap part passes over it like over text.
+	void unknownPartTypeIsKept()
+	{
+		const NumerotationContext nc = make({"bogus|x|1|0|0|", "unit|1|0|0|0|",
+						     "Unit|7|1|0|0|", "wrap|9|1|0|10|"});
+		NumerotationContextCommands forward(nc);
+		QCOMPARE(parts(forward.next()), (QStringList{"bogus|x|1|0|0|", "unit|2|0|0|0|",
+							     "Unit|7|1|0|0|", "wrap|0|1|0|10|"}));
+		NumerotationContextCommands back(make({"unit|1|0|0|0|", "Unit|7|1|0|0|",
+						       "wrap|0|1|0|10|", "bogus|x|1|0|0|"}));
+		QCOMPARE(values(back.previous()), (QStringList{"0", "7", "9", "x"}));
+		NumerotationContextCommands shown(nc);
+		QCOMPARE(shown.toRepresentedString(), QStringLiteral("x179"));
+	}
+
 	void alphaStep_data()
 	{
 		QTest::addColumn<QString>("value");
