@@ -155,6 +155,14 @@ set_tests_properties(tst_textanchor PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offs
 target_include_directories(tst_textanchor PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_textanchor PRIVATE Qt::Test Qt::Widgets)
 
+# textresize.h is header-only: changing the width of a text box keeps the
+# text where it is drawn, whatever its alignment, rotation or pivot.
+add_executable(tst_textresize tst_textresize.cpp)
+add_test(NAME tst_textresize COMMAND tst_textresize)
+set_tests_properties(tst_textresize PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+target_include_directories(tst_textresize PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_textresize PRIVATE Qt::Test Qt::Widgets)
+
 # legacyelementtypes.h is header-only: the rewrite of element type names in
 # nomenclature queries saved before June 2022.
 add_executable(tst_legacyelementtypes tst_legacyelementtypes.cpp)

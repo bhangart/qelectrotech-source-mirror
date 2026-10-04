@@ -25,6 +25,7 @@
 #include "../qetgraphicsitem/terminal.h"
 #include "../qetinformation.h"
 #include "../utils/qetutils.h"
+#include "../textresize.h"
 #include "../QetGraphicsItemModeler/qetgraphicshandleritem.h"
 #include "crossrefitem.h"
 #include "element.h"
@@ -1792,9 +1793,27 @@ void DynamicElementTextItem::setPlainText(const QString &text)
 	}
 }
 
+/**
+	@brief DynamicElementTextItem::setTextWidth
+	Set the width of this text (-1 = automatic width). The point of the text
+	chosen by its alignment stays in place, as when the text itself changes
+	(see setPlainText()), so a right-aligned or centred label does not grow
+	to the right only, and undoing a width change puts the text back where
+	it was.
+	@param width
+*/
 void DynamicElementTextItem::setTextWidth(qreal width)
 {
-	this->document()->setTextWidth(width);
+	bool keep_anchor = !m_block_alignment && !parentGroup();
+	if (diagram() && (diagram()->project()->state() == QETProject::ProjectParsingRunning))
+		keep_anchor = false;
+	if (m_parent_element &&
+		(m_parent_element->state() == QET::GIBuildingFromXml ||
+		 m_parent_element->state() == QET::GILoadingFromXml))
+		keep_anchor = false;
+
+	TextResize::applyWidth(this, width, alignment(), keep_anchor,
+						   m_keep_visual_rotation && m_rotation_point_center);
 	m_text_width = width;
 	emit textWidthChanged(width);
 }
