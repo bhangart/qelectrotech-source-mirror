@@ -783,7 +783,7 @@ int TitleBlockTemplate::rowDimension(int i) {
 void TitleBlockTemplate::setRowDimension(int i,
 					 const TitleBlockDimension &dimension) {
 	int index = (i == -1) ? rows_heights_.count() - 1 : i;
-	if (index >= 0 || index < rows_heights_.count()) {
+	if (index >= 0 && index < rows_heights_.count()) {
 		rows_heights_[index] = dimension.value;
 	}
 }
@@ -811,7 +811,7 @@ void TitleBlockTemplate::setColumnDimension(
 		int i,
 		const TitleBlockDimension &dimension) {
 	int index = (i == -1) ? columns_width_.count() - 1 : i;
-	if (index >= 0 || index < columns_width_.count()) {
+	if (index >= 0 && index < columns_width_.count()) {
 		columns_width_[index] = dimension;
 	}
 }

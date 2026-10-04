@@ -569,6 +569,33 @@ private slots:
 		QCOMPARE(savedGrid(reloaded), savedGrid(tbt));
 	}
 
+	// setRowDimension() and setColumnDimension() change the row or column
+	// asked for, -1 meaning the last one, and nothing for an index outside
+	// the grid. They used to check `index >= 0 || index < count`, always
+	// true, and wrote past the end of the list.
+	void dimensionsOutOfRangeIgnored()
+	{
+		TitleBlockTemplate tbt;
+		QVERIFY(load(tbt, templateXml(QStringLiteral("10;20"), QStringLiteral("50;60"))));
+
+		tbt.setRowDimension(1, TitleBlockDimension(25));
+		tbt.setRowDimension(-1, TitleBlockDimension(30));
+		tbt.setColumnDimension(0, TitleBlockDimension(70));
+		QCOMPARE(tbt.rowDimension(1), 30);
+		QCOMPARE(tbt.columnDimension(0).value, 70);
+
+		tbt.setRowDimension(2, TitleBlockDimension(99));
+		tbt.setRowDimension(-2, TitleBlockDimension(99));
+		tbt.setColumnDimension(2, TitleBlockDimension(99));
+		tbt.setColumnDimension(-2, TitleBlockDimension(99));
+		QCOMPARE(tbt.rowsCount(), 2);
+		QCOMPARE(tbt.columnsCount(), 2);
+		QCOMPARE(tbt.rowDimension(0), 10);
+		QCOMPARE(tbt.rowDimension(1), 30);
+		QCOMPARE(tbt.columnDimension(0).value, 70);
+		QCOMPARE(tbt.columnDimension(1).value, 60);
+	}
+
 	// A clone is the same template, with its spans pointing at its own cells.
 	void cloneIsDeep()
 	{
