@@ -196,8 +196,8 @@ void DiagramContext::toXml(QDomElement &e, const QString &tag_name) const
 void DiagramContext::fromXml(const QDomElement &e, const QString &tag_name) {
 	foreach (QDomElement property, QET::findInDomElement(e, tag_name)) {
 		if (!property.hasAttribute("name")) continue;
-		addValue(property.attribute("name"), QVariant(storedValue(property.text())));
-		m_content_show.insert(property.attribute("name"), property.attribute("show", "1").toInt());
+		addValue(property.attribute("name"), QVariant(storedValue(property.text())),
+				 property.attribute("show", "1").toInt());
 	}
 }
 
@@ -213,8 +213,8 @@ void DiagramContext::fromXml(const pugi::xml_node &dom_element, const QString &t
 	for(auto node = dom_element.child(tag_name.toStdString().c_str()) ; node ; node = node.next_sibling(tag_name.toStdString().c_str()))
 	{
 		addValue(node.attribute("name").as_string(),
-				 QVariant(storedValue(QString::fromUtf8(node.text().as_string()))));
-		m_content_show.insert(node.attribute("name").as_string(), node.attribute("show").empty()? 1 : node.attribute("show").as_int());
+				 QVariant(storedValue(QString::fromUtf8(node.text().as_string()))),
+				 node.attribute("show").empty()? 1 : node.attribute("show").as_int());
 	}
 }
 

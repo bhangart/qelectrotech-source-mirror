@@ -814,6 +814,36 @@ private slots:
 		QCOMPARE(read.value(QStringLiteral("label")).toString(), QStringLiteral("-K1"));
 	}
 
+		// A key the context does not accept (only lower-case letters,
+		// digits, "-" and "_" are) is not read by either reader, and
+		// leaves nothing behind. Its show flag used to be kept, so the
+		// context lacked the key but did not equal one that never had it.
+	void contextXmlRejectedKey()
+	{
+		const QByteArray xml =
+			"<properties>"
+			"<property name=\"Bad Key\" show=\"0\">x</property>"
+			"<property name=\"label\" show=\"0\">-K1</property>"
+			"</properties>";
+		DiagramContext expected;
+		expected.addValue(QStringLiteral("label"), QStringLiteral("-K1"), false);
+
+		QDomDocument dom;
+		QVERIFY(dom.setContent(xml));
+		DiagramContext from_dom;
+		from_dom.fromXml(dom.documentElement());
+
+		pugi::xml_document pugi_doc;
+		QVERIFY(pugi_doc.load_buffer(xml.constData(), size_t(xml.size())));
+		DiagramContext from_pugi;
+		from_pugi.fromXml(pugi_doc.document_element());
+
+		QCOMPARE(from_dom.keys(), expected.keys());
+		QVERIFY(from_dom == expected);
+		QCOMPARE(from_pugi.keys(), expected.keys());
+		QVERIFY(from_pugi == expected);
+	}
+
 	void contextSettingsRoundTrip()
 	{
 		DiagramContext written;
