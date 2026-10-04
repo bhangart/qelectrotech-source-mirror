@@ -577,6 +577,24 @@ private slots:
 		QCOMPARE(int(read.phasesCount()), expected);
 	}
 
+		// The settings are clamped as a file is; fromSettings() used to
+		// take any number: 7 came back as 7, and -2 as 65534.
+	void singleLinePhasesClampedSettings_data()
+	{
+		singleLinePhasesClamped_data();
+	}
+
+	void singleLinePhasesClampedSettings()
+	{
+		QFETCH(QString, stored);
+		QFETCH(int, expected);
+		const QString path = newSettingsFile();
+		settings(path)->setValue(QStringLiteral("diagrameditor/defaultconductorphases"), stored);
+		SingleLineProperties read;
+		read.fromSettings(*settings(path), QStringLiteral("diagrameditor/defaultconductor"));
+		QCOMPARE(int(read.phasesCount()), expected);
+	}
+
 	// ---- NamesList -------------------------------------------------------
 
 		// The QDom reader (projects, categories) and the pugixml reader

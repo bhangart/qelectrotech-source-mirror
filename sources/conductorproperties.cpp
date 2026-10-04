@@ -968,6 +968,6 @@ void SingleLineProperties::fromSettings(QSettings &settings,
 					const QString &prefix) {
 	hasGround  = settings.value(prefix + "hasGround",  true).toBool();
 	hasNeutral = settings.value(prefix + "hasNeutral", true).toBool();
-	phases     = settings.value(prefix + "phases",     1).toInt();
+	setPhasesCount(settings.value(prefix + "phases", 1).toInt());
 	is_pen     = settings.value(prefix + "pen",        false).toBool();
 }
