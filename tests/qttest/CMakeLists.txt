@@ -489,6 +489,15 @@ qet_add_test(tst_xrefpos
   SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
   LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# QETXML: the property readers and writers (int, double, bool, uuid, color,
+# string) with what they report for a missing or unreadable value, and the
+# pen, brush, margins, orientation and alignment round trips. qetxml.cpp is
+# compiled with the two files it calls into; the few QETApp symbols those
+# need are supplied by the test itself.
+qet_add_test(tst_qetxml
+  SOURCES qetxml.cpp NameList/nameslist.cpp utils/qetutils.cpp
+  LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
