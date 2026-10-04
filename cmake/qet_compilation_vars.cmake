@@ -548,6 +548,8 @@ set(QET_SRC_FILES
   ${QET_DIR}/sources/properties/reportproperties.h
   ${QET_DIR}/sources/properties/terminaldata.cpp
   ${QET_DIR}/sources/properties/terminaldata.h
+  ${QET_DIR}/sources/properties/terminalclass.cpp
+  ${QET_DIR}/sources/properties/terminalclass.h
   ${QET_DIR}/sources/properties/xrefproperties.cpp
   ${QET_DIR}/sources/properties/xrefproperties.h
   ${QET_DIR}/sources/properties/userproperties.cpp

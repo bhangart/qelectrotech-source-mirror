@@ -20,6 +20,7 @@
 
 #include "../qet.h"
 #include "propertiesinterface.h"
+#include "terminalclass.h"
 
 #include <QColor>
 #include <QFont>
@@ -66,6 +67,8 @@ class TerminalData : public PropertiesInterface
 
 		static QString typeToString(TerminalData::Type type);
 		static TerminalData::Type typeFromString(const QString &string);
+
+		TerminalClass::Class terminalClass() const;
 
 	// must be public, because this class is a private member
 	// of PartTerminal/Terminal and they must access this data
@@ -116,6 +119,14 @@ class TerminalData : public PropertiesInterface
 		QPointF m_pos;
 
 		TerminalData::Type m_type = TerminalData::Generic;
+
+		/**
+			@brief m_class
+			The optional `class` attribute, kept exactly as read so that
+			a value this build does not know is written back unchanged.
+			Empty when the terminal has none. See TerminalClass.
+		*/
+		QString m_class;
 
 		/// Whether to display the terminal name as a text label
 		bool m_show_name = false;

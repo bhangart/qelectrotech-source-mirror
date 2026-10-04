@@ -688,6 +688,20 @@ target_compile_definitions(tst_terminaluuids PRIVATE
   "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
   "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
 
+# The optional `class` attribute of <terminal> (what a terminal carries):
+# TerminalClass on its own, then the real binary's --resave on a project
+# whose symbol terminals carry a known and an unknown value.
+add_executable(
+  tst_terminalclass
+  tst_terminalclass.cpp
+  ${QET_DIR}/sources/properties/terminalclass.cpp)
+add_test(NAME tst_terminalclass COMMAND tst_terminalclass)
+add_dependencies(tst_terminalclass qelectrotech)
+target_include_directories(tst_terminalclass PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_terminalclass PRIVATE Qt::Test)
+target_compile_definitions(tst_terminalclass PRIVATE
+  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+
 # ConductorProperties::applyChanges() -- the Selection properties panel
 # writes only the fields the user edited.
 add_executable(

@@ -115,6 +115,10 @@ QDomElement TerminalData::toXml(QDomDocument &xml_document) const
 
 	xml_element.setAttribute("type", typeToString(m_type));
 
+	// optional: absent from terminals that never had one
+	if (!m_class.isEmpty())
+		xml_element.setAttribute("class", m_class);
+
 	if (m_show_name) {
 		xml_element.setAttribute("show_name", "true");
 		xml_element.setAttribute("label_x", QString::number(m_label_pos.x()));
@@ -182,6 +186,8 @@ bool TerminalData::fromXml (const QDomElement &xml_element)
 
 	m_type = typeFromString(xml_element.attribute("type"));
 
+	m_class = xml_element.attribute("class");
+
 	m_show_name = (xml_element.attribute("show_name") == QLatin1String("true"));
 	if (m_show_name) {
 		qreal lx = xml_element.attribute("label_x", "0").toDouble();
@@ -212,6 +218,15 @@ bool TerminalData::fromXml (const QDomElement &xml_element)
 	m_master_label_index = xml_element.attribute("master_label_index", "0").toInt();
 
 	return true;
+}
+
+/**
+	@brief TerminalData::terminalClass
+	@return what this terminal carries, from its `class` attribute
+*/
+TerminalClass::Class TerminalData::terminalClass() const
+{
+	return TerminalClass::fromAttribute(m_class);
 }
 
 /**

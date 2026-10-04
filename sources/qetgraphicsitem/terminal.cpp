@@ -1012,6 +1012,16 @@ TerminalData::Type Terminal::terminalType() const
 }
 
 /**
+	@brief Terminal::terminalClass
+	@return what this terminal carries (electrical, hydraulic...),
+	Unspecified if its definition does not say
+*/
+TerminalClass::Class Terminal::terminalClass() const
+{
+	return d->terminalClass();
+}
+
+/**
 	@brief Terminal::setUseMasterLabel
 	Set whether this terminal uses a label from the master's contact group
 	@param use true to use master label
