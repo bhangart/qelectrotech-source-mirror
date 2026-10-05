@@ -459,6 +459,15 @@ qet_add_test(tst_terminaluuids BINARY EXAMPLES
   SOURCES ElementsCollection/terminaluuids.cpp
   LIBS Qt::Xml)
 
+# The command-line exports through the real binary: the text exports
+# (--export-bom, -nets, -links, -wires, -wiring) against golden files in
+# fixtures/golden/, the DXF and PNG exports by structure, --set-titleblock,
+# and the error exit codes. UPDATE_GOLDEN=1 in the environment rewrites the
+# goldens in the source tree instead of comparing.
+qet_add_test(tst_cliexport BINARY EXAMPLES
+  LIBS Qt::Gui Qt::Xml
+  DEFINES "QET_GOLDEN_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/fixtures/golden\"")
+
 # ConductorProperties::applyChanges() -- the Selection properties panel
 # writes only the fields the user edited.
 qet_add_test(tst_conductorapplychanges

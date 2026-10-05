@@ -1,0 +1,1324 @@
+{
+    "list": [
+        {
+            "net": 1,
+            "terminals": [
+                {
+                    "element": "s",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q1",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q3",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "F",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "L  10mm²"
+        },
+        {
+            "net": 2,
+            "terminals": [
+                {
+                    "element": "D15",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm²"
+        },
+        {
+            "net": 3,
+            "terminals": [
+                {
+                    "element": "D11",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q1",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D13",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D17",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D18",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D15",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D16",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D12",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D14",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 4,
+            "terminals": [
+                {
+                    "element": "s",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q1",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q3",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "F",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "N 10mm²"
+        },
+        {
+            "net": 5,
+            "terminals": [
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Solid plate",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "s",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "l",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "DHW wall boiler",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "R= XX Ohms",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "PE"
+        },
+        {
+            "net": 6,
+            "terminals": [
+                {
+                    "element": "D16",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q1",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D18",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D13",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D14",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D11",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D15",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D17",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "D12",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 7,
+            "terminals": [
+                {
+                    "element": "D18",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm²"
+        },
+        {
+            "net": 8,
+            "terminals": [
+                {
+                    "element": "D11",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 9,
+            "terminals": [
+                {
+                    "element": "D12",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm² "
+        },
+        {
+            "net": 10,
+            "terminals": [
+                {
+                    "element": "D12",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 11,
+            "terminals": [
+                {
+                    "element": "D18",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 12,
+            "terminals": [
+                {
+                    "element": "D16",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm2"
+        },
+        {
+            "net": 13,
+            "terminals": [
+                {
+                    "element": "D14",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2,5 mm²"
+        },
+        {
+            "net": 14,
+            "terminals": [
+                {
+                    "element": "D13",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 15,
+            "terminals": [
+                {
+                    "element": "Ground",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "R= XX Ohms",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "PE"
+        },
+        {
+            "net": 16,
+            "terminals": [
+                {
+                    "element": "D11",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 17,
+            "terminals": [
+                {
+                    "element": "D17",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm² "
+        },
+        {
+            "net": 18,
+            "terminals": [
+                {
+                    "element": "D13",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 19,
+            "terminals": [
+                {
+                    "element": "D14",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 20,
+            "terminals": [
+                {
+                    "element": "D17",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 21,
+            "terminals": [
+                {
+                    "element": "D15",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 22,
+            "terminals": [
+                {
+                    "element": "D16",
+                    "folio": 2,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 2,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 23,
+            "terminals": [
+                {
+                    "element": "D21",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 2.5mm²"
+        },
+        {
+            "net": 24,
+            "terminals": [
+                {
+                    "element": "D24",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "F",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D28",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D21",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D22",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D26",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D23",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D25",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D27",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": ""
+        },
+        {
+            "net": 25,
+            "terminals": [
+                {
+                    "element": "D22",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 26,
+            "terminals": [
+                {
+                    "element": "D22",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 2.5mm²"
+        },
+        {
+            "net": 27,
+            "terminals": [
+                {
+                    "element": "D23",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 28,
+            "terminals": [
+                {
+                    "element": "D24",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "F",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D28",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D21",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D22",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D26",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D27",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D25",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "D23",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": ""
+        },
+        {
+            "net": 29,
+            "terminals": [
+                {
+                    "element": "D24",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "DHW wall boiler",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 30,
+            "terminals": [
+                {
+                    "element": "D24",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "DHW wall boiler",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm² "
+        },
+        {
+            "net": 31,
+            "terminals": [
+                {
+                    "element": "D21",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 32,
+            "terminals": [
+                {
+                    "element": "D23",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Outlet 3 poles",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 2.5mm²"
+        },
+        {
+            "net": 33,
+            "terminals": [
+                {
+                    "element": "D26",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 34,
+            "terminals": [
+                {
+                    "element": "D27",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 1.5mm²"
+        },
+        {
+            "net": 35,
+            "terminals": [
+                {
+                    "element": "D28",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 36,
+            "terminals": [
+                {
+                    "element": "D26",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 2.5mm²"
+        },
+        {
+            "net": 37,
+            "terminals": [
+                {
+                    "element": "D25",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 38,
+            "terminals": [
+                {
+                    "element": "D28",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 1.5mm²"
+        },
+        {
+            "net": 39,
+            "terminals": [
+                {
+                    "element": "D25",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " 1.5mm²"
+        },
+        {
+            "net": 40,
+            "terminals": [
+                {
+                    "element": "D27",
+                    "folio": 3,
+                    "terminal": ""
+                },
+                {
+                    "element": ")",
+                    "folio": 3,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 41,
+            "terminals": [
+                {
+                    "element": "D37",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 42,
+            "terminals": [
+                {
+                    "element": "D31",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Solid plate",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "6.0mm²"
+        },
+        {
+            "net": 43,
+            "terminals": [
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D37",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm²"
+        },
+        {
+            "net": 44,
+            "terminals": [
+                {
+                    "element": "D34",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q3",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D33",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D37",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D32",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D38",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D31",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D36",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D35",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 45,
+            "terminals": [
+                {
+                    "element": "D35",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 46,
+            "terminals": [
+                {
+                    "element": "D33",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Q3",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D32",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D36",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D34",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D35",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D37",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D31",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "D38",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 47,
+            "terminals": [
+                {
+                    "element": "D31",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Solid plate",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 48,
+            "terminals": [
+                {
+                    "element": "D38",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "l",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 49,
+            "terminals": [
+                {
+                    "element": "D33",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 50,
+            "terminals": [
+                {
+                    "element": "D33",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "2",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 51,
+            "terminals": [
+                {
+                    "element": "D32",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "s",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 52,
+            "terminals": [
+                {
+                    "element": "D32",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "s",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 53,
+            "terminals": [
+                {
+                    "element": "D34",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 54,
+            "terminals": [
+                {
+                    "element": "D35",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "2.5mm²"
+        },
+        {
+            "net": 55,
+            "terminals": [
+                {
+                    "element": "D34",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 56,
+            "terminals": [
+                {
+                    "element": "D38",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "l",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm²"
+        },
+        {
+            "net": 57,
+            "terminals": [
+                {
+                    "element": "D36",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": " "
+        },
+        {
+            "net": 58,
+            "terminals": [
+                {
+                    "element": "D36",
+                    "folio": 4,
+                    "terminal": ""
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 4,
+                    "terminal": ""
+                }
+            ],
+            "wire_no": "1.5mm²"
+        }
+    ],
+    "nets": 58,
+    "project": "TABLEAU ELECTRIQUE"
+}

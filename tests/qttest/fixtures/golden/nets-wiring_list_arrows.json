@@ -1,0 +1,94 @@
+{
+    "list": [
+        {
+            "net": 1,
+            "terminals": [
+                {
+                    "element": "PA",
+                    "folio": 1,
+                    "terminal": "A1"
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 1,
+                    "terminal": "1"
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 2,
+                    "terminal": "1"
+                },
+                {
+                    "element": "PB",
+                    "folio": 2,
+                    "terminal": "A1"
+                }
+            ],
+            "wire_no": "_"
+        },
+        {
+            "net": 2,
+            "terminals": [
+                {
+                    "element": "EA",
+                    "folio": 3,
+                    "terminal": "A1"
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 3,
+                    "terminal": "1"
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 4,
+                    "terminal": "1"
+                },
+                {
+                    "element": "EA2",
+                    "folio": 3,
+                    "terminal": "A1"
+                },
+                {
+                    "element": "EB",
+                    "folio": 4,
+                    "terminal": "A1"
+                }
+            ],
+            "wire_no": "_"
+        },
+        {
+            "net": 3,
+            "terminals": [
+                {
+                    "element": "LA",
+                    "folio": 5,
+                    "terminal": "A1"
+                },
+                {
+                    "element": "Going arrow",
+                    "folio": 5,
+                    "terminal": "1"
+                },
+                {
+                    "element": "Coming arrow",
+                    "folio": 6,
+                    "terminal": "1"
+                },
+                {
+                    "element": "LB",
+                    "folio": 6,
+                    "terminal": "A1"
+                },
+                {
+                    "element": "LD",
+                    "folio": 6,
+                    "terminal": "A1"
+                }
+            ],
+            "wire_no": "_"
+        }
+    ],
+    "nets": 3,
+    "project": "ENA006 E-101 QET TRIAL V2 - PILOT ARTIFACT"
+}
