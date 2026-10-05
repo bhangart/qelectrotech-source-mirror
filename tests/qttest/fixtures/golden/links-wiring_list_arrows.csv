@@ -1,7 +1,7 @@
 element;link_type;linked_to;folio;status
-Coming arrow;PreviousReport;Going arrow(f1);2;linked
-Coming arrow;PreviousReport;Going arrow(f3);4;linked
-Coming arrow;PreviousReport;Going arrow(f5);6;linked
 Going arrow;NextReport;Coming arrow(f2);1;linked
+Coming arrow;PreviousReport;Going arrow(f1);2;linked
 Going arrow;NextReport;Coming arrow(f4);3;linked
+Coming arrow;PreviousReport;Going arrow(f3);4;linked
 Going arrow;NextReport;Coming arrow(f6);5;linked
+Coming arrow;PreviousReport;Going arrow(f5);6;linked

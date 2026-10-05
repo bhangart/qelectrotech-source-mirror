@@ -1,69 +1,63 @@
 element;link_type;linked_to;folio;status
-10K1;Master;Simple Contact (NO)(f20);10;linked
-10K2;Master;Simple Contact (NO)(f20);10;linked
-10K3;Master;Simple Contact (NO)(f20);10;linked
-10QF2;Master;;10;UNRESOLVED
-11K1;Master;Simple Contact (NO)(f22);11;linked
-11K2;Master;Simple Contact (NO)(f22);11;linked
-11K3;Master;Simple Contact (NO)(f22);11;linked
-11QF3;Master;;11;UNRESOLVED
-12K1;Master;Simple Contact (NO)(f23);12;linked
-12K2;Master;Simple Contact (NO)(f23);12;linked
-12K3;Master;Simple Contact (NO)(f23);12;linked
-12QF2;Master;;12;UNRESOLVED
-13K1;Master;Simple Contact (NO)(f25);13;linked
-13K2;Master;Simple Contact (NO)(f25);13;linked
-13K3;Master;Simple Contact (NO)(f25);13;linked
-13QF2;Master;;13;UNRESOLVED
-14K1;Master;Simple Contact (NO)(f26);14;linked
-14K2;Master;Simple Contact (NO)(f26);14;linked
-14K3;Master;Simple Contact (NO)(f26);14;linked
-14QF2;Master;;14;UNRESOLVED
-15K1;Master;Simple Contact (NO)(f28);15;linked
-15K2;Master;Simple Contact (NO)(f28);15;linked
-15K3;Master;Simple Contact (NO)(f28);15;linked
-15QF2;Master;;15;UNRESOLVED
-19S1;Master;;19;UNRESOLVED
-19S2;Master;;19;UNRESOLVED
-2 position switch;Master;;17;UNRESOLVED
-20S1;Master;;20;UNRESOLVED
-20S2;Master;;20;UNRESOLVED
-21K1;Master;Simple Contact (NO)(f9);21;linked
-21K2;Master;Simple Contact (NO)(f9);21;linked
-21K3;Master;Simple Contact (NO)(f10);21;linked
-21K4;Master;Simple Contact (NO)(f10);21;linked
-22S1;Master;;22;UNRESOLVED
-22S2;Master;;22;UNRESOLVED
-23S1;Master;;23;UNRESOLVED
-23S2;Master;;23;UNRESOLVED
-24K1;Master;Simple Contact (NO)(f11);24;linked
-24K2;Master;Simple Contact (NO)(f11);24;linked
-24K3;Master;Simple Contact (NO)(f12);24;linked
-24K4;Master;Simple Contact (NO)(f12);24;linked
-25S1;Master;;25;UNRESOLVED
-25S2;Master;;25;UNRESOLVED
-26S1;Master;;26;UNRESOLVED
-26S2;Master;;26;UNRESOLVED
-27K1;Master;Simple Contact (NO)(f13);27;linked
-27K2;Master;Simple Contact (NO)(f13);27;linked
-27K3;Master;Simple Contact (NO)(f14);27;linked
-27K4;Master;Simple Contact (NO)(f14);27;linked
-28S1;Master;;28;UNRESOLVED
-28S2;Master;;28;UNRESOLVED
-30K1;Master;Simple Contact (NO)(f15);30;linked
-30K2;Master;Simple Contact (NO)(f15);30;linked
-5F31;Master;;5;UNRESOLVED
+Going arrow;NextReport;;4;linked
+Next folio;NextReport;Coming arrow(f5);4;linked
+Next folio;NextReport;Coming arrow(f5);4;linked
+Next folio;NextReport;Coming arrow(f5);4;linked
+Next folio;NextReport;Coming arrow(f5);4;linked
+XPE;Terminale;;4;linked
 5F3;Master;;5;UNRESOLVED
+5F31;Master;;5;UNRESOLVED
+5F4;Master;;5;UNRESOLVED
 5F41;Master;;5;UNRESOLVED
 5F42;Master;;5;UNRESOLVED
 5F43;Master;;5;UNRESOLVED
-5F4;Master;;5;UNRESOLVED
+Coming arrow;PreviousReport;Next folio(f4);5;linked
+Coming arrow;PreviousReport;Next folio(f4);5;linked
+Coming arrow;PreviousReport;Next folio(f4);5;linked
+Coming arrow;PreviousReport;Next folio(f4);5;linked
+Going arrow;NextReport;Coming arrow(f7);5;linked
+Going arrow;NextReport;Coming arrow(f7);5;linked
+Going arrow;NextReport;Coming arrow(f7);5;linked
+Going arrow;NextReport;Coming arrow(f6);5;linked
+Going arrow;NextReport;Coming arrow(f6);5;linked
+Going arrow;NextReport;Coming arrow(f6);5;linked
+Going arrow;NextReport;Coming arrow(f6);5;linked
+Going arrow;NextReport;Coming arrow(f17);5;linked
+Going arrow;NextReport;Coming arrow(f8);5;linked
+Going arrow;NextReport;Coming arrow(f7);5;linked
 6KE1;Master;Simple contact ref (NO)(f6);6;linked
 6KE2;Master;Simple contact ref (NO)(f6);6;linked
 6KEP1;Master;Simple contact (NC)(f6), Contact power contactor(f7);6;linked
 6KEP2;Master;Simple contact (NC)(f6), Contact power contactor(f7);6;linked
 6S1;Master;;6;UNRESOLVED
 6S2;Master;;6;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f5);6;linked
+Coming arrow;PreviousReport;Going arrow(f5);6;linked
+Coming arrow;PreviousReport;Going arrow(f5);6;linked
+Coming arrow;PreviousReport;Going arrow(f5);6;linked
+Coming arrow;PreviousReport;Going arrow(f7);6;linked
+Going arrow;NextReport;Coming arrow(f16);6;linked
+Going arrow;NextReport;Coming arrow(f9);6;linked
+Going arrow;NextReport;Coming arrow(f9);6;linked
+Simple contact (NC);Slave;6KEP1(f6);6;linked
+Simple contact (NC);Slave;6KEP2(f6);6;linked
+Simple contact ref (NO);Slave;6KE1(f6);6;linked
+Simple contact ref (NO);Slave;6KE2(f6);6;linked
+XE:1;Terminale;;6;linked
+XE:2;Terminale;;6;linked
+XE:3;Terminale;;6;linked
+XE:4;Terminale;;6;linked
+Coming arrow;PreviousReport;Going arrow(f5);7;linked
+Coming arrow;PreviousReport;Going arrow(f5);7;linked
+Coming arrow;PreviousReport;Going arrow(f5);7;linked
+Coming arrow;PreviousReport;Going arrow(f5);7;linked
+Contact power contactor;Slave;6KEP1(f6);7;linked
+Contact power contactor;Slave;6KEP2(f6);7;linked
+Going arrow;NextReport;Coming arrow(f9);7;linked
+Going arrow;NextReport;Coming arrow(f9);7;linked
+Going arrow;NextReport;Coming arrow(f9);7;linked
+Going arrow;NextReport;Coming arrow(f6);7;linked
+Going arrow;NextReport;;7;linked
 8F1;Master;;8;UNRESOLVED
 8F2;Master;;8;UNRESOLVED
 8F3;Master;;8;UNRESOLVED
@@ -71,301 +65,44 @@ element;link_type;linked_to;folio;status
 8F5;Master;;8;UNRESOLVED
 8F6;Master;;8;UNRESOLVED
 8F7;Master;;8;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f5);8;linked
+Going arrow;NextReport;;8;linked
+Going arrow;NextReport;Coming arrow(f9);8;linked
+Going arrow;NextReport;Coming arrow(f10);8;linked
+Going arrow;NextReport;Coming arrow(f11);8;linked
+Going arrow;NextReport;Coming arrow(f12);8;linked
+Going arrow;NextReport;Coming arrow(f13);8;linked
+Going arrow;NextReport;Coming arrow(f14);8;linked
+Going arrow;NextReport;Coming arrow(f15);8;linked
+XV1:1;Terminale;;8;linked
+XV2:1;Terminale;;8;linked
+XV3:1;Terminale;;8;linked
+XV4:1;Terminale;;8;linked
+XV5:1;Terminale;;8;linked
+XV6:1;Terminale;;8;linked
+XV7:1;Terminale;;8;linked
 9K1;Master;Simple Contact (NO)(f19);9;linked
 9K2;Master;Simple Contact (NO)(f19);9;linked
 9K3;Master;Simple Contact (NO)(f19);9;linked
 9QF1;Master;;9;UNRESOLVED
-Coming arrow;PreviousReport;Going arrow(f10);11;linked
-Coming arrow;PreviousReport;Going arrow(f10);11;linked
-Coming arrow;PreviousReport;Going arrow(f10);11;linked
-Coming arrow;PreviousReport;Going arrow(f10);11;linked
-Coming arrow;PreviousReport;Going arrow(f10);11;linked
-Coming arrow;PreviousReport;Going arrow(f10);31;linked
-Coming arrow;PreviousReport;Going arrow(f10);31;linked
-Coming arrow;PreviousReport;Going arrow(f11);12;linked
-Coming arrow;PreviousReport;Going arrow(f11);12;linked
-Coming arrow;PreviousReport;Going arrow(f11);12;linked
-Coming arrow;PreviousReport;Going arrow(f11);12;linked
-Coming arrow;PreviousReport;Going arrow(f11);12;linked
-Coming arrow;PreviousReport;Going arrow(f11);31;linked
-Coming arrow;PreviousReport;Going arrow(f11);31;linked
-Coming arrow;PreviousReport;Going arrow(f12);13;linked
-Coming arrow;PreviousReport;Going arrow(f12);13;linked
-Coming arrow;PreviousReport;Going arrow(f12);13;linked
-Coming arrow;PreviousReport;Going arrow(f12);13;linked
-Coming arrow;PreviousReport;Going arrow(f12);13;linked
-Coming arrow;PreviousReport;Going arrow(f12);32;linked
-Coming arrow;PreviousReport;Going arrow(f12);32;linked
-Coming arrow;PreviousReport;Going arrow(f13);14;linked
-Coming arrow;PreviousReport;Going arrow(f13);14;linked
-Coming arrow;PreviousReport;Going arrow(f13);14;linked
-Coming arrow;PreviousReport;Going arrow(f13);14;linked
-Coming arrow;PreviousReport;Going arrow(f13);14;linked
-Coming arrow;PreviousReport;Going arrow(f13);32;linked
-Coming arrow;PreviousReport;Going arrow(f13);32;linked
-Coming arrow;PreviousReport;Going arrow(f14);15;linked
-Coming arrow;PreviousReport;Going arrow(f14);15;linked
-Coming arrow;PreviousReport;Going arrow(f14);15;linked
-Coming arrow;PreviousReport;Going arrow(f14);15;linked
-Coming arrow;PreviousReport;Going arrow(f14);15;linked
-Coming arrow;PreviousReport;Going arrow(f14);32;linked
-Coming arrow;PreviousReport;Going arrow(f14);32;linked
-Coming arrow;PreviousReport;Going arrow(f15);16;linked
-Coming arrow;PreviousReport;Going arrow(f15);16;linked
-Coming arrow;PreviousReport;Going arrow(f15);32;linked
-Coming arrow;PreviousReport;Going arrow(f15);32;linked
-Coming arrow;PreviousReport;Going arrow(f16);17;linked
-Coming arrow;PreviousReport;Going arrow(f16);33;linked
-Coming arrow;PreviousReport;Going arrow(f16);40;linked
-Coming arrow;PreviousReport;Going arrow(f16);40;linked
-Coming arrow;PreviousReport;Going arrow(f16);40;linked
-Coming arrow;PreviousReport;Going arrow(f17);18;linked
-Coming arrow;PreviousReport;Going arrow(f17);18;linked
-Coming arrow;PreviousReport;Going arrow(f18);19;linked
-Coming arrow;PreviousReport;Going arrow(f18);19;linked
-Coming arrow;PreviousReport;Going arrow(f19);20;linked
-Coming arrow;PreviousReport;Going arrow(f19);20;linked
-Coming arrow;PreviousReport;Going arrow(f20);21;linked
-Coming arrow;PreviousReport;Going arrow(f20);21;linked
-Coming arrow;PreviousReport;Going arrow(f21);22;linked
-Coming arrow;PreviousReport;Going arrow(f21);22;linked
-Coming arrow;PreviousReport;Going arrow(f22);23;linked
-Coming arrow;PreviousReport;Going arrow(f22);23;linked
-Coming arrow;PreviousReport;Going arrow(f23);24;linked
-Coming arrow;PreviousReport;Going arrow(f23);24;linked
-Coming arrow;PreviousReport;Going arrow(f24);25;linked
-Coming arrow;PreviousReport;Going arrow(f24);25;linked
-Coming arrow;PreviousReport;Going arrow(f25);26;linked
-Coming arrow;PreviousReport;Going arrow(f25);26;linked
-Coming arrow;PreviousReport;Going arrow(f26);27;linked
-Coming arrow;PreviousReport;Going arrow(f26);27;linked
-Coming arrow;PreviousReport;Going arrow(f27);28;linked
-Coming arrow;PreviousReport;Going arrow(f27);28;linked
-Coming arrow;PreviousReport;Going arrow(f28);29;linked
-Coming arrow;PreviousReport;Going arrow(f28);29;linked
-Coming arrow;PreviousReport;Going arrow(f29);30;linked
-Coming arrow;PreviousReport;Going arrow(f29);30;linked
-Coming arrow;PreviousReport;Going arrow(f30);31;linked
-Coming arrow;PreviousReport;Going arrow(f30);31;linked
-Coming arrow;PreviousReport;Going arrow(f31);40;linked
-Coming arrow;PreviousReport;Going arrow(f33);40;linked
-Coming arrow;PreviousReport;Going arrow(f5);17;linked
-Coming arrow;PreviousReport;Going arrow(f5);6;linked
-Coming arrow;PreviousReport;Going arrow(f5);6;linked
-Coming arrow;PreviousReport;Going arrow(f5);6;linked
-Coming arrow;PreviousReport;Going arrow(f5);6;linked
-Coming arrow;PreviousReport;Going arrow(f5);7;linked
-Coming arrow;PreviousReport;Going arrow(f5);7;linked
-Coming arrow;PreviousReport;Going arrow(f5);7;linked
-Coming arrow;PreviousReport;Going arrow(f5);7;linked
-Coming arrow;PreviousReport;Going arrow(f5);8;linked
-Coming arrow;PreviousReport;Going arrow(f6);16;linked
-Coming arrow;PreviousReport;Going arrow(f6);9;linked
-Coming arrow;PreviousReport;Going arrow(f6);9;linked
-Coming arrow;PreviousReport;Going arrow(f7);6;linked
 Coming arrow;PreviousReport;Going arrow(f7);9;linked
 Coming arrow;PreviousReport;Going arrow(f7);9;linked
 Coming arrow;PreviousReport;Going arrow(f7);9;linked
-Coming arrow;PreviousReport;Going arrow(f8);10;linked
-Coming arrow;PreviousReport;Going arrow(f8);11;linked
-Coming arrow;PreviousReport;Going arrow(f8);12;linked
-Coming arrow;PreviousReport;Going arrow(f8);13;linked
-Coming arrow;PreviousReport;Going arrow(f8);14;linked
-Coming arrow;PreviousReport;Going arrow(f8);15;linked
 Coming arrow;PreviousReport;Going arrow(f8);9;linked
-Coming arrow;PreviousReport;Going arrow(f9);10;linked
-Coming arrow;PreviousReport;Going arrow(f9);10;linked
-Coming arrow;PreviousReport;Going arrow(f9);10;linked
-Coming arrow;PreviousReport;Going arrow(f9);10;linked
-Coming arrow;PreviousReport;Going arrow(f9);10;linked
-Coming arrow;PreviousReport;Going arrow(f9);31;linked
-Coming arrow;PreviousReport;Going arrow(f9);31;linked
-Coming arrow;PreviousReport;Next folio(f4);5;linked
-Coming arrow;PreviousReport;Next folio(f4);5;linked
-Coming arrow;PreviousReport;Next folio(f4);5;linked
-Coming arrow;PreviousReport;Next folio(f4);5;linked
-Contact power contactor;Slave;6KEP1(f6);7;linked
-Contact power contactor;Slave;6KEP2(f6);7;linked
-Going arrow;NextReport;;31;linked
-Going arrow;NextReport;;40;linked
-Going arrow;NextReport;;4;linked
-Going arrow;NextReport;;7;linked
-Going arrow;NextReport;;8;linked
-Going arrow;NextReport;Coming arrow(f10);8;linked
+Coming arrow;PreviousReport;Going arrow(f6);9;linked
+Coming arrow;PreviousReport;Going arrow(f6);9;linked
 Going arrow;NextReport;Coming arrow(f10);9;linked
 Going arrow;NextReport;Coming arrow(f10);9;linked
 Going arrow;NextReport;Coming arrow(f10);9;linked
 Going arrow;NextReport;Coming arrow(f10);9;linked
-Going arrow;NextReport;Coming arrow(f10);9;linked
-Going arrow;NextReport;Coming arrow(f11);10;linked
-Going arrow;NextReport;Coming arrow(f11);10;linked
-Going arrow;NextReport;Coming arrow(f11);10;linked
-Going arrow;NextReport;Coming arrow(f11);10;linked
-Going arrow;NextReport;Coming arrow(f11);10;linked
-Going arrow;NextReport;Coming arrow(f11);8;linked
-Going arrow;NextReport;Coming arrow(f12);11;linked
-Going arrow;NextReport;Coming arrow(f12);11;linked
-Going arrow;NextReport;Coming arrow(f12);11;linked
-Going arrow;NextReport;Coming arrow(f12);11;linked
-Going arrow;NextReport;Coming arrow(f12);11;linked
-Going arrow;NextReport;Coming arrow(f12);8;linked
-Going arrow;NextReport;Coming arrow(f13);12;linked
-Going arrow;NextReport;Coming arrow(f13);12;linked
-Going arrow;NextReport;Coming arrow(f13);12;linked
-Going arrow;NextReport;Coming arrow(f13);12;linked
-Going arrow;NextReport;Coming arrow(f13);12;linked
-Going arrow;NextReport;Coming arrow(f13);8;linked
-Going arrow;NextReport;Coming arrow(f14);13;linked
-Going arrow;NextReport;Coming arrow(f14);13;linked
-Going arrow;NextReport;Coming arrow(f14);13;linked
-Going arrow;NextReport;Coming arrow(f14);13;linked
-Going arrow;NextReport;Coming arrow(f14);13;linked
-Going arrow;NextReport;Coming arrow(f14);8;linked
-Going arrow;NextReport;Coming arrow(f15);14;linked
-Going arrow;NextReport;Coming arrow(f15);14;linked
-Going arrow;NextReport;Coming arrow(f15);14;linked
-Going arrow;NextReport;Coming arrow(f15);14;linked
-Going arrow;NextReport;Coming arrow(f15);14;linked
-Going arrow;NextReport;Coming arrow(f15);8;linked
-Going arrow;NextReport;Coming arrow(f16);15;linked
-Going arrow;NextReport;Coming arrow(f16);15;linked
-Going arrow;NextReport;Coming arrow(f16);6;linked
-Going arrow;NextReport;Coming arrow(f17);16;linked
-Going arrow;NextReport;Coming arrow(f17);5;linked
-Going arrow;NextReport;Coming arrow(f18);17;linked
-Going arrow;NextReport;Coming arrow(f18);17;linked
-Going arrow;NextReport;Coming arrow(f19);18;linked
-Going arrow;NextReport;Coming arrow(f19);18;linked
-Going arrow;NextReport;Coming arrow(f20);19;linked
-Going arrow;NextReport;Coming arrow(f20);19;linked
-Going arrow;NextReport;Coming arrow(f21);20;linked
-Going arrow;NextReport;Coming arrow(f21);20;linked
-Going arrow;NextReport;Coming arrow(f22);21;linked
-Going arrow;NextReport;Coming arrow(f22);21;linked
-Going arrow;NextReport;Coming arrow(f23);22;linked
-Going arrow;NextReport;Coming arrow(f23);22;linked
-Going arrow;NextReport;Coming arrow(f24);23;linked
-Going arrow;NextReport;Coming arrow(f24);23;linked
-Going arrow;NextReport;Coming arrow(f25);24;linked
-Going arrow;NextReport;Coming arrow(f25);24;linked
-Going arrow;NextReport;Coming arrow(f26);25;linked
-Going arrow;NextReport;Coming arrow(f26);25;linked
-Going arrow;NextReport;Coming arrow(f27);26;linked
-Going arrow;NextReport;Coming arrow(f27);26;linked
-Going arrow;NextReport;Coming arrow(f28);27;linked
-Going arrow;NextReport;Coming arrow(f28);27;linked
-Going arrow;NextReport;Coming arrow(f29);28;linked
-Going arrow;NextReport;Coming arrow(f29);28;linked
-Going arrow;NextReport;Coming arrow(f30);29;linked
-Going arrow;NextReport;Coming arrow(f30);29;linked
-Going arrow;NextReport;Coming arrow(f31);10;linked
-Going arrow;NextReport;Coming arrow(f31);10;linked
-Going arrow;NextReport;Coming arrow(f31);11;linked
-Going arrow;NextReport;Coming arrow(f31);11;linked
-Going arrow;NextReport;Coming arrow(f31);30;linked
-Going arrow;NextReport;Coming arrow(f31);30;linked
 Going arrow;NextReport;Coming arrow(f31);9;linked
 Going arrow;NextReport;Coming arrow(f31);9;linked
-Going arrow;NextReport;Coming arrow(f32);12;linked
-Going arrow;NextReport;Coming arrow(f32);12;linked
-Going arrow;NextReport;Coming arrow(f32);13;linked
-Going arrow;NextReport;Coming arrow(f32);13;linked
-Going arrow;NextReport;Coming arrow(f32);14;linked
-Going arrow;NextReport;Coming arrow(f32);14;linked
-Going arrow;NextReport;Coming arrow(f32);15;linked
-Going arrow;NextReport;Coming arrow(f32);15;linked
-Going arrow;NextReport;Coming arrow(f33);16;linked
-Going arrow;NextReport;Coming arrow(f40);16;linked
-Going arrow;NextReport;Coming arrow(f40);16;linked
-Going arrow;NextReport;Coming arrow(f40);16;linked
-Going arrow;NextReport;Coming arrow(f40);31;linked
-Going arrow;NextReport;Coming arrow(f40);33;linked
-Going arrow;NextReport;Coming arrow(f6);5;linked
-Going arrow;NextReport;Coming arrow(f6);5;linked
-Going arrow;NextReport;Coming arrow(f6);5;linked
-Going arrow;NextReport;Coming arrow(f6);5;linked
-Going arrow;NextReport;Coming arrow(f6);7;linked
-Going arrow;NextReport;Coming arrow(f7);5;linked
-Going arrow;NextReport;Coming arrow(f7);5;linked
-Going arrow;NextReport;Coming arrow(f7);5;linked
-Going arrow;NextReport;Coming arrow(f7);5;linked
-Going arrow;NextReport;Coming arrow(f8);5;linked
-Going arrow;NextReport;Coming arrow(f9);6;linked
-Going arrow;NextReport;Coming arrow(f9);6;linked
-Going arrow;NextReport;Coming arrow(f9);7;linked
-Going arrow;NextReport;Coming arrow(f9);7;linked
-Going arrow;NextReport;Coming arrow(f9);7;linked
-Going arrow;NextReport;Coming arrow(f9);8;linked
-Next folio;NextReport;Coming arrow(f5);4;linked
-Next folio;NextReport;Coming arrow(f5);4;linked
-Next folio;NextReport;Coming arrow(f5);4;linked
-Next folio;NextReport;Coming arrow(f5);4;linked
-Simple Contact (NO);Slave;10K1(f10);20;linked
-Simple Contact (NO);Slave;10K2(f10);20;linked
-Simple Contact (NO);Slave;10K3(f10);20;linked
-Simple Contact (NO);Slave;11K1(f11);22;linked
-Simple Contact (NO);Slave;11K2(f11);22;linked
-Simple Contact (NO);Slave;11K3(f11);22;linked
-Simple Contact (NO);Slave;12K1(f12);23;linked
-Simple Contact (NO);Slave;12K2(f12);23;linked
-Simple Contact (NO);Slave;12K3(f12);23;linked
-Simple Contact (NO);Slave;13K1(f13);25;linked
-Simple Contact (NO);Slave;13K2(f13);25;linked
-Simple Contact (NO);Slave;13K3(f13);25;linked
-Simple Contact (NO);Slave;14K1(f14);26;linked
-Simple Contact (NO);Slave;14K2(f14);26;linked
-Simple Contact (NO);Slave;14K3(f14);26;linked
-Simple Contact (NO);Slave;15K1(f15);28;linked
-Simple Contact (NO);Slave;15K2(f15);28;linked
-Simple Contact (NO);Slave;15K3(f15);28;linked
+Going arrow;NextReport;Coming arrow(f10);9;linked
 Simple Contact (NO);Slave;21K1(f21);9;linked
 Simple Contact (NO);Slave;21K2(f21);9;linked
-Simple Contact (NO);Slave;21K3(f21);10;linked
-Simple Contact (NO);Slave;21K4(f21);10;linked
-Simple Contact (NO);Slave;24K1(f24);11;linked
-Simple Contact (NO);Slave;24K2(f24);11;linked
-Simple Contact (NO);Slave;24K3(f24);12;linked
-Simple Contact (NO);Slave;24K4(f24);12;linked
-Simple Contact (NO);Slave;27K1(f27);13;linked
-Simple Contact (NO);Slave;27K2(f27);13;linked
-Simple Contact (NO);Slave;27K3(f27);14;linked
-Simple Contact (NO);Slave;27K4(f27);14;linked
-Simple Contact (NO);Slave;30K1(f30);15;linked
-Simple Contact (NO);Slave;30K2(f30);15;linked
-Simple Contact (NO);Slave;9K1(f9);19;linked
-Simple Contact (NO);Slave;9K2(f9);19;linked
-Simple Contact (NO);Slave;9K3(f9);19;linked
-Simple contact (NC);Slave;6KEP1(f6);6;linked
-Simple contact (NC);Slave;6KEP2(f6);6;linked
-Simple contact ref (NO);Slave;6KE1(f6);6;linked
-Simple contact ref (NO);Slave;6KE2(f6);6;linked
-X2:10;Terminale;;12;linked
-X2:11;Terminale;;12;linked
-X2:12;Terminale;;12;linked
-X2:13;Terminale;;13;linked
-X2:14;Terminale;;13;linked
-X2:15;Terminale;;13;linked
-X2:16;Terminale;;14;linked
-X2:17;Terminale;;14;linked
-X2:18;Terminale;;14;linked
-X2:19;Terminale;;15;linked
 X2:1;Terminale;;9;linked
-X2:20;Terminale;;15;linked
-X2:21;Terminale;;15;linked
 X2:2;Terminale;;9;linked
 X2:3;Terminale;;9;linked
-X2:4;Terminale;;10;linked
-X2:5;Terminale;;10;linked
-X2:6;Terminale;;10;linked
-X2:7;Terminale;;11;linked
-X2:8;Terminale;;11;linked
-X2:9;Terminale;;11;linked
-XE:1;Terminale;;6;linked
-XE:2;Terminale;;6;linked
-XE:3;Terminale;;6;linked
-XE:4;Terminale;;6;linked
-XPE;Terminale;;4;linked
-XV1:1;Terminale;;8;linked
 XV1:2;Terminale;;9;linked
 XV1:3;Terminale;;9;linked
 XV1:4;Terminale;;9;linked
@@ -373,7 +110,30 @@ XV1:5;Terminale;;9;linked
 XV1:6;Terminale;;9;linked
 XV1:7;Terminale;;9;linked
 XV1:8;Terminale;;9;linked
-XV2:1;Terminale;;8;linked
+XVA:1;Terminale;;9;linked
+XVA:2;Terminale;;9;linked
+10K1;Master;Simple Contact (NO)(f20);10;linked
+10K2;Master;Simple Contact (NO)(f20);10;linked
+10K3;Master;Simple Contact (NO)(f20);10;linked
+10QF2;Master;;10;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f9);10;linked
+Coming arrow;PreviousReport;Going arrow(f9);10;linked
+Coming arrow;PreviousReport;Going arrow(f9);10;linked
+Coming arrow;PreviousReport;Going arrow(f8);10;linked
+Coming arrow;PreviousReport;Going arrow(f9);10;linked
+Coming arrow;PreviousReport;Going arrow(f9);10;linked
+Going arrow;NextReport;Coming arrow(f11);10;linked
+Going arrow;NextReport;Coming arrow(f11);10;linked
+Going arrow;NextReport;Coming arrow(f11);10;linked
+Going arrow;NextReport;Coming arrow(f11);10;linked
+Going arrow;NextReport;Coming arrow(f31);10;linked
+Going arrow;NextReport;Coming arrow(f31);10;linked
+Going arrow;NextReport;Coming arrow(f11);10;linked
+Simple Contact (NO);Slave;21K3(f21);10;linked
+Simple Contact (NO);Slave;21K4(f21);10;linked
+X2:4;Terminale;;10;linked
+X2:5;Terminale;;10;linked
+X2:6;Terminale;;10;linked
 XV2:2;Terminale;;10;linked
 XV2:3;Terminale;;10;linked
 XV2:4;Terminale;;10;linked
@@ -381,7 +141,30 @@ XV2:5;Terminale;;10;linked
 XV2:6;Terminale;;10;linked
 XV2:7;Terminale;;10;linked
 XV2:8;Terminale;;10;linked
-XV3:1;Terminale;;8;linked
+XVA:3;Terminale;;10;linked
+XVA:4;Terminale;;10;linked
+11K1;Master;Simple Contact (NO)(f22);11;linked
+11K2;Master;Simple Contact (NO)(f22);11;linked
+11K3;Master;Simple Contact (NO)(f22);11;linked
+11QF3;Master;;11;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f10);11;linked
+Coming arrow;PreviousReport;Going arrow(f10);11;linked
+Coming arrow;PreviousReport;Going arrow(f10);11;linked
+Coming arrow;PreviousReport;Going arrow(f8);11;linked
+Coming arrow;PreviousReport;Going arrow(f10);11;linked
+Coming arrow;PreviousReport;Going arrow(f10);11;linked
+Going arrow;NextReport;Coming arrow(f12);11;linked
+Going arrow;NextReport;Coming arrow(f12);11;linked
+Going arrow;NextReport;Coming arrow(f12);11;linked
+Going arrow;NextReport;Coming arrow(f12);11;linked
+Going arrow;NextReport;Coming arrow(f31);11;linked
+Going arrow;NextReport;Coming arrow(f31);11;linked
+Going arrow;NextReport;Coming arrow(f12);11;linked
+Simple Contact (NO);Slave;24K1(f24);11;linked
+Simple Contact (NO);Slave;24K2(f24);11;linked
+X2:7;Terminale;;11;linked
+X2:8;Terminale;;11;linked
+X2:9;Terminale;;11;linked
 XV3:2;Terminale;;11;linked
 XV3:3;Terminale;;11;linked
 XV3:4;Terminale;;11;linked
@@ -389,7 +172,30 @@ XV3:5;Terminale;;11;linked
 XV3:6;Terminale;;11;linked
 XV3:7;Terminale;;11;linked
 XV3:8;Terminale;;11;linked
-XV4:1;Terminale;;8;linked
+XVA:5;Terminale;;11;linked
+XVA:6;Terminale;;11;linked
+12K1;Master;Simple Contact (NO)(f23);12;linked
+12K2;Master;Simple Contact (NO)(f23);12;linked
+12K3;Master;Simple Contact (NO)(f23);12;linked
+12QF2;Master;;12;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f11);12;linked
+Coming arrow;PreviousReport;Going arrow(f11);12;linked
+Coming arrow;PreviousReport;Going arrow(f11);12;linked
+Coming arrow;PreviousReport;Going arrow(f8);12;linked
+Coming arrow;PreviousReport;Going arrow(f11);12;linked
+Coming arrow;PreviousReport;Going arrow(f11);12;linked
+Going arrow;NextReport;Coming arrow(f13);12;linked
+Going arrow;NextReport;Coming arrow(f13);12;linked
+Going arrow;NextReport;Coming arrow(f13);12;linked
+Going arrow;NextReport;Coming arrow(f13);12;linked
+Going arrow;NextReport;Coming arrow(f32);12;linked
+Going arrow;NextReport;Coming arrow(f32);12;linked
+Going arrow;NextReport;Coming arrow(f13);12;linked
+Simple Contact (NO);Slave;24K3(f24);12;linked
+Simple Contact (NO);Slave;24K4(f24);12;linked
+X2:10;Terminale;;12;linked
+X2:11;Terminale;;12;linked
+X2:12;Terminale;;12;linked
 XV4:2;Terminale;;12;linked
 XV4:3;Terminale;;12;linked
 XV4:4;Terminale;;12;linked
@@ -397,7 +203,30 @@ XV4:5;Terminale;;12;linked
 XV4:6;Terminale;;12;linked
 XV4:7;Terminale;;12;linked
 XV4:8;Terminale;;12;linked
-XV5:1;Terminale;;8;linked
+XVA:7;Terminale;;12;linked
+XVA:8;Terminale;;12;linked
+13K1;Master;Simple Contact (NO)(f25);13;linked
+13K2;Master;Simple Contact (NO)(f25);13;linked
+13K3;Master;Simple Contact (NO)(f25);13;linked
+13QF2;Master;;13;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f12);13;linked
+Coming arrow;PreviousReport;Going arrow(f12);13;linked
+Coming arrow;PreviousReport;Going arrow(f12);13;linked
+Coming arrow;PreviousReport;Going arrow(f8);13;linked
+Coming arrow;PreviousReport;Going arrow(f12);13;linked
+Coming arrow;PreviousReport;Going arrow(f12);13;linked
+Going arrow;NextReport;Coming arrow(f14);13;linked
+Going arrow;NextReport;Coming arrow(f14);13;linked
+Going arrow;NextReport;Coming arrow(f14);13;linked
+Going arrow;NextReport;Coming arrow(f14);13;linked
+Going arrow;NextReport;Coming arrow(f32);13;linked
+Going arrow;NextReport;Coming arrow(f32);13;linked
+Going arrow;NextReport;Coming arrow(f14);13;linked
+Simple Contact (NO);Slave;27K1(f27);13;linked
+Simple Contact (NO);Slave;27K2(f27);13;linked
+X2:13;Terminale;;13;linked
+X2:14;Terminale;;13;linked
+X2:15;Terminale;;13;linked
 XV5:2;Terminale;;13;linked
 XV5:3;Terminale;;13;linked
 XV5:4;Terminale;;13;linked
@@ -405,7 +234,30 @@ XV5:5;Terminale;;13;linked
 XV5:6;Terminale;;13;linked
 XV5:7;Terminale;;13;linked
 XV5:8;Terminale;;13;linked
-XV6:1;Terminale;;8;linked
+XVA:10;Terminale;;13;linked
+XVA:9;Terminale;;13;linked
+14K1;Master;Simple Contact (NO)(f26);14;linked
+14K2;Master;Simple Contact (NO)(f26);14;linked
+14K3;Master;Simple Contact (NO)(f26);14;linked
+14QF2;Master;;14;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f13);14;linked
+Coming arrow;PreviousReport;Going arrow(f13);14;linked
+Coming arrow;PreviousReport;Going arrow(f13);14;linked
+Coming arrow;PreviousReport;Going arrow(f8);14;linked
+Coming arrow;PreviousReport;Going arrow(f13);14;linked
+Coming arrow;PreviousReport;Going arrow(f13);14;linked
+Going arrow;NextReport;Coming arrow(f15);14;linked
+Going arrow;NextReport;Coming arrow(f15);14;linked
+Going arrow;NextReport;Coming arrow(f15);14;linked
+Going arrow;NextReport;Coming arrow(f15);14;linked
+Going arrow;NextReport;Coming arrow(f32);14;linked
+Going arrow;NextReport;Coming arrow(f32);14;linked
+Going arrow;NextReport;Coming arrow(f15);14;linked
+Simple Contact (NO);Slave;27K3(f27);14;linked
+Simple Contact (NO);Slave;27K4(f27);14;linked
+X2:16;Terminale;;14;linked
+X2:17;Terminale;;14;linked
+X2:18;Terminale;;14;linked
 XV6:2;Terminale;;14;linked
 XV6:3;Terminale;;14;linked
 XV6:4;Terminale;;14;linked
@@ -413,7 +265,27 @@ XV6:5;Terminale;;14;linked
 XV6:6;Terminale;;14;linked
 XV6:7;Terminale;;14;linked
 XV6:8;Terminale;;14;linked
-XV7:1;Terminale;;8;linked
+XVA:11;Terminale;;14;linked
+XVA:12;Terminale;;14;linked
+15K1;Master;Simple Contact (NO)(f28);15;linked
+15K2;Master;Simple Contact (NO)(f28);15;linked
+15K3;Master;Simple Contact (NO)(f28);15;linked
+15QF2;Master;;15;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f14);15;linked
+Coming arrow;PreviousReport;Going arrow(f14);15;linked
+Coming arrow;PreviousReport;Going arrow(f14);15;linked
+Coming arrow;PreviousReport;Going arrow(f8);15;linked
+Coming arrow;PreviousReport;Going arrow(f14);15;linked
+Coming arrow;PreviousReport;Going arrow(f14);15;linked
+Going arrow;NextReport;Coming arrow(f16);15;linked
+Going arrow;NextReport;Coming arrow(f32);15;linked
+Going arrow;NextReport;Coming arrow(f32);15;linked
+Going arrow;NextReport;Coming arrow(f16);15;linked
+Simple Contact (NO);Slave;30K1(f30);15;linked
+Simple Contact (NO);Slave;30K2(f30);15;linked
+X2:19;Terminale;;15;linked
+X2:20;Terminale;;15;linked
+X2:21;Terminale;;15;linked
 XV7:2;Terminale;;15;linked
 XV7:3;Terminale;;15;linked
 XV7:4;Terminale;;15;linked
@@ -421,17 +293,145 @@ XV7:5;Terminale;;15;linked
 XV7:6;Terminale;;15;linked
 XV7:7;Terminale;;15;linked
 XV7:8;Terminale;;15;linked
-XVA:10;Terminale;;13;linked
-XVA:11;Terminale;;14;linked
-XVA:12;Terminale;;14;linked
 XVA:13;Terminale;;15;linked
 XVA:14;Terminale;;15;linked
-XVA:1;Terminale;;9;linked
-XVA:2;Terminale;;9;linked
-XVA:3;Terminale;;10;linked
-XVA:4;Terminale;;10;linked
-XVA:5;Terminale;;11;linked
-XVA:6;Terminale;;11;linked
-XVA:7;Terminale;;12;linked
-XVA:8;Terminale;;12;linked
-XVA:9;Terminale;;13;linked
+Coming arrow;PreviousReport;Going arrow(f6);16;linked
+Coming arrow;PreviousReport;Going arrow(f15);16;linked
+Coming arrow;PreviousReport;Going arrow(f15);16;linked
+Going arrow;NextReport;Coming arrow(f40);16;linked
+Going arrow;NextReport;Coming arrow(f40);16;linked
+Going arrow;NextReport;Coming arrow(f40);16;linked
+Going arrow;NextReport;Coming arrow(f17);16;linked
+Going arrow;NextReport;Coming arrow(f33);16;linked
+2 position switch;Master;;17;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f5);17;linked
+Coming arrow;PreviousReport;Going arrow(f16);17;linked
+Going arrow;NextReport;Coming arrow(f18);17;linked
+Going arrow;NextReport;Coming arrow(f18);17;linked
+Coming arrow;PreviousReport;Going arrow(f17);18;linked
+Coming arrow;PreviousReport;Going arrow(f17);18;linked
+Going arrow;NextReport;Coming arrow(f19);18;linked
+Going arrow;NextReport;Coming arrow(f19);18;linked
+19S1;Master;;19;UNRESOLVED
+19S2;Master;;19;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f18);19;linked
+Coming arrow;PreviousReport;Going arrow(f18);19;linked
+Going arrow;NextReport;Coming arrow(f20);19;linked
+Going arrow;NextReport;Coming arrow(f20);19;linked
+Simple Contact (NO);Slave;9K1(f9);19;linked
+Simple Contact (NO);Slave;9K2(f9);19;linked
+Simple Contact (NO);Slave;9K3(f9);19;linked
+20S1;Master;;20;UNRESOLVED
+20S2;Master;;20;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f19);20;linked
+Coming arrow;PreviousReport;Going arrow(f19);20;linked
+Going arrow;NextReport;Coming arrow(f21);20;linked
+Going arrow;NextReport;Coming arrow(f21);20;linked
+Simple Contact (NO);Slave;10K1(f10);20;linked
+Simple Contact (NO);Slave;10K2(f10);20;linked
+Simple Contact (NO);Slave;10K3(f10);20;linked
+21K1;Master;Simple Contact (NO)(f9);21;linked
+21K2;Master;Simple Contact (NO)(f9);21;linked
+21K3;Master;Simple Contact (NO)(f10);21;linked
+21K4;Master;Simple Contact (NO)(f10);21;linked
+Coming arrow;PreviousReport;Going arrow(f20);21;linked
+Coming arrow;PreviousReport;Going arrow(f20);21;linked
+Going arrow;NextReport;Coming arrow(f22);21;linked
+Going arrow;NextReport;Coming arrow(f22);21;linked
+22S1;Master;;22;UNRESOLVED
+22S2;Master;;22;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f21);22;linked
+Coming arrow;PreviousReport;Going arrow(f21);22;linked
+Going arrow;NextReport;Coming arrow(f23);22;linked
+Going arrow;NextReport;Coming arrow(f23);22;linked
+Simple Contact (NO);Slave;11K1(f11);22;linked
+Simple Contact (NO);Slave;11K2(f11);22;linked
+Simple Contact (NO);Slave;11K3(f11);22;linked
+23S1;Master;;23;UNRESOLVED
+23S2;Master;;23;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f22);23;linked
+Coming arrow;PreviousReport;Going arrow(f22);23;linked
+Going arrow;NextReport;Coming arrow(f24);23;linked
+Going arrow;NextReport;Coming arrow(f24);23;linked
+Simple Contact (NO);Slave;12K1(f12);23;linked
+Simple Contact (NO);Slave;12K2(f12);23;linked
+Simple Contact (NO);Slave;12K3(f12);23;linked
+24K1;Master;Simple Contact (NO)(f11);24;linked
+24K2;Master;Simple Contact (NO)(f11);24;linked
+24K3;Master;Simple Contact (NO)(f12);24;linked
+24K4;Master;Simple Contact (NO)(f12);24;linked
+Coming arrow;PreviousReport;Going arrow(f23);24;linked
+Coming arrow;PreviousReport;Going arrow(f23);24;linked
+Going arrow;NextReport;Coming arrow(f25);24;linked
+Going arrow;NextReport;Coming arrow(f25);24;linked
+25S1;Master;;25;UNRESOLVED
+25S2;Master;;25;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f24);25;linked
+Coming arrow;PreviousReport;Going arrow(f24);25;linked
+Going arrow;NextReport;Coming arrow(f26);25;linked
+Going arrow;NextReport;Coming arrow(f26);25;linked
+Simple Contact (NO);Slave;13K1(f13);25;linked
+Simple Contact (NO);Slave;13K2(f13);25;linked
+Simple Contact (NO);Slave;13K3(f13);25;linked
+26S1;Master;;26;UNRESOLVED
+26S2;Master;;26;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f25);26;linked
+Coming arrow;PreviousReport;Going arrow(f25);26;linked
+Going arrow;NextReport;Coming arrow(f27);26;linked
+Going arrow;NextReport;Coming arrow(f27);26;linked
+Simple Contact (NO);Slave;14K1(f14);26;linked
+Simple Contact (NO);Slave;14K2(f14);26;linked
+Simple Contact (NO);Slave;14K3(f14);26;linked
+27K1;Master;Simple Contact (NO)(f13);27;linked
+27K2;Master;Simple Contact (NO)(f13);27;linked
+27K3;Master;Simple Contact (NO)(f14);27;linked
+27K4;Master;Simple Contact (NO)(f14);27;linked
+Coming arrow;PreviousReport;Going arrow(f26);27;linked
+Coming arrow;PreviousReport;Going arrow(f26);27;linked
+Going arrow;NextReport;Coming arrow(f28);27;linked
+Going arrow;NextReport;Coming arrow(f28);27;linked
+28S1;Master;;28;UNRESOLVED
+28S2;Master;;28;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f27);28;linked
+Coming arrow;PreviousReport;Going arrow(f27);28;linked
+Going arrow;NextReport;Coming arrow(f29);28;linked
+Going arrow;NextReport;Coming arrow(f29);28;linked
+Simple Contact (NO);Slave;15K1(f15);28;linked
+Simple Contact (NO);Slave;15K2(f15);28;linked
+Simple Contact (NO);Slave;15K3(f15);28;linked
+Coming arrow;PreviousReport;Going arrow(f28);29;linked
+Coming arrow;PreviousReport;Going arrow(f28);29;linked
+Going arrow;NextReport;Coming arrow(f30);29;linked
+Going arrow;NextReport;Coming arrow(f30);29;linked
+30K1;Master;Simple Contact (NO)(f15);30;linked
+30K2;Master;Simple Contact (NO)(f15);30;linked
+Coming arrow;PreviousReport;Going arrow(f29);30;linked
+Coming arrow;PreviousReport;Going arrow(f29);30;linked
+Going arrow;NextReport;Coming arrow(f31);30;linked
+Going arrow;NextReport;Coming arrow(f31);30;linked
+Coming arrow;PreviousReport;Going arrow(f30);31;linked
+Coming arrow;PreviousReport;Going arrow(f30);31;linked
+Coming arrow;PreviousReport;Going arrow(f9);31;linked
+Coming arrow;PreviousReport;Going arrow(f9);31;linked
+Coming arrow;PreviousReport;Going arrow(f10);31;linked
+Coming arrow;PreviousReport;Going arrow(f10);31;linked
+Coming arrow;PreviousReport;Going arrow(f11);31;linked
+Coming arrow;PreviousReport;Going arrow(f11);31;linked
+Going arrow;NextReport;;31;linked
+Going arrow;NextReport;Coming arrow(f40);31;linked
+Coming arrow;PreviousReport;Going arrow(f12);32;linked
+Coming arrow;PreviousReport;Going arrow(f12);32;linked
+Coming arrow;PreviousReport;Going arrow(f13);32;linked
+Coming arrow;PreviousReport;Going arrow(f13);32;linked
+Coming arrow;PreviousReport;Going arrow(f14);32;linked
+Coming arrow;PreviousReport;Going arrow(f14);32;linked
+Coming arrow;PreviousReport;Going arrow(f15);32;linked
+Coming arrow;PreviousReport;Going arrow(f15);32;linked
+Coming arrow;PreviousReport;Going arrow(f16);33;linked
+Going arrow;NextReport;Coming arrow(f40);33;linked
+Coming arrow;PreviousReport;Going arrow(f16);40;linked
+Coming arrow;PreviousReport;Going arrow(f16);40;linked
+Coming arrow;PreviousReport;Going arrow(f16);40;linked
+Coming arrow;PreviousReport;Going arrow(f31);40;linked
+Coming arrow;PreviousReport;Going arrow(f33);40;linked
+Going arrow;NextReport;;40;linked

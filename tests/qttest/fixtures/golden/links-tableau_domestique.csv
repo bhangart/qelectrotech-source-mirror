@@ -1,35 +1,4 @@
 element;link_type;linked_to;folio;status
-0;Slave;D11(f2);5;linked
-0;Slave;D12(f2);5;linked
-0;Slave;D13(f2);5;linked
-0;Slave;D15(f2);5;linked
-0;Slave;D17(f2);5;linked
-0;Slave;D18(f2);5;linked
-0;Slave;D21(f3);5;linked
-0;Slave;D22(f3);5;linked
-0;Slave;D23(f3);5;linked
-0;Slave;D25(f3);5;linked
-0;Slave;D27(f3);5;linked
-0;Slave;D28(f3);5;linked
-0;Slave;D32(f4);5;linked
-0;Slave;D33(f4);5;linked
-0;Slave;D34(f4);5;linked
-0;Slave;D35(f4);5;linked
-2;Master;;4;UNRESOLVED
-2;Slave;D31(f4);5;linked
-2;Slave;D36(f4);5;linked
-2;Slave;D37(f4);5;linked
-2;Slave;D38(f4);5;linked
-6;Slave;D14(f2);5;linked
-6;Slave;D16(f2);5;linked
-6;Slave;D24(f3);5;linked
-6;Slave;D26(f3);5;linked
-Coming arrow;PreviousReport;Going arrow(f2);3;linked
-Coming arrow;PreviousReport;Going arrow(f2);3;linked
-Coming arrow;PreviousReport;Going arrow(f2);3;linked
-Coming arrow;PreviousReport;Going arrow(f3);4;linked
-Coming arrow;PreviousReport;Going arrow(f3);4;linked
-Coming arrow;PreviousReport;Going arrow(f3);4;linked
 D11;Master;0(f5);2;linked
 D12;Master;0(f5);2;linked
 D13;Master;0(f5);2;linked
@@ -38,6 +7,17 @@ D15;Master;0(f5);2;linked
 D16;Master;6(f5);2;linked
 D17;Master;0(f5);2;linked
 D18;Master;0(f5);2;linked
+Going arrow;NextReport;Coming arrow(f3);2;linked
+Going arrow;NextReport;Coming arrow(f3);2;linked
+Going arrow;NextReport;;2;linked
+Going arrow;NextReport;;2;linked
+Going arrow;NextReport;Coming arrow(f3);2;linked
+Ground;Terminale;;2;linked
+Q1;Master;;2;UNRESOLVED
+s;Master;;2;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f2);3;linked
+Coming arrow;PreviousReport;Going arrow(f2);3;linked
+Coming arrow;PreviousReport;Going arrow(f2);3;linked
 D21;Master;0(f5);3;linked
 D22;Master;0(f5);3;linked
 D23;Master;0(f5);3;linked
@@ -46,6 +26,16 @@ D25;Master;0(f5);3;linked
 D26;Master;6(f5);3;linked
 D27;Master;0(f5);3;linked
 D28;Master;0(f5);3;linked
+F;Master;;3;UNRESOLVED
+Going arrow;NextReport;Coming arrow(f4);3;linked
+Going arrow;NextReport;Coming arrow(f4);3;linked
+Going arrow;NextReport;;3;linked
+Going arrow;NextReport;;3;linked
+Going arrow;NextReport;Coming arrow(f4);3;linked
+2;Master;;4;UNRESOLVED
+Coming arrow;PreviousReport;Going arrow(f3);4;linked
+Coming arrow;PreviousReport;Going arrow(f3);4;linked
+Coming arrow;PreviousReport;Going arrow(f3);4;linked
 D31;Master;2(f5);4;linked
 D32;Master;0(f5);4;linked
 D33;Master;0(f5);4;linked
@@ -54,11 +44,6 @@ D35;Master;0(f5);4;linked
 D36;Master;2(f5);4;linked
 D37;Master;2(f5);4;linked
 D38;Master;2(f5);4;linked
-F;Master;;3;UNRESOLVED
-Going arrow;NextReport;;2;linked
-Going arrow;NextReport;;2;linked
-Going arrow;NextReport;;3;linked
-Going arrow;NextReport;;3;linked
 Going arrow;NextReport;;4;linked
 Going arrow;NextReport;;4;linked
 Going arrow;NextReport;;4;linked
@@ -67,16 +52,31 @@ Going arrow;NextReport;;4;linked
 Going arrow;NextReport;;4;linked
 Going arrow;NextReport;;4;linked
 Going arrow;NextReport;;4;linked
-Going arrow;NextReport;Coming arrow(f3);2;linked
-Going arrow;NextReport;Coming arrow(f3);2;linked
-Going arrow;NextReport;Coming arrow(f3);2;linked
-Going arrow;NextReport;Coming arrow(f4);3;linked
-Going arrow;NextReport;Coming arrow(f4);3;linked
-Going arrow;NextReport;Coming arrow(f4);3;linked
-Ground;Terminale;;2;linked
-Q1;Master;;2;UNRESOLVED
 Q3;Master;;4;UNRESOLVED
+0;Slave;D18(f2);5;linked
+0;Slave;D28(f3);5;linked
+0;Slave;D17(f2);5;linked
+0;Slave;D27(f3);5;linked
+0;Slave;D15(f2);5;linked
+0;Slave;D25(f3);5;linked
+0;Slave;D35(f4);5;linked
+0;Slave;D34(f4);5;linked
+0;Slave;D13(f2);5;linked
+0;Slave;D23(f3);5;linked
+0;Slave;D33(f4);5;linked
+0;Slave;D12(f2);5;linked
+0;Slave;D22(f3);5;linked
+0;Slave;D32(f4);5;linked
+0;Slave;D11(f2);5;linked
+0;Slave;D21(f3);5;linked
+2;Slave;D38(f4);5;linked
+2;Slave;D37(f4);5;linked
+2;Slave;D36(f4);5;linked
+2;Slave;D31(f4);5;linked
+6;Slave;D16(f2);5;linked
+6;Slave;D26(f3);5;linked
+6;Slave;D14(f2);5;linked
+6;Slave;D24(f3);5;linked
 f;Slave;;5;UNRESOLVED
 f;Slave;;5;UNRESOLVED
 f;Slave;;5;UNRESOLVED
-s;Master;;2;UNRESOLVED

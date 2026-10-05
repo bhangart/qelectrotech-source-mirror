@@ -39,8 +39,11 @@
 //    (QET_SETTINGS_DIR) saying lang=en.
 //  - order: the binary fixes its own hash seed (main.cpp), and every export
 //    runs as a separate process, so an order that changes between runs
-//    shows as a golden mismatch. One does: the order of the rows of one
-//    folio in --export-links, see textExport().
+//    shows as a golden mismatch. An order taken from the scene would:
+//    QGraphicsScene::items() follows memory addresses once the scene has
+//    sorted its items (see appendInStackingOrder() in diagram.cpp,
+//    bugtracker #343). sameOrderEveryRun() runs an export several times to
+//    show that up without waiting for a golden mismatch.
 //  - line endings: the files are written in text mode, CRLF on Windows.
 //    Lines are compared with any CR removed.
 // None of the text exports writes a path, a date or a uuid that changes
@@ -232,19 +235,6 @@ class tst_cliexport : public QObject
 		return s;
 	}
 
-	// @p bytes with its lines after the first sorted, line endings LF.
-	static QByteArray headerThenSortedRows(const QByteArray &bytes)
-	{
-		QStringList l = lines(bytes);
-		l.removeAll(QString());
-		if (l.isEmpty())
-			return {};
-		const QString header = l.takeFirst();
-		l.sort();
-		l.prepend(header);
-		return (l.join(QLatin1Char('\n')) + QLatin1Char('\n')).toUtf8();
-	}
-
 	// Compares @p actual with the golden file @p golden, or writes it there
 	// with UPDATE_GOLDEN set (then skips).
 	void compareWithGolden(const QByteArray &actual, const QString &golden)
@@ -361,29 +351,53 @@ private slots:
 		const Result r = run({option, project, output});
 		QVERIFY2(r.finished && r.exitCode == 0, qPrintable(describe(r)));
 		QVERIFY2(QFile::exists(output), "the export wrote no file");
-		QByteArray bytes = readFile(output);
+		compareWithGolden(readFile(output), golden);
+	}
 
-		// --export-links lists the folios in order, but the elements of one
-		// folio in Diagram::elements() order, which is QGraphicsScene::
-		// items() order: per run once the scene has sorted its items by
-		// address (see appendInStackingOrder() in diagram.cpp, bugtracker
-		// #343). Until the export sorts its rows, the folio order is checked
-		// here and the rows are compared with the golden as a set: header
-		// first, then the rows sorted, in the golden as in the output.
-		if (option == QLatin1String("--export-links")) {
-			const QStringList rows = lines(bytes).mid(1);
-			int folio = 0;
-			for (const QString &row : rows) {
-				if (row.isEmpty())
-					continue;
-				const int f = row.section(QLatin1Char(';'), -2, -2).toInt();
-				QVERIFY2(f >= folio, qPrintable(QStringLiteral("folio %1 after %2: %3")
-												  .arg(f).arg(folio).arg(row)));
-				folio = f;
+	// An export that writes a folio's items in QGraphicsScene::items() order
+	// writes them in a different order on each run, as that order follows
+	// memory addresses. The goldens would catch it too, but only by chance in
+	// a single run; here the same export runs several times, each in a
+	// process of its own, and must write the same bytes every time.
+	// --export-nets starts each net from the conductors in items() order too;
+	// it has never been seen to vary, as conductors are all allocated alike,
+	// but nothing guarantees that.
+	void sameOrderEveryRun_data()
+	{
+		QTest::addColumn<QString>("option");
+		QTest::newRow("links") << QStringLiteral("--export-links");
+		QTest::newRow("nets") << QStringLiteral("--export-nets");
+	}
+
+	void sameOrderEveryRun()
+	{
+		QFETCH(QString, option);
+		const QString project = example(QStringLiteral("tableau_domestique.qet"));
+		QVERIFY2(QFile::exists(project), qPrintable(project));
+
+		QByteArray first;
+		for (int i = 0; i < 5; ++i) {
+			const QString output = m_dir.filePath(
+					QStringLiteral("same-order-%1-%2").arg(option.mid(2)).arg(i));
+			const Result r = run({option, project, output});
+			QVERIFY2(r.finished && r.exitCode == 0, qPrintable(describe(r)));
+			const QByteArray bytes = readFile(output);
+			QVERIFY2(!bytes.isEmpty(), "the export wrote nothing");
+			if (i == 0) {
+				first = bytes;
+				continue;
 			}
-			bytes = headerThenSortedRows(bytes);
+			const QStringList expected = lines(first);
+			const QStringList got = lines(bytes);
+			for (int l = 0; l < qMax(expected.size(), got.size()); ++l) {
+				if (expected.value(l) != got.value(l) || l >= expected.size() || l >= got.size())
+					QFAIL(qPrintable(QStringLiteral(
+							"run %1 differs from run 1 at line %2\n   run 1: %3\n   run %1: %4")
+							.arg(i + 1).arg(l + 1)
+							.arg(expected.value(l, QStringLiteral("<end of file>")),
+								 got.value(l, QStringLiteral("<end of file>")))));
+			}
 		}
-		compareWithGolden(bytes, golden);
 	}
 
 	// One DXF per folio, each a whole DXF file: HEADER, TABLES, BLOCKS and

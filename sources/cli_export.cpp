@@ -817,7 +817,27 @@ int exportLinks(QETProject &project, const QString &output)
 
 	const QList<Diagram *> diagrams = project.diagrams();
 	for (Diagram *diagram : diagrams) {
-		const QList<Element *> elements = diagram->elements();
+			//Diagram::elements() is QGraphicsScene::items() order, which
+			//follows memory addresses once the scene has sorted its items
+			//(bugtracker #343), so the rows of a folio would come in a
+			//different order on each run. Sort them by label instead; the
+			//position, then the uuid (saved in the project), keep equal
+			//labels from swapping.
+		QList<Element *> elements = diagram->elements();
+		QHash<Element *, QString> label;
+		for (Element *e : elements)
+			label.insert(e, elementLabel(e));
+		std::sort(elements.begin(), elements.end(),
+			[&label](Element *a, Element *b) {
+				if (label.value(a) != label.value(b))
+					return label.value(a) < label.value(b);
+				const QPointF pa = a->pos(), pb = b->pos();
+				if (pa.y() != pb.y())
+					return pa.y() < pb.y();
+				if (pa.x() != pb.x())
+					return pa.x() < pb.x();
+				return a->uuid() < b->uuid();
+			});
 		for (Element *e : elements) {
 			if (e->linkType() == Element::Simple)
 				continue;
