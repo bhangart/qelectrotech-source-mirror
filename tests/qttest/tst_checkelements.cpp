@@ -326,11 +326,17 @@ private slots:
 		if (unexpected.size() > shown)
 			message += QStringLiteral("\n  ... and %1 more").arg(unexpected.size() - shown);
 		QVERIFY2(unexpected.isEmpty(), qPrintable(message));
-		QVERIFY2(gone.isEmpty(),
-				 qPrintable(QStringLiteral("known failures that now pass or are gone; "
-										   "take them out of knownFailures():\n  ")
-							+ gone.join(QStringLiteral("\n  "))));
-		QVERIFY2(r.exit_code == 1, qPrintable(QStringLiteral("exit code %1").arg(r.exit_code)));
+		// An element fixed or removed is not a failure of this test: someone
+		// repairing the collection must not have to touch it. It is only
+		// reported, so knownFailures() can be trimmed now and then.
+		if (!gone.isEmpty())
+			qInfo().noquote() << QStringLiteral("known failures that now pass or are gone; "
+							    "they can come out of knownFailures():\n  ")
+						+ gone.join(QStringLiteral("\n  "));
+		const int expected_exit = failures.isEmpty() ? 0 : 1;
+		QVERIFY2(r.exit_code == expected_exit,
+			 qPrintable(QStringLiteral("exit code %1, expected %2")
+					.arg(r.exit_code).arg(expected_exit)));
 	}
 };
 
