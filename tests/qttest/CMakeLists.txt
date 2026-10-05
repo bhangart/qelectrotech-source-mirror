@@ -178,6 +178,13 @@ qet_add_test(tst_alignment)
 # element editor on save and by --check-elements.
 qet_add_test(tst_terminalnamecheck)
 
+# --check-elements: what it reports, with which exit code, for one fixture
+# per problem in fixtures/elements/, and that the shipped collection in
+# elements/ gives exactly the failures the test lists. Checking the whole
+# collection takes a few seconds, hence the "slow" label.
+qet_add_test(tst_checkelements BINARY ELEMENTS)
+set_tests_properties(tst_checkelements PROPERTIES LABELS slow TIMEOUT 600)
+
 # configprofile.h is header-only: which settings a saved configuration
 # profile carries, and how loading one replaces the live settings.
 qet_add_test(tst_configprofile LIBS Qt::Gui)

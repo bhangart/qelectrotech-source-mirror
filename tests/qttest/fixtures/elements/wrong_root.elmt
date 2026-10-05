@@ -1,0 +1,12 @@
+<definition version="0.100.0" type="titleblock" link_type="simple" width="20" height="20" hotspot_x="10" hotspot_y="10">
+    <uuid uuid="{7f2d6a10-0000-4000-8000-000000000003}"/>
+    <names>
+        <name lang="en">Wrong root</name>
+    </names>
+    <informations>QElectroTech test fixture for --check-elements.</informations>
+    <description>
+        <line x1="0" y1="-10" x2="0" y2="10" length1="1.5" length2="1.5" end1="none" end2="none" antialias="false" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+        <terminal x="0" y="-10" orientation="n" name="1" uuid="{7f2d6a10-0000-4000-8000-0000000000c1}"/>
+        <terminal x="0" y="10" orientation="s" name="2" uuid="{7f2d6a10-0000-4000-8000-0000000000c2}"/>
+    </description>
+</definition>
