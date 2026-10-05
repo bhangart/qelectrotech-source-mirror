@@ -548,13 +548,26 @@ int checkOneElement(const QString &path)
 		return 2;
 	}
 
-	bool w_ok = false, h_ok = false;
-	const double w = root.attribute("width").toDouble(&w_ok);
-	const double h = root.attribute("height").toDouble(&h_ok);
-	if (!w_ok || !h_ok || w == 0 || h == 0) {
-		out << "FAIL  " << path << "  (missing/zero bounding box "
-			<< root.attribute("width") << "x"
-			<< root.attribute("height") << ")\n";
+	// Element::buildFromXml() does not load an element without these four
+	// integer attributes, nor one with no children; the same helper decides.
+	int w = 0, h = 0;
+	const std::pair<const char *, int *> integers[] {
+		{"width", &w}, {"height", &h}, {"hotspot_x", nullptr}, {"hotspot_y", nullptr}
+	};
+	for (const auto &[name, value] : integers) {
+		if (!QET::attributeIsAnInteger(root, name, value)) {
+			out << "FAIL  " << path << "  (" << name
+				<< " missing or not an integer)\n";
+			return 2;
+		}
+	}
+	if (root.firstChild().isNull()) {
+		out << "FAIL  " << path << "  (empty definition, no child elements)\n";
+		return 2;
+	}
+	if (w == 0 || h == 0) {
+		out << "FAIL  " << path << "  (zero bounding box "
+			<< w << "x" << h << ")\n";
 		return 2;
 	}
 

@@ -31,17 +31,15 @@
 //
 // For each file it prints one line, "OK", "WARN" or "FAIL", the path and the
 // reason, then a count of each. A FAIL (unreadable XML, a root other than
-// <definition type="element">, a missing or zero size, two terminals with
-// one name) makes the exit code 1; a WARN (a shape with a nan or inf
-// coordinate, a negative size, no terminals, an unnamed terminal on a
-// symbol that is not a folio report) does not. A path that does not exist,
+// <definition type="element">, anything QElectroTech refuses to load, a zero
+// size, two terminals with one name) makes the exit code 1; a WARN (a shape
+// with a nan or inf coordinate, a negative size, no terminals, an unnamed
+// terminal on a symbol that is not a folio report) does not. A path that does not exist,
 // a directory without .elmt files or no path at all give 2.
 //
-// The fixtures in fixtures/elements/ each carry one problem; four of them
-// are definitions QElectroTech refuses to load that the checker still
-// passes (rejectedByLoader, an expected failure until it learns the
-// loader's rules). Runs the real binary, also over the whole collection,
-// which must give exactly the failures listed in knownFailures().
+// The fixtures in fixtures/elements/ each carry one problem. Runs the real
+// binary, also over the whole collection, which must give exactly the
+// failures listed in knownFailures().
 class tst_checkelements : public QObject
 {
 	Q_OBJECT
@@ -150,10 +148,21 @@ private slots:
 		QTest::newRow("root is not an element")
 				<< "wrong_root.elmt" << "FAIL"
 				<< "(root is not <definition type=\"element\">)" << 1;
+		// Element::buildFromXml() wants width, height, hotspot_x and
+		// hotspot_y as integers and at least one child, and leaves the
+		// symbol off the folio otherwise (seen through --info: "elements": 0).
 		QTest::newRow("no width")
-				<< "missing_width.elmt" << "FAIL" << "(missing/zero bounding box x20)" << 1;
+				<< "missing_width.elmt" << "FAIL" << "(width missing or not an integer)" << 1;
+		QTest::newRow("no hotspot_x")
+				<< "missing_hotspot.elmt" << "FAIL" << "(hotspot_x missing or not an integer)" << 1;
+		QTest::newRow("fractional width")
+				<< "fractional_width.elmt" << "FAIL" << "(width missing or not an integer)" << 1;
+		QTest::newRow("nan width")
+				<< "nan_width.elmt" << "FAIL" << "(width missing or not an integer)" << 1;
+		QTest::newRow("empty definition")
+				<< "empty_definition.elmt" << "FAIL" << "(empty definition, no child elements)" << 1;
 		QTest::newRow("zero height")
-				<< "zero_height.elmt" << "FAIL" << "(missing/zero bounding box 20x0)" << 1;
+				<< "zero_height.elmt" << "FAIL" << "(zero bounding box 20x0)" << 1;
 		// " L " is "L" once trimmed, as the element editor compares them.
 		QTest::newRow("repeated terminal name")
 				<< "repeated_terminal_names.elmt" << "FAIL"
@@ -198,34 +207,6 @@ private slots:
 		QVERIFY2(r.exit_code == exit_code,
 				 qPrintable(QStringLiteral("expected exit code %1\n").arg(exit_code)
 							+ details(r)));
-	}
-
-	// Definitions the checker passes but QElectroTech does not load:
-	// Element::buildFromXml() wants width, height, hotspot_x and hotspot_y
-	// as integers and at least one child, and leaves the symbol off the
-	// folio otherwise (seen through --info: "elements": 0). checkOneElement()
-	// reads width and height as reals (so 20.5 and nan pass), never looks
-	// at the hotspot, and calls an empty definition one that "loads".
-	void rejectedByLoader_data()
-	{
-		QTest::addColumn<QString>("file");
-		QTest::newRow("no hotspot_x") << "missing_hotspot.elmt";
-		QTest::newRow("fractional width") << "fractional_width.elmt";
-		QTest::newRow("nan width") << "nan_width.elmt";
-		QTest::newRow("empty definition") << "empty_definition.elmt";
-	}
-
-	void rejectedByLoader()
-	{
-		QFETCH(QString, file);
-		const QString path = fixturesDir() + QLatin1Char('/') + file;
-		const Result r = check({path});
-		QVERIFY2(r.finished, qPrintable(details(r)));
-		QEXPECT_FAIL("", "--check-elements does not apply the loader's rules "
-					 "for the size, the hotspot and an empty definition", Abort);
-		QVERIFY2(r.out.startsWith(QStringLiteral("FAIL  ")) && r.exit_code == 1,
-				 qPrintable(QStringLiteral("QElectroTech does not load this element, "
-										   "but the checker passes it\n") + details(r)));
 	}
 
 	// A directory is searched for .elmt files, in subdirectories too, and
