@@ -452,6 +452,13 @@ qet_add_test(tst_derivedwireuuid BINARY EXAMPLES LIBS Qt::Xml)
 # title block holds a single-space value (#973).
 qet_add_test(tst_resaveunchanged BINARY EXAMPLES)
 
+# Opening a project written by the current version and saving it loses
+# nothing: runs the real binary's --resave once on every 0.200.x fixture and
+# example and compares the original with the save as XML, allowing only the
+# normalisations listed in the test (tst_resaveunchanged compares the second
+# save with the first, so it cannot see what the first load drops).
+qet_add_test(tst_firstload BINARY EXAMPLES LIBS Qt::Xml)
+
 # Replacing a symbol's definition in a project keeps its terminal uuids, so
 # the wires saved against them still load: TerminalUuids::keep() on its own,
 # then the real binary's --info on an example whose symbols were replaced.
