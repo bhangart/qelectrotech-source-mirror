@@ -17,9 +17,26 @@ on:
 
 jobs:
   linux:
-    name: Build and test (Qt 6, Debug)
+    name: Build and test (Qt 6, ${{ matrix.name }})
     runs-on: ubuntu-latest
     container: ubuntu:26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The plain Debug build, as before.
+          - name: Debug
+            sanitize: ""
+          # The same build with AddressSanitizer and UndefinedBehaviorSanitizer,
+          # the way reviewers build pull requests by hand. A use-after-free
+          # or an out-of-bounds access then fails the test that reaches it
+          # every time, instead of depending on what the allocator does with
+          # the freed block. -fno-sanitize-recover makes an undefined-behaviour
+          # report fail the test too, rather than only printing it.
+          - name: ASan+UBSan
+            sanitize: "-fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=undefined"
+    env:
+      UBSAN_OPTIONS: print_stacktrace=1
 
     steps:
       - name: Install build and test dependencies
@@ -53,6 +70,10 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_C_FLAGS="${{ matrix.sanitize }}" \
+            -DCMAKE_CXX_FLAGS="${{ matrix.sanitize }}" \
+            -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.sanitize }}" \
+            -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.sanitize }}" \
             -DQT_VERSION_MAJOR=6 \
             -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DQET_EXPORT_PROJECT_DB=ON 
@@ -64,6 +85,9 @@ jobs:
         run: xvfb-run -a ctest --test-dir build --output-on-failure
 
       - name: IPC open-forwarding regression (#868)
+        # Debug build only: the gate drives the GUI through xdotool with
+        # fixed waits, which the sanitizer slowdown would make inconclusive.
+        if: matrix.sanitize == ''
         # Fails the job only on an actual crash. An inconclusive run means the
         # crash path was not exercised -- it proves nothing, which is not the
         # same as a regression, and failing on it would make this job flaky
