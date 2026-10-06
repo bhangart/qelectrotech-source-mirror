@@ -29,8 +29,12 @@ jobs:
             ca-certificates build-essential cmake ninja-build git pkg-config \
             qt6-base-dev qt6-base-private-dev qt6-tools-dev qt6-tools-dev-tools \
             libqt6svg6-dev libqt6sql6-sqlite libcups2-dev libsqlite3-dev \
+            qt6-declarative-dev \
             libxkbcommon-x11-0 \
             xvfb openbox xdotool x11-utils
+          # qt6-declarative-dev is Qt Qml: without it CMake turns scripting
+          # off (QET_HAS_SCRIPTING), and the tests of --run and the project
+          # database, which need it, are not even built.
           # extra-cmake-modules and the KF6 libraries are installed rather than
           # left to FetchContent: without them CMake builds extra-cmake-modules
           # from source, and its Qt Help documentation target then demands
