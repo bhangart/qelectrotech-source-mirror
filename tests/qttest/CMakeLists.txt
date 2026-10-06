@@ -68,6 +68,13 @@ enable_testing()
 
 include(qet_add_test.cmake)
 
+# qet.cpp carries much of what the files below need, and pulls in qeticons
+# and shortcutmanager; these are compiled alongside rather than linking the
+# whole application. The application symbols they need are supplied by
+# each test itself.
+set(QET_TEST_QET_SOURCES qet.cpp qeticons.cpp shortcutmanager.cpp)
+set(QET_TEST_QET_LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
+
 add_executable(${PROJECT_NAME} tst_mytest.cpp)
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
@@ -112,18 +119,15 @@ qet_add_test(tst_configprofile LIBS Qt::Gui)
 
 # itemgroups.cpp keeps group membership and the selection rule apart from
 # Diagram, so it is tested here on a plain scene of rectangles.
-add_executable(tst_itemgroups tst_itemgroups.cpp ${QET_DIR}/sources/itemgroups.cpp)
-add_test(NAME tst_itemgroups COMMAND tst_itemgroups)
-target_include_directories(tst_itemgroups PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_itemgroups PRIVATE Qt::Test Qt::Widgets Qt::Xml)
+qet_add_test(tst_itemgroups
+  SOURCES itemgroups.cpp
+  LIBS Qt::Widgets Qt::Xml)
 
 # shownkinds.cpp keeps View > Show (bugtracker #301) apart from the item
 # classes, so it is tested here on a plain scene of rectangles.
-add_executable(tst_shownkinds tst_shownkinds.cpp ${QET_DIR}/sources/shownkinds.cpp)
-add_test(NAME tst_shownkinds COMMAND tst_shownkinds)
-set_tests_properties(tst_shownkinds PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
-target_include_directories(tst_shownkinds PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_shownkinds PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_shownkinds OFFSCREEN
+  SOURCES shownkinds.cpp
+  LIBS Qt::Widgets)
 
 # textanchor.h is header-only: the point of a text chosen by its alignment,
 # shown as Position X/Y in the text properties (#1155).
@@ -133,208 +137,128 @@ qet_add_test(tst_textanchor OFFSCREEN LIBS Qt::Widgets)
 # nomenclature queries saved before June 2022.
 qet_add_test(tst_legacyelementtypes)
 
-add_executable(
-  tst_qetpalette
-  tst_qetpalette.cpp
-  inkcontrast.h
-  ${QET_DIR}/sources/palettegraphicsview.cpp
-  ${QET_DIR}/sources/palettegraphicsview.h
-  ${QET_DIR}/sources/qetpalette.cpp
-  ${QET_DIR}/sources/qetpalette.h
-  ${QET_DIR}/sources/ElementsCollection/elementpreviewdelegate.cpp
-  ${QET_DIR}/sources/ElementsCollection/elementpreviewdelegate.h)
-add_test(NAME tst_qetpalette COMMAND tst_qetpalette)
-target_include_directories(tst_qetpalette PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_qetpalette PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_qetpalette
+  SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/inkcontrast.h
+    palettegraphicsview.cpp
+    palettegraphicsview.h
+    qetpalette.cpp
+    qetpalette.h
+    ElementsCollection/elementpreviewdelegate.cpp
+    ElementsCollection/elementpreviewdelegate.h
+  LIBS Qt::Widgets)
 
 # qeticons.cpp is compiled in so the test can check the table entries
 # themselves (icon sizes in the element panel), not only the theme files.
-add_executable(
-  tst_qeticons
-  tst_qeticons.cpp
-  inkcontrast.h
-  ${QET_DIR}/sources/qeticons.cpp
-  ${QET_DIR}/sources/qeticons.h
-  ${QET_DIR}/sources/qetpalette.cpp
-  ${QET_DIR}/sources/qetstyle.cpp
-  ${QET_DIR}/sources/qetpalette.h
-  ${QET_DIR}/ico/icon-themes.qrc)
-add_test(NAME tst_qeticons COMMAND tst_qeticons)
-target_include_directories(tst_qeticons PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_qeticons PRIVATE Qt::Test Qt::Widgets Qt::Svg)
+qet_add_test(tst_qeticons
+  SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/inkcontrast.h
+    qeticons.cpp
+    qeticons.h
+    qetpalette.cpp
+    qetstyle.cpp
+    qetpalette.h
+    ${QET_DIR}/ico/icon-themes.qrc
+  LIBS Qt::Widgets Qt::Svg)
 
-add_executable(
-  tst_smart_device
-  tst_smart_device.cpp
-  ${QET_DIR}/sources/bomexport.cpp
-  ${QET_DIR}/sources/bomexport.h)
-add_test(NAME tst_smart_device COMMAND tst_smart_device)
-target_include_directories(tst_smart_device PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_smart_device PRIVATE Qt::Test Qt::Sql)
+qet_add_test(tst_smart_device
+  SOURCES bomexport.cpp bomexport.h
+  LIBS Qt::Sql)
 
 # qet.cpp carries the SingleApplication argument wire format
-# (joinWithSpaces/splitWithSpaces); it pulls in qeticons and shortcutmanager,
-# so those are compiled alongside rather than linking the whole application.
-add_executable(
-  tst_qetstrings
-  tst_qetstrings.cpp
-  ${QET_DIR}/sources/qet.cpp
-  ${QET_DIR}/sources/qeticons.cpp
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_qetstrings COMMAND tst_qetstrings)
-target_include_directories(tst_qetstrings PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_qetstrings PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+# (joinWithSpaces/splitWithSpaces) and QET::stringToFileName().
+qet_add_test(tst_qetstrings
+  SOURCES ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS})
 
 # CommandSearchPopup: accent-blind matching, ranking, and that Enter runs
 # only the owning window's highlighted, enabled command.
-add_executable(
-  tst_commandsearch
-  tst_commandsearch.cpp
-  ${QET_DIR}/sources/commandsearchpopup.cpp
-  ${QET_DIR}/sources/commandsearchpopup.h
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_commandsearch COMMAND tst_commandsearch)
-set_tests_properties(tst_commandsearch PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
-target_include_directories(tst_commandsearch PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_commandsearch PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_commandsearch OFFSCREEN
+  SOURCES commandsearchpopup.cpp commandsearchpopup.h shortcutmanager.cpp
+  LIBS Qt::Widgets)
 
 # scriptheader.h is header-only: the // ==QETScript== block that turns a
 # stored script into a button; and ShortcutManager::unregisterAction(), which
 # takes a deleted script's command out of the lists again.
-add_executable(
-  tst_scriptheader
-  tst_scriptheader.cpp
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_scriptheader COMMAND tst_scriptheader)
-set_tests_properties(tst_scriptheader PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
-target_include_directories(tst_scriptheader PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_scriptheader PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_scriptheader OFFSCREEN
+  SOURCES shortcutmanager.cpp
+  LIBS Qt::Widgets)
 
 # QETSql::execReadOnly() -- read-only enforcement for every project-database
 # query, including the ones a .qet file carries. Compiles sqlreadonly.cpp
 # alone against its own in-memory QSQLITE connection, so the security
 # property is checked without standing up a QETProject.
-add_executable(
-  tst_sqlreadonly
-  tst_sqlreadonly.cpp
-  ${QET_DIR}/sources/dataBase/sqlreadonly.cpp)
-add_test(NAME tst_sqlreadonly COMMAND tst_sqlreadonly)
-target_include_directories(tst_sqlreadonly PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_sqlreadonly PRIVATE Qt::Test Qt::Sql)
+qet_add_test(tst_sqlreadonly
+  SOURCES dataBase/sqlreadonly.cpp
+  LIBS Qt::Sql)
 
 # QetSettings::scriptingEnabled() -- whether QElectroTech may run a script.
 # Compiles qetsettings.cpp alone: the setting is deliberately a plain
 # QSettings read, so the test needs nothing else of QElectroTech.
-add_executable(
-  tst_scriptingsetting
-  tst_scriptingsetting.cpp
-  ${QET_DIR}/sources/utils/qetsettings.cpp)
-add_test(NAME tst_scriptingsetting COMMAND tst_scriptingsetting)
-target_include_directories(tst_scriptingsetting PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_scriptingsetting PRIVATE Qt::Test Qt::Gui)
+qet_add_test(tst_scriptingsetting
+  SOURCES utils/qetsettings.cpp
+  LIBS Qt::Gui)
 
 # AiAssistantSetup: finding the MCP server beside an installation, and the
 # configuration text for each AI assistant. Compiles the one file alone.
-add_executable(
-  tst_aiassistantsetup
-  tst_aiassistantsetup.cpp
-  ${QET_DIR}/sources/ui/aiassistantsetup.cpp)
-add_test(NAME tst_aiassistantsetup COMMAND tst_aiassistantsetup)
-target_include_directories(tst_aiassistantsetup PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_aiassistantsetup PRIVATE Qt::Test Qt::Core)
+qet_add_test(tst_aiassistantsetup
+  SOURCES ui/aiassistantsetup.cpp
+  LIBS Qt::Core)
 
 # QetSettings::sheetBackground() -- the sheet (folio) background the diagram
 # editor remembers between runs. Compiles qetsettings.cpp alone for the same
 # reason as the test above; Qt::Gui because the pair carries a QColor.
-add_executable(
-  tst_sheetbackgroundsetting
-  tst_sheetbackgroundsetting.cpp
-  ${QET_DIR}/sources/utils/qetsettings.cpp)
-add_test(NAME tst_sheetbackgroundsetting COMMAND tst_sheetbackgroundsetting)
-target_include_directories(tst_sheetbackgroundsetting PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_sheetbackgroundsetting PRIVATE Qt::Test Qt::Gui)
+qet_add_test(tst_sheetbackgroundsetting
+  SOURCES utils/qetsettings.cpp
+  LIBS Qt::Gui)
 
 # SpaceMouseMotion::map() -- how a 3D mouse sample pans and zooms a view.
 # Pure code with no device or widget behind it, so it is built and run
 # whether or not QET_ENABLE_SPACEMOUSE is on.
-add_executable(
-  tst_spacemousemotion
-  tst_spacemousemotion.cpp
-  ${QET_DIR}/sources/spacemouse/spacemousemotion.cpp)
-add_test(NAME tst_spacemousemotion COMMAND tst_spacemousemotion)
-target_include_directories(tst_spacemousemotion PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_spacemousemotion PRIVATE Qt::Test Qt::Core)
+qet_add_test(tst_spacemousemotion
+  SOURCES spacemouse/spacemousemotion.cpp
+  LIBS Qt::Core)
 
 # SpaceMouseHid -- decoding a 3D mouse's raw USB reports. Pure code, built
 # whether or not QET_ENABLE_SPACEMOUSE is on; recordings from real devices
 # go in fixtures/spacemouse/.
-add_executable(
-  tst_spacemousehid
-  tst_spacemousehid.cpp
-  ${QET_DIR}/sources/spacemouse/spacemousehid.cpp)
-add_test(NAME tst_spacemousehid COMMAND tst_spacemousehid)
-target_include_directories(tst_spacemousehid PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_spacemousehid PRIVATE Qt::Test Qt::Core)
+qet_add_test(tst_spacemousehid
+  SOURCES spacemouse/spacemousehid.cpp
+  LIBS Qt::Core)
 
 # ConnexionBackend -- the macOS 3DxWare backend. Built on every platform and
 # run against fakeconnexion, a stand-in for 3DxWare's client library that
 # exports the same calls and answers from a thread of its own.
 add_library(fakeconnexion MODULE fakeconnexion.cpp)
 target_link_libraries(fakeconnexion PRIVATE Qt::Core)
-add_executable(
-  tst_spacemouseconnexion
-  tst_spacemouseconnexion.cpp
-  ${QET_DIR}/sources/spacemouse/connexionbackend.cpp
-  ${QET_DIR}/sources/spacemouse/spacemousebackend.h)
-add_dependencies(tst_spacemouseconnexion fakeconnexion)
-add_test(NAME tst_spacemouseconnexion COMMAND tst_spacemouseconnexion)
-target_compile_definitions(tst_spacemouseconnexion PRIVATE
-  FAKE_CONNEXION="$<TARGET_FILE:fakeconnexion>")
-target_include_directories(tst_spacemouseconnexion PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_spacemouseconnexion PRIVATE Qt::Test Qt::Core)
+qet_add_test(tst_spacemouseconnexion
+  SOURCES spacemouse/connexionbackend.cpp spacemouse/spacemousebackend.h
+  LIBS Qt::Core
+  DEFINES FAKE_CONNEXION="$<TARGET_FILE:fakeconnexion>"
+  DEPENDS fakeconnexion)
 
 # CrashHandler::formatInt() -- the async-signal-safe decimal formatter the
 # signal handler uses for the "Signal: N" line of a crash dump. Compiles
 # crashhandler.cpp and logring.cpp alongside; the handler deliberately
-# depends on nothing heavier than QByteArray.
-add_executable(
-  tst_crashhandler
-  tst_crashhandler.cpp
-  ${QET_DIR}/sources/logging/crashhandler.cpp
-  ${QET_DIR}/sources/logging/logring.cpp
-  ${QET_DIR}/sources/qetversion.cpp)
-add_test(NAME tst_crashhandler COMMAND tst_crashhandler)
-target_include_directories(tst_crashhandler PRIVATE ${QET_DIR}/sources)
-# Qt::Xml because crashhandler.cpp includes qetversion.h for the header it
-# builds at install() time, and that pulls in QDomElement.
-if(Backtrace_FOUND)
-  target_link_libraries(tst_crashhandler PRIVATE
-    Qt::Test Qt::Xml ${Backtrace_LIBRARIES})
-else()
-  target_link_libraries(tst_crashhandler PRIVATE Qt::Test Qt::Xml)
-endif()
+# depends on nothing heavier than QByteArray. Qt::Xml because
+# crashhandler.cpp includes qetversion.h for the header it builds at
+# install() time, and that pulls in QDomElement.
+qet_add_test(tst_crashhandler
+  SOURCES logging/crashhandler.cpp logging/logring.cpp qetversion.cpp
+  LIBS Qt::Xml ${Backtrace_LIBRARIES})
 
 # The crash-dump bookkeeping from #905: which dumps get listed, offered and
 # deleted, and what redact() masks. qetlogger.cpp needs exactly one symbol
 # from the application (QETApp::dataDir()), which the test supplies itself,
 # so this links the logging sources rather than the whole program.
-add_executable(
-  tst_crashdumps
-  tst_crashdumps.cpp
-  ${QET_DIR}/sources/logging/qetlogger.cpp
-  ${QET_DIR}/sources/logging/crashhandler.cpp
-  ${QET_DIR}/sources/logging/logring.cpp
-  ${QET_DIR}/sources/qetversion.cpp)
-add_test(NAME tst_crashdumps COMMAND tst_crashdumps)
-target_include_directories(tst_crashdumps PRIVATE
-  ${QET_DIR}
-  ${QET_DIR}/sources
-  ${QET_DIR}/sources/NameList)
-target_link_libraries(tst_crashdumps PRIVATE
-  Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
-if(Backtrace_FOUND)
-  target_link_libraries(tst_crashdumps PRIVATE ${Backtrace_LIBRARIES})
-endif()
+qet_add_test(tst_crashdumps
+  SOURCES
+    logging/qetlogger.cpp
+    logging/crashhandler.cpp
+    logging/logring.cpp
+    qetversion.cpp
+  LIBS Qt::Widgets Qt::Xml pugixml::pugixml ${Backtrace_LIBRARIES}
+  INCLUDES ${QET_DIR} ${QET_DIR}/sources/NameList)
 
 qet_add_test(tst_menubarkeyboard LIBS Qt::Widgets)
 
@@ -463,13 +387,7 @@ target_compile_definitions(tst_wiringrules PRIVATE
 
 # The routing behind qet.routeConductor(): conductorrouter.cpp needs only
 # Qt Core, so the geometry is tested without a scene.
-add_executable(
-  tst_conductorrouter
-  tst_conductorrouter.cpp
-  ${QET_DIR}/sources/conductorrouter.cpp)
-add_test(NAME tst_conductorrouter COMMAND tst_conductorrouter)
-target_include_directories(tst_conductorrouter PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_conductorrouter PRIVATE Qt::Test)
+qet_add_test(tst_conductorrouter SOURCES conductorrouter.cpp)
 
 # qet.conductorUuids() / qet.conductorEnds(): a script lists a folio's
 # conductors by uuid and finds each one's two ends. Runs a script through
@@ -656,57 +574,33 @@ target_compile_definitions(tst_terminaluuids PRIVATE
 
 # ConductorProperties::applyChanges() -- the Selection properties panel
 # writes only the fields the user edited.
-add_executable(
-  tst_conductorapplychanges
-  tst_conductorapplychanges.cpp
-  ${QET_DIR}/sources/conductorproperties.cpp
-  ${QET_DIR}/sources/qet.cpp
-  ${QET_DIR}/sources/qeticons.cpp
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_conductorapplychanges COMMAND tst_conductorapplychanges)
-target_include_directories(tst_conductorapplychanges PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_conductorapplychanges PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+qet_add_test(tst_conductorapplychanges
+  SOURCES conductorproperties.cpp ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS})
 
 # ConductorMultiEdit -- editing several wires at once in the Selection
 # properties panel: order, which wires an edit reaches, one undo step for
 # all of them, and fields shown blank because the wires disagree.
-add_executable(
-  tst_conductormultiedit
-  tst_conductormultiedit.cpp
-  ${QET_DIR}/sources/conductorproperties.cpp
-  ${QET_DIR}/sources/QPropertyUndoCommand/qpropertyundocommand.cpp
-  ${QET_DIR}/sources/qet.cpp
-  ${QET_DIR}/sources/qeticons.cpp
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_conductormultiedit COMMAND tst_conductormultiedit)
-target_include_directories(tst_conductormultiedit PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_conductormultiedit PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+qet_add_test(tst_conductormultiedit
+  SOURCES
+    conductorproperties.cpp
+    QPropertyUndoCommand/qpropertyundocommand.cpp
+    ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS})
 
 # DiagramContext::fromXml() -- the two readers (QDom for projects, pugixml
 # for element definitions in the collection) give the same values: stray
 # spaces trimmed, accents kept.
-add_executable(
-  tst_diagramcontext
-  tst_diagramcontext.cpp
-  ${QET_DIR}/sources/diagramcontext.cpp
-  ${QET_DIR}/sources/qet.cpp
-  ${QET_DIR}/sources/qeticons.cpp
-  ${QET_DIR}/sources/shortcutmanager.cpp)
-add_test(NAME tst_diagramcontext COMMAND tst_diagramcontext)
-target_include_directories(tst_diagramcontext PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_diagramcontext PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+qet_add_test(tst_diagramcontext
+  SOURCES diagramcontext.cpp ${QET_TEST_QET_SOURCES}
+  LIBS ${QET_TEST_QET_LIBS})
 
 # XRefProperties: an empty or unknown cross-reference position, as older
 # versions saved it, reads as the default instead of drawing the
 # cross-reference over the element's label (issue #1238).
-add_executable(
-  tst_xrefpos
-  tst_xrefpos.cpp
-  ${QET_DIR}/sources/properties/xrefproperties.cpp
-  ${QET_DIR}/sources/properties/propertiesinterface.cpp)
-add_test(NAME tst_xrefpos COMMAND tst_xrefpos)
-target_include_directories(tst_xrefpos PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_xrefpos PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
+qet_add_test(tst_xrefpos
+  SOURCES properties/xrefproperties.cpp properties/propertiesinterface.cpp
+  LIBS Qt::Widgets Qt::Xml pugixml::pugixml)
 
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
