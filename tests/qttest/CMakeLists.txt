@@ -548,6 +548,17 @@ if(Backtrace_FOUND)
   target_link_libraries(tst_crashdumps PRIVATE ${Backtrace_LIBRARIES})
 endif()
 
+# The Qt-only KAutoSaveFile (sources/ui/nokde) finds the backups a crashed
+# process left. It needs nothing but Qt, so it is built and run whether or
+# not this build uses KDE Frameworks -- CI builds with them.
+add_executable(
+  tst_kautosavefile
+  tst_kautosavefile.cpp
+  ${QET_DIR}/sources/ui/nokde/kautosavefile.cpp)
+add_test(NAME tst_kautosavefile COMMAND tst_kautosavefile)
+target_include_directories(tst_kautosavefile PRIVATE ${QET_DIR}/sources/ui/nokde)
+target_link_libraries(tst_kautosavefile PRIVATE Qt::Test)
+
 add_executable(
   tst_menubarkeyboard
   tst_menubarkeyboard.cpp)
