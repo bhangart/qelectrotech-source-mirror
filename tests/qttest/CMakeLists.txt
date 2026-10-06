@@ -269,308 +269,130 @@ qet_add_test(tst_menubarkeyboard LIBS Qt::Widgets)
 # Conductor::generateConductorPath() pulls in the full graphics-item
 # dependency graph (Diagram, Element, Terminal...) that the other,
 # deliberately header-only tests above avoid.
-add_executable(
-  tst_conductorselfretrace
-  tst_conductorselfretrace.cpp)
-add_test(NAME tst_conductorselfretrace COMMAND tst_conductorselfretrace)
-add_dependencies(tst_conductorselfretrace qelectrotech)
-target_include_directories(tst_conductorselfretrace PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_conductorselfretrace PRIVATE Qt::Test)
-target_compile_definitions(tst_conductorselfretrace PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_conductorselfretrace BINARY)
 
 # The wiring list export (--export-cables) keeps every wire drawn to a folio
 # report when a report has several, joins only one-to-one report pairs, and
 # prints the folio number rather than its template. fixtures/wiring_list_arrows.qet
 # has one of each report pair; the examples check the page column.
-add_executable(
-  tst_wiringlistexport
-  tst_wiringlistexport.cpp)
-add_test(NAME tst_wiringlistexport COMMAND tst_wiringlistexport)
-add_dependencies(tst_wiringlistexport qelectrotech)
-target_link_libraries(tst_wiringlistexport PRIVATE Qt::Test)
-target_compile_definitions(tst_wiringlistexport PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+qet_add_test(tst_wiringlistexport BINARY EXAMPLES)
 
 # --export-pdf puts an A3 folio on an A3 page whichever way it is turned:
 # QPageSize matches standard sheets upright only, so a wide folio is matched
 # upright and turned. fixtures/pdf_page_a3.qet has one folio each way.
-add_executable(
-  tst_pdfpagesize
-  tst_pdfpagesize.cpp)
-add_test(NAME tst_pdfpagesize COMMAND tst_pdfpagesize)
-add_dependencies(tst_pdfpagesize qelectrotech)
-target_link_libraries(tst_pdfpagesize PRIVATE Qt::Test Qt::Gui)
-target_compile_definitions(tst_pdfpagesize PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_pdfpagesize BINARY LIBS Qt::Gui)
 
 # --export-pdf writes the cross-reference links in the same order in every
 # run, rather than in Element pointer order. Exports examples/industrial.qet
 # several times, in separate processes.
-add_executable(
-  tst_pdflinkorder
-  tst_pdflinkorder.cpp)
-add_test(NAME tst_pdflinkorder COMMAND tst_pdflinkorder)
-add_dependencies(tst_pdflinkorder qelectrotech)
-target_link_libraries(tst_pdflinkorder PRIVATE Qt::Test)
-target_compile_definitions(tst_pdflinkorder PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+qet_add_test(tst_pdflinkorder BINARY EXAMPLES)
 
 # One text per potential: the number goes on the same conductor in every
 # run when two conductors tie for longest. Exports
 # fixtures/one_text_per_potential_tie.qet through the real binary, several
 # times, since the order it used to depend on changes only between runs.
-add_executable(
-  tst_potentialtextcarrier
-  tst_potentialtextcarrier.cpp)
-add_test(NAME tst_potentialtextcarrier COMMAND tst_potentialtextcarrier)
-add_dependencies(tst_potentialtextcarrier qelectrotech)
-target_link_libraries(tst_potentialtextcarrier PRIVATE Qt::Test)
-target_compile_definitions(tst_potentialtextcarrier PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_potentialtextcarrier BINARY)
 
 # Junction dots: a wire's corner that lies on another wire of the same
 # potential gets a dot, even when the two share no terminal (issue #1280).
 # Exports fixtures/junction_dot_shared_potential.qet through the real binary.
-add_executable(
-  tst_junctiondots
-  tst_junctiondots.cpp)
-add_test(NAME tst_junctiondots COMMAND tst_junctiondots)
-add_dependencies(tst_junctiondots qelectrotech)
-target_link_libraries(tst_junctiondots PRIVATE Qt::Test)
-target_compile_definitions(tst_junctiondots PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_junctiondots BINARY)
 
 # With SOURCE_DATE_EPOCH set, --export-pdf writes the same bytes for the
 # same project in every run. Exports examples/741.qet several times, in
 # separate processes.
-add_executable(
-  tst_pdfreproducible
-  tst_pdfreproducible.cpp)
-add_test(NAME tst_pdfreproducible COMMAND tst_pdfreproducible)
-add_dependencies(tst_pdfreproducible qelectrotech)
-target_link_libraries(tst_pdfreproducible PRIVATE Qt::Test)
-target_compile_definitions(tst_pdfreproducible PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+qet_add_test(tst_pdfreproducible BINARY EXAMPLES)
 
 # Hops where wires cross (issue #436): the geometry in wirehops.cpp, and
 # through the real binary, that --resave keeps the project setting and
 # adds nothing to a project without it.
-add_executable(
-  tst_wirehops
-  tst_wirehops.cpp
-  ${QET_DIR}/sources/wirehops.cpp)
-add_test(NAME tst_wirehops COMMAND tst_wirehops)
-add_dependencies(tst_wirehops qelectrotech)
-target_include_directories(tst_wirehops PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_wirehops PRIVATE Qt::Test Qt::Gui)
-target_compile_definitions(tst_wirehops PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_wirehops BINARY
+  SOURCES wirehops.cpp
+  LIBS Qt::Gui)
 
 # Wires per terminal (discussion #1158): the rules in wiringrules.cpp, and
 # through the real binary, that --resave keeps the project setting, adds
 # none to a project without it, and that a wire past the limit is refused
 # unless the master switch is off.
-add_executable(
-  tst_wiringrules
-  tst_wiringrules.cpp
-  ${QET_DIR}/sources/wiringrules.cpp)
-add_test(NAME tst_wiringrules COMMAND tst_wiringrules)
-add_dependencies(tst_wiringrules qelectrotech)
-target_include_directories(tst_wiringrules PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_wiringrules PRIVATE Qt::Test Qt::Xml)
-target_compile_definitions(tst_wiringrules PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_wiringrules BINARY
+  SOURCES wiringrules.cpp
+  LIBS Qt::Xml)
 
 # The routing behind qet.routeConductor(): conductorrouter.cpp needs only
 # Qt Core, so the geometry is tested without a scene.
 qet_add_test(tst_conductorrouter SOURCES conductorrouter.cpp)
 
-# qet.conductorUuids() / qet.conductorEnds(): a script lists a folio's
-# conductors by uuid and finds each one's two ends. Runs a script through
-# the real binary's --run on fixtures/qet_bug_repro_resaved.qet, so only
-# where --run exists: a build without the Qt Qml module has no scripting
-# (see QET_HAS_SCRIPTING in the top-level CMakeLists.txt).
+# The tests in this block run a script through the real binary's --run, so
+# they exist only where --run does: a build without the Qt Qml module has
+# no scripting (see QET_HAS_SCRIPTING in the top-level CMakeLists.txt).
 if(QET_HAS_SCRIPTING)
-  add_executable(
-    tst_scriptconductoruuid
-    tst_scriptconductoruuid.cpp)
-  add_test(NAME tst_scriptconductoruuid COMMAND tst_scriptconductoruuid)
-  add_dependencies(tst_scriptconductoruuid qelectrotech)
-  target_link_libraries(tst_scriptconductoruuid PRIVATE Qt::Test)
-  target_compile_definitions(tst_scriptconductoruuid PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+  # qet.conductorUuids() / qet.conductorEnds(): a script lists a folio's
+  # conductors by uuid and finds each one's two ends, on
+  # fixtures/qet_bug_repro_resaved.qet.
+  qet_add_test(tst_scriptconductoruuid BINARY)
 
   # qet.terminalPosition() and qet.conductorPath(), checked against each
   # other on a fixture's conductors.
-  add_executable(
-    tst_scriptlayoutreads
-    tst_scriptlayoutreads.cpp)
-  add_test(NAME tst_scriptlayoutreads COMMAND tst_scriptlayoutreads)
-  add_dependencies(tst_scriptlayoutreads qelectrotech)
-  target_link_libraries(tst_scriptlayoutreads PRIVATE Qt::Test)
-  target_compile_definitions(tst_scriptlayoutreads PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+  qet_add_test(tst_scriptlayoutreads BINARY)
 
   # QET_SETTINGS_DIR moves the settings into an INI file there (#1178): a
   # script places a symbol only the folder's settings file can resolve.
-  add_executable(
-    tst_settingsdir
-    tst_settingsdir.cpp)
-  add_test(NAME tst_settingsdir COMMAND tst_settingsdir)
-  add_dependencies(tst_settingsdir qelectrotech)
-  target_link_libraries(tst_settingsdir PRIVATE Qt::Test)
-  target_compile_definitions(tst_settingsdir PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_ELEMENTS_DIR=\"${QET_DIR}/elements\"")
+  qet_add_test(tst_settingsdir BINARY ELEMENTS)
 
   # qet.addElement() on a symbol that exists but cannot be read says so,
   # rather than reporting a collision with the copy already embedded.
-  add_executable(
-    tst_unreadableelement
-    tst_unreadableelement.cpp)
-  add_test(NAME tst_unreadableelement COMMAND tst_unreadableelement)
-  add_dependencies(tst_unreadableelement qelectrotech)
-  target_link_libraries(tst_unreadableelement PRIVATE Qt::Test)
-  target_compile_definitions(tst_unreadableelement PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_ELEMENTS_DIR=\"${QET_DIR}/elements\"")
+  qet_add_test(tst_unreadableelement BINARY ELEMENTS)
 
   # The project database filled from the file as it is read holds exactly
   # what it holds filled from the built folios (QET_DATABASE_FROM_FOLIOS=1),
   # on every example saved once; an older file falls back, saying why.
-  add_executable(
-    tst_databasefromdocument
-    tst_databasefromdocument.cpp)
-  add_test(NAME tst_databasefromdocument COMMAND tst_databasefromdocument)
-  add_dependencies(tst_databasefromdocument qelectrotech)
-  target_link_libraries(tst_databasefromdocument PRIVATE Qt::Test Qt::Xml)
-  target_compile_definitions(tst_databasefromdocument PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+  qet_add_test(tst_databasefromdocument BINARY EXAMPLES LIBS Qt::Xml)
 
   # The project database keeps a folio's date with its century: 741.qet's
   # 2010-09-21, read through project_summary_view under LC_ALL=en_US.UTF-8.
-  add_executable(
-    tst_dbfoliodate
-    tst_dbfoliodate.cpp)
-  add_test(NAME tst_dbfoliodate COMMAND tst_dbfoliodate)
-  add_dependencies(tst_dbfoliodate qelectrotech)
-  target_link_libraries(tst_dbfoliodate PRIVATE Qt::Test)
-  target_compile_definitions(tst_dbfoliodate PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+  qet_add_test(tst_dbfoliodate BINARY EXAMPLES)
 
   # qet.elementTerminals() lists each terminal's uuid and qet.terminalIndex()
   # turns element uuid + terminal uuid back into the index the conductor
   # calls take, on examples/perceuse.qet (two terminals at one point).
-  add_executable(
-    tst_scriptterminaluuid
-    tst_scriptterminaluuid.cpp)
-  add_test(NAME tst_scriptterminaluuid COMMAND tst_scriptterminaluuid)
-  add_dependencies(tst_scriptterminaluuid qelectrotech)
-  target_link_libraries(tst_scriptterminaluuid PRIVATE Qt::Test Qt::Xml)
-  target_compile_definitions(tst_scriptterminaluuid PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+  qet_add_test(tst_scriptterminaluuid BINARY EXAMPLES LIBS Qt::Xml)
 
   # The same symbol placed twice in a project whose collection does not
   # start with its "import" category (examples/lmdg.qet).
-  add_executable(
-    tst_importcategory
-    tst_importcategory.cpp)
-  add_test(NAME tst_importcategory COMMAND tst_importcategory)
-  add_dependencies(tst_importcategory qelectrotech)
-  target_link_libraries(tst_importcategory PRIVATE Qt::Test)
-  target_compile_definitions(tst_importcategory PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\""
-    "QET_ELEMENTS_DIR=\"${QET_DIR}/elements\"")
+  qet_add_test(tst_importcategory BINARY EXAMPLES ELEMENTS)
 
   # qet.currentFolio() through --run: the first folio, or -1 with none; and
   # --run keeps one undo step per call (only an editor run is grouped).
-  add_executable(
-    tst_scriptcurrentfolio
-    tst_scriptcurrentfolio.cpp)
-  add_test(NAME tst_scriptcurrentfolio COMMAND tst_scriptcurrentfolio)
-  add_dependencies(tst_scriptcurrentfolio qelectrotech)
-  target_link_libraries(tst_scriptcurrentfolio PRIVATE Qt::Test)
-  target_compile_definitions(tst_scriptcurrentfolio PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+  qet_add_test(tst_scriptcurrentfolio BINARY EXAMPLES)
+
+  # Element numbering schemes carry an id and elements follow them by it:
+  # a legacy file gets stable ids on --resave; through --run, rename, edit,
+  # refused removal and undo/redo keep the elements following the scheme.
+  qet_add_test(tst_elementautonumids BINARY EXAMPLES LIBS Qt::Xml)
 endif()
 
 # A symbol saved without a uuid gets the same one on every load, and
 # inserting a folio does not change it. Runs the real binary's --resave on
 # fixtures/qet_bug_repro_resaved.qet with the symbols' uuids stripped.
-add_executable(
-  tst_derivedsymboluuid
-  tst_derivedsymboluuid.cpp)
-add_test(NAME tst_derivedsymboluuid COMMAND tst_derivedsymboluuid)
-add_dependencies(tst_derivedsymboluuid qelectrotech)
-target_link_libraries(tst_derivedsymboluuid PRIVATE Qt::Test Qt::Xml)
-target_compile_definitions(tst_derivedsymboluuid PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+qet_add_test(tst_derivedsymboluuid BINARY LIBS Qt::Xml)
 
 # A wire saved without a uuid gets one derived from its two ends: the same
 # on every load, saved, and unchanged by inserting a folio, reordering the
 # wires or drawing a wire the other way. Runs the real binary's --resave on
 # a fixture and on examples/tremie_vibrante.qet (ends by terminal number).
-add_executable(
-  tst_derivedwireuuid
-  tst_derivedwireuuid.cpp)
-add_test(NAME tst_derivedwireuuid COMMAND tst_derivedwireuuid)
-add_dependencies(tst_derivedwireuuid qelectrotech)
-target_link_libraries(tst_derivedwireuuid PRIVATE Qt::Test Qt::Xml)
-target_compile_definitions(tst_derivedwireuuid PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
-
-# Element numbering schemes carry an id and elements follow them by it:
-# a legacy file gets stable ids on --resave; through --run, rename, edit,
-# refused removal and undo/redo keep the elements following the scheme.
-if(QET_HAS_SCRIPTING)
-  add_executable(
-    tst_elementautonumids
-    tst_elementautonumids.cpp)
-  add_test(NAME tst_elementautonumids COMMAND tst_elementautonumids)
-  add_dependencies(tst_elementautonumids qelectrotech)
-  target_link_libraries(tst_elementautonumids PRIVATE Qt::Test Qt::Xml)
-  target_compile_definitions(tst_elementautonumids PRIVATE
-    "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-    "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
-endif()
+qet_add_test(tst_derivedwireuuid BINARY EXAMPLES LIBS Qt::Xml)
 
 # Saving a project that was just saved changes nothing: runs the real
 # binary's --resave twice on every project in examples/, and on one whose
 # title block holds a single-space value (#973).
-
-add_executable(
-  tst_resaveunchanged
-  tst_resaveunchanged.cpp)
-add_test(NAME tst_resaveunchanged COMMAND tst_resaveunchanged)
-add_dependencies(tst_resaveunchanged qelectrotech)
-target_link_libraries(tst_resaveunchanged PRIVATE Qt::Test)
-target_compile_definitions(tst_resaveunchanged PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+qet_add_test(tst_resaveunchanged BINARY EXAMPLES)
 
 # Replacing a symbol's definition in a project keeps its terminal uuids, so
 # the wires saved against them still load: TerminalUuids::keep() on its own,
 # then the real binary's --info on an example whose symbols were replaced.
-add_executable(
-  tst_terminaluuids
-  tst_terminaluuids.cpp
-  ${QET_DIR}/sources/ElementsCollection/terminaluuids.cpp)
-add_test(NAME tst_terminaluuids COMMAND tst_terminaluuids)
-add_dependencies(tst_terminaluuids qelectrotech)
-target_link_libraries(tst_terminaluuids PRIVATE Qt::Test Qt::Xml)
-target_compile_definitions(tst_terminaluuids PRIVATE
-  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\""
-  "QET_EXAMPLES_DIR=\"${QET_DIR}/examples\"")
+qet_add_test(tst_terminaluuids BINARY EXAMPLES
+  SOURCES ElementsCollection/terminaluuids.cpp
+  LIBS Qt::Xml)
 
 # ConductorProperties::applyChanges() -- the Selection properties panel
 # writes only the fields the user edited.
@@ -609,7 +431,7 @@ qet_add_test(tst_xrefpos
 if(Qt6_VERSION VERSION_LESS 6.5.0)
   foreach(qet_test tst_resaveunchanged tst_elementautonumids)
     if(TEST ${qet_test})
-      set_tests_properties(${qet_test} PROPERTIES ENVIRONMENT "QT_HASH_SEED=0")
+      set_property(TEST ${qet_test} APPEND PROPERTY ENVIRONMENT "QT_HASH_SEED=0")
     endif()
   endforeach()
 endif()
