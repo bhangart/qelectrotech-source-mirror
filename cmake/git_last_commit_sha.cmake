@@ -37,5 +37,11 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
   endif()
 endif()
 
-# This adds to definitions => .cpp
-add_definitions(-DGIT_COMMIT_SHA="${GIT_COMMIT_SHA}")
+# A header, not a definition on the command line: only the few files that
+# include it are rebuilt when the commit changes, not the whole program.
+# configure_file() leaves the header untouched when the commit is the same.
+configure_file(
+  ${CMAKE_CURRENT_LIST_DIR}/gitcommitsha.h.in
+  ${CMAKE_BINARY_DIR}/generated/gitcommitsha.h
+  @ONLY)
+include_directories(${CMAKE_BINARY_DIR}/generated)

@@ -1,0 +1,8 @@
+// Generated from cmake/gitcommitsha.h.in by cmake/git_last_commit_sha.cmake.
+// Do not edit: it is written again at each configure.
+#ifndef GITCOMMITSHA_H
+#define GITCOMMITSHA_H
+
+#define GIT_COMMIT_SHA "@GIT_COMMIT_SHA@"
+
+#endif // GITCOMMITSHA_H

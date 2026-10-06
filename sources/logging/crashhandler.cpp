@@ -19,6 +19,7 @@
 
 #include "logring.h"
 #include "../qetversion.h"
+#include "gitcommitsha.h"
 
 #include <QByteArray>
 #include <QSysInfo>

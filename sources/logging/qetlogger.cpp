@@ -20,6 +20,7 @@
 #include "crashhandler.h"
 #include "../qetapp.h"
 #include "../qetversion.h"
+#include "gitcommitsha.h"
 
 #include <QCoreApplication>
 #include <QDateTime>

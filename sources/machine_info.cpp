@@ -18,6 +18,7 @@
 #include "machine_info.h"
 #include "qetapp.h"
 #include "qetversion.h"
+#include "gitcommitsha.h"
 #include <QSettings>
 #include <QDirIterator>
 
