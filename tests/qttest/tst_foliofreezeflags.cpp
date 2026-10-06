@@ -15,6 +15,8 @@
 	You should have received a copy of the GNU General Public License
 	along with QElectroTech.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "qettesthelpers.h"
+
 #include <QtTest>
 #include <QDomDocument>
 #include <QProcess>
@@ -36,8 +38,8 @@ class tst_foliofreezeflags : public QObject
 
 	static bool runQet(const QStringList &arguments)
 	{
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QTemporaryDir home;
+		const QProcessEnvironment env = QET::Test::sandboxEnvironment(home.path());
 		QProcess proc;
 		proc.setProcessEnvironment(env);
 		proc.start(QStringLiteral(QET_TEST_BINARY_PATH), arguments);
