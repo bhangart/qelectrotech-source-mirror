@@ -15,6 +15,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# A push to a pull request cancels the run of the previous push: only the
+# newest commit matters there. Runs on master and manual runs are kept, so
+# every master commit has its result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   linux:
     name: Build and test (Qt 6, Debug)
