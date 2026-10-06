@@ -15,6 +15,8 @@
 	You should have received a copy of the GNU General Public License
 	along with QElectroTech.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "qettesthelpers.h"
+
 #include <QtTest>
 #include <QProcess>
 #include <QTemporaryDir>
@@ -34,8 +36,8 @@ class tst_dxfblocks : public QObject
 	{
 		const QString project = QFINDTESTDATA("fixtures/dxf_blocks.qet");
 		QTemporaryDir dir;
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QTemporaryDir home;
+		const QProcessEnvironment env = QET::Test::sandboxEnvironment(home.path());
 		QProcess proc;
 		proc.setProcessEnvironment(env);
 		proc.start(QStringLiteral(QET_TEST_BINARY_PATH),
