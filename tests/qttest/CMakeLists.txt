@@ -66,6 +66,8 @@ include(../../cmake/fetch_pugixml.cmake)
 
 enable_testing()
 
+include(qet_add_test.cmake)
+
 add_executable(${PROJECT_NAME} tst_mytest.cpp)
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
@@ -79,58 +81,34 @@ target_link_libraries(
 # diagramsortkeys.h is a header-only helper (no QET link deps needed
 # beyond Qt itself), so this test builds independently of the rest of
 # the QET sources.
-add_executable(tst_diagramsortkeys tst_diagramsortkeys.cpp)
-add_test(NAME tst_diagramsortkeys COMMAND tst_diagramsortkeys)
-target_include_directories(tst_diagramsortkeys PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_diagramsortkeys PRIVATE Qt::Test)
+qet_add_test(tst_diagramsortkeys)
 
 # bordercelllabels.h is header-only too.
-add_executable(tst_bordercelllabels tst_bordercelllabels.cpp)
-add_test(NAME tst_bordercelllabels COMMAND tst_bordercelllabels)
-target_include_directories(tst_bordercelllabels PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_bordercelllabels PRIVATE Qt::Test)
+qet_add_test(tst_bordercelllabels)
 
 # contactusage.h is a header-only helper holding the contact counting
 # rules, so this test builds independently of the rest of the QET sources.
-add_executable(tst_contactusage tst_contactusage.cpp)
-add_test(NAME tst_contactusage COMMAND tst_contactusage)
-target_include_directories(tst_contactusage PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_contactusage PRIVATE Qt::Test)
+qet_add_test(tst_contactusage)
 
 # textgrid.h is a header-only helper holding the text snap rules, so this
 # test builds independently of the rest of the QET sources.
-add_executable(tst_textgrid tst_textgrid.cpp)
-add_test(NAME tst_textgrid COMMAND tst_textgrid)
-target_include_directories(tst_textgrid PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_textgrid PRIVATE Qt::Test)
+qet_add_test(tst_textgrid)
 
 # elementviewgrid.h is header-only: the symbol editor's snap step at each
 # zoom (bugtracker #112), tested without an editor window.
-add_executable(tst_elementviewgrid tst_elementviewgrid.cpp)
-add_test(NAME tst_elementviewgrid COMMAND tst_elementviewgrid)
-target_include_directories(tst_elementviewgrid PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_elementviewgrid PRIVATE Qt::Test)
+qet_add_test(tst_elementviewgrid)
 
 # alignment.h is header-only too (it builds on textgrid.h): the geometry
 # behind the align commands, tested without a scene.
-add_executable(tst_alignment tst_alignment.cpp)
-add_test(NAME tst_alignment COMMAND tst_alignment)
-target_include_directories(tst_alignment PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_alignment PRIVATE Qt::Test)
+qet_add_test(tst_alignment)
 
 # terminalnamecheck.h is header-only: the terminal name rule applied by the
 # element editor on save and by --check-elements.
-add_executable(tst_terminalnamecheck tst_terminalnamecheck.cpp)
-add_test(NAME tst_terminalnamecheck COMMAND tst_terminalnamecheck)
-target_include_directories(tst_terminalnamecheck PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_terminalnamecheck PRIVATE Qt::Test)
+qet_add_test(tst_terminalnamecheck)
 
 # configprofile.h is header-only: which settings a saved configuration
 # profile carries, and how loading one replaces the live settings.
-add_executable(tst_configprofile tst_configprofile.cpp)
-add_test(NAME tst_configprofile COMMAND tst_configprofile)
-target_include_directories(tst_configprofile PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_configprofile PRIVATE Qt::Test Qt::Gui)
+qet_add_test(tst_configprofile LIBS Qt::Gui)
 
 # itemgroups.cpp keeps group membership and the selection rule apart from
 # Diagram, so it is tested here on a plain scene of rectangles.
@@ -149,18 +127,11 @@ target_link_libraries(tst_shownkinds PRIVATE Qt::Test Qt::Widgets)
 
 # textanchor.h is header-only: the point of a text chosen by its alignment,
 # shown as Position X/Y in the text properties (#1155).
-add_executable(tst_textanchor tst_textanchor.cpp)
-add_test(NAME tst_textanchor COMMAND tst_textanchor)
-set_tests_properties(tst_textanchor PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
-target_include_directories(tst_textanchor PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_textanchor PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_textanchor OFFSCREEN LIBS Qt::Widgets)
 
 # legacyelementtypes.h is header-only: the rewrite of element type names in
 # nomenclature queries saved before June 2022.
-add_executable(tst_legacyelementtypes tst_legacyelementtypes.cpp)
-add_test(NAME tst_legacyelementtypes COMMAND tst_legacyelementtypes)
-target_include_directories(tst_legacyelementtypes PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_legacyelementtypes PRIVATE Qt::Test)
+qet_add_test(tst_legacyelementtypes)
 
 add_executable(
   tst_qetpalette
@@ -365,12 +336,7 @@ if(Backtrace_FOUND)
   target_link_libraries(tst_crashdumps PRIVATE ${Backtrace_LIBRARIES})
 endif()
 
-add_executable(
-  tst_menubarkeyboard
-  tst_menubarkeyboard.cpp)
-add_test(NAME tst_menubarkeyboard COMMAND tst_menubarkeyboard)
-target_include_directories(tst_menubarkeyboard PRIVATE ${QET_DIR}/sources)
-target_link_libraries(tst_menubarkeyboard PRIVATE Qt::Test Qt::Widgets)
+qet_add_test(tst_menubarkeyboard LIBS Qt::Widgets)
 
 # Bugtracker #734 regression: exports fixtures/qet_bug_repro_resaved.qet
 # (the report's own canonical reproduction) via the built qelectrotech
