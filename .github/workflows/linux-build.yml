@@ -20,13 +20,16 @@ jobs:
     name: Build and test (Qt 6, Debug)
     runs-on: ubuntu-latest
     container: ubuntu:26.04
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_MAXSIZE: 500M
 
     steps:
       - name: Install build and test dependencies
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            ca-certificates build-essential cmake ninja-build git pkg-config \
+            ca-certificates build-essential cmake ninja-build ccache git pkg-config \
             qt6-base-dev qt6-base-private-dev qt6-tools-dev qt6-tools-dev-tools \
             libqt6svg6-dev libqt6sql6-sqlite libcups2-dev libsqlite3-dev \
             libxkbcommon-x11-0 \
@@ -44,6 +47,21 @@ jobs:
         with:
           submodules: recursive
 
+      # ccache keeps the compiled objects between runs. A pull request
+      # restores the cache of its own earlier runs first, then the one of
+      # the last master build, so a branch that touches a few files
+      # recompiles those few and links. ccache reuses an object only when
+      # the preprocessed source, the compiler and the flags are the same,
+      # so the Debug build the #868 gate relies on is the same build.
+      - name: Restore the compiler cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ github.workspace }}/.ccache
+          key: ccache-linux-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            ccache-linux-${{ github.ref_name }}-
+            ccache-linux-master-
+
       - name: Configure
         # Debug, not Release. Whether a use-after-free faults depends on what
         # the allocator does with the freed block: the commit before #868
@@ -53,12 +71,17 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DQT_VERSION_MAJOR=6 \
             -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DQET_EXPORT_PROJECT_DB=ON 
 
       - name: Build
-        run: cmake --build build --parallel $(nproc)
+        run: |
+          ccache --zero-stats
+          cmake --build build --parallel $(nproc)
+          ccache --show-stats
 
       - name: Unit tests
         run: xvfb-run -a ctest --test-dir build --output-on-failure
