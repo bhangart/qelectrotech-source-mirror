@@ -35,7 +35,9 @@ jobs:
           # left to FetchContent: without them CMake builds extra-cmake-modules
           # from source, and its Qt Help documentation target then demands
           # Qt6{Core,Gui,Widgets,DBus}Tools, failing the configure with an error
-          # that appears to be about QElectroTech and is not.
+          # that appears to be about QElectroTech and is not. -DBUILD_KF=OFF
+          # below makes CMake use these packages instead of cloning and
+          # compiling kcoreaddons and kwidgetsaddons, as Flatpak and Snap do.
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             extra-cmake-modules libkf6coreaddons-dev libkf6widgetsaddons-dev \
             qt6-svg-plugins
@@ -55,7 +57,8 @@ jobs:
             -DCMAKE_BUILD_TYPE=Debug \
             -DQT_VERSION_MAJOR=6 \
             -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-            -DQET_EXPORT_PROJECT_DB=ON 
+            -DBUILD_KF=OFF \
+            -DQET_EXPORT_PROJECT_DB=ON
 
       - name: Build
         run: cmake --build build --parallel $(nproc)
