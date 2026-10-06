@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QDir>
@@ -24,13 +26,8 @@ class tst_uprightsymboltexts : public QObject
 	{
 		const QString home = m_dir.filePath(QStringLiteral("home"));
 		QDir().mkpath(home);
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, m_dir.path());
 		env.insert(QStringLiteral("QET_ENABLE_SCRIPTING"), QStringLiteral("1"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/data"));
-		env.insert(QStringLiteral("TMPDIR"), m_dir.path());
 		return env;
 	}
 

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QDir>
@@ -27,13 +29,8 @@ class tst_databasefromdocument : public QObject
 	{
 		const QString home = m_dir.filePath(QStringLiteral("home%1").arg(m_run++));
 		QDir().mkpath(home);
-		QProcessEnvironment e = QProcessEnvironment::systemEnvironment();
-		e.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QProcessEnvironment e = QET::Test::sandboxEnvironment(home, m_dir.path());
 		e.insert(QStringLiteral("QET_ENABLE_SCRIPTING"), QStringLiteral("1"));
-		e.insert(QStringLiteral("HOME"), home);
-		e.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/config"));
-		e.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/data"));
-		e.insert(QStringLiteral("TMPDIR"), m_dir.path());
 		e.remove(QStringLiteral("QET_DATABASE_FROM_FOLIOS"));
 		return e;
 	}

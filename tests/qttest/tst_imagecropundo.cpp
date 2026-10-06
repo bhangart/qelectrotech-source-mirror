@@ -15,6 +15,8 @@
 	You should have received a copy of the GNU General Public License
 	along with QElectroTech.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "qettesthelpers.h"
+
 #include <QtTest>
 
 #include <QDir>
@@ -55,13 +57,8 @@ class tst_imagecropundo : public QObject
 		f.write(script.toUtf8());
 		f.close();
 
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("offscreen"));
+		QProcessEnvironment env = QET::Test::sandboxEnvironment(home, m_dir.path());
 		env.insert(QStringLiteral("QET_ENABLE_SCRIPTING"), QStringLiteral("1"));
-		env.insert(QStringLiteral("HOME"), home);
-		env.insert(QStringLiteral("XDG_CONFIG_HOME"), home + QStringLiteral("/config"));
-		env.insert(QStringLiteral("XDG_DATA_HOME"), home + QStringLiteral("/data"));
-		env.insert(QStringLiteral("TMPDIR"), m_dir.path());
 		QProcess proc;
 		proc.setProcessEnvironment(env);
 		proc.start(QStringLiteral(QET_TEST_BINARY_PATH),
