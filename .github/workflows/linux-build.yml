@@ -61,7 +61,10 @@ jobs:
         run: cmake --build build --parallel $(nproc)
 
       - name: Unit tests
-        run: xvfb-run -a ctest --test-dir build --output-on-failure
+        # One test per core. The few tests that need the keyboard focus of
+        # the shared Xvfb display are marked RUN_SERIAL in
+        # tests/qttest/CMakeLists.txt and run alone.
+        run: xvfb-run -a ctest --test-dir build --output-on-failure -j "$(nproc)"
 
       - name: IPC open-forwarding regression (#868)
         # Fails the job only on an actual crash. An inconclusive run means the

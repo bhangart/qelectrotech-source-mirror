@@ -406,6 +406,9 @@ add_executable(
   tst_menubarkeyboard
   tst_menubarkeyboard.cpp)
 add_test(NAME tst_menubarkeyboard COMMAND tst_menubarkeyboard)
+# Needs the keyboard focus of the display it runs on: with ctest -j another
+# test's window could take it. RUN_SERIAL runs it while nothing else runs.
+set_tests_properties(tst_menubarkeyboard PROPERTIES RUN_SERIAL TRUE)
 target_include_directories(tst_menubarkeyboard PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_menubarkeyboard PRIVATE Qt::Test Qt::Widgets)
 
