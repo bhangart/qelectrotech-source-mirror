@@ -293,6 +293,15 @@ add_test(NAME tst_smart_device COMMAND tst_smart_device)
 target_include_directories(tst_smart_device PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_smart_device PRIVATE Qt::Test Qt::Sql)
 
+# BorderProperties: the default folio border, and comparing two borders.
+add_executable(
+  tst_borderproperties
+  tst_borderproperties.cpp
+  ${QET_DIR}/sources/borderproperties.cpp)
+add_test(NAME tst_borderproperties COMMAND tst_borderproperties)
+target_include_directories(tst_borderproperties PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_borderproperties PRIVATE Qt::Test Qt::Xml)
+
 # qet.cpp carries the SingleApplication argument wire format
 # (joinWithSpaces/splitWithSpaces); it pulls in qeticons and shortcutmanager,
 # so those are compiled alongside rather than linking the whole application.
