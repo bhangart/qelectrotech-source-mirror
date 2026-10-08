@@ -97,16 +97,6 @@ if(Python3_Interpreter_FOUND AND CMAKE_GENERATOR STREQUAL "Ninja")
   set_tests_properties(tst_darkimageintegration PROPERTIES TIMEOUT 300 RUN_SERIAL TRUE)
 endif()
 
-add_executable(${PROJECT_NAME} tst_mytest.cpp)
-add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
-
-target_link_libraries(
-  ${PROJECT_NAME}
-  PRIVATE
-  Qt::Test
-  ${KF_PRIVATE_LIBRARIES}
-  ${QET_PRIVATE_LIBRARIES})
-
 # diagramsortkeys.h is a header-only helper (no QET link deps needed
 # beyond Qt itself), so this test builds independently of the rest of
 # the QET sources.
