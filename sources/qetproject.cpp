@@ -144,8 +144,9 @@ QETProject::QETProject(const QString &path, QObject *parent) :
 	}
 
 		//The file just read already holds everything a crash could lose, so
-		//there is nothing to back up until the project is changed.
+		//there is nothing to back up or autosave until the project is changed.
 	m_backup_needed = false;
+	m_autosave_needed = false;
 	init();
 }
 
@@ -308,18 +309,21 @@ void QETProject::init()
 	m_undo_stack = new QUndoStack(this);
 	connect(m_undo_stack, &QUndoStack::cleanChanged, this, &QETProject::undoStackChanged);
 
-		//What counts as a change for writeBackup(): the undo stack moving,
-		//setModified(true), and the embedded collections, which can change
-		//without going through either.
-	const auto backup_needed = [this]() { m_backup_needed = true; };
-	connect(m_undo_stack, &QUndoStack::indexChanged, this, backup_needed);
-	connect(&m_titleblocks_collection, &TitleBlockTemplatesCollection::changed, this, backup_needed);
-	connect(&m_titleblocks_collection, &TitleBlockTemplatesCollection::aboutToRemove, this, backup_needed);
-	connect(m_elements_collection, &XmlElementCollection::elementAdded, this, backup_needed);
-	connect(m_elements_collection, &XmlElementCollection::elementChanged, this, backup_needed);
-	connect(m_elements_collection, &XmlElementCollection::elementRemoved, this, backup_needed);
-	connect(m_elements_collection, &XmlElementCollection::directorieAdded, this, backup_needed);
-	connect(m_elements_collection, &XmlElementCollection::directoryRemoved, this, backup_needed);
+		//What counts as a change for writeBackup() and autosave(): the undo
+		//stack moving, setModified(true), and the embedded collections, which
+		//can change without going through either.
+	const auto mark_changed = [this]() {
+		m_backup_needed = true;
+		m_autosave_needed = true;
+	};
+	connect(m_undo_stack, &QUndoStack::indexChanged, this, mark_changed);
+	connect(&m_titleblocks_collection, &TitleBlockTemplatesCollection::changed, this, mark_changed);
+	connect(&m_titleblocks_collection, &TitleBlockTemplatesCollection::aboutToRemove, this, mark_changed);
+	connect(m_elements_collection, &XmlElementCollection::elementAdded, this, mark_changed);
+	connect(m_elements_collection, &XmlElementCollection::elementChanged, this, mark_changed);
+	connect(m_elements_collection, &XmlElementCollection::elementRemoved, this, mark_changed);
+	connect(m_elements_collection, &XmlElementCollection::directorieAdded, this, mark_changed);
+	connect(m_elements_collection, &XmlElementCollection::directoryRemoved, this, mark_changed);
 
 	m_save_backup_timer.setInterval(BACKUP_INTERVAL);
 	connect(&m_save_backup_timer, &QTimer::timeout, this, &QETProject::writeBackup);
@@ -332,11 +336,8 @@ void QETProject::init()
 	{
 		int ms = autosave_interval*60*1000;
 		m_autosave_timer.setInterval(ms);
-		connect(&m_autosave_timer, &QTimer::timeout, this, [this]()
-		{
-			if(!this->m_file_path.isEmpty())
-				this->write();
-		});
+		connect(&m_autosave_timer, &QTimer::timeout,
+				this, &QETProject::autosave);
 		m_autosave_timer.start();
 	}
 
@@ -1657,7 +1658,24 @@ QETResult QETProject::write()
 	updateDiagramsFolioData();
 
 	setModified(false);
+	m_autosave_needed = false;
 	return(QETResult());
+}
+
+/**
+	@brief QETProject::autosave
+	Called by the autosave timer: write the project to its file, unless it
+	has no file yet or nothing changed since the last write(). toXml()
+	walks the whole project on the GUI thread, which freezes big projects
+	for seconds, and rewriting an unchanged project gains nothing
+	(discussion #800).
+	@return true if the project was written
+*/
+bool QETProject::autosave()
+{
+	if (m_file_path.isEmpty() || !m_autosave_needed)
+		return(false);
+	return(write().isOk());
 }
 
 /**
@@ -1975,6 +1993,7 @@ void QETProject::diagramOrderChanged(int old_index, int new_index) {
 void QETProject::setModified(bool modified) {
 	if (modified) {
 		m_backup_needed = true;
+		m_autosave_needed = true;
 	}
 	if (m_modified != modified) {
 		m_modified = modified;

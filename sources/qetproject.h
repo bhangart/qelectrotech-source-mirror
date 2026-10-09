@@ -242,6 +242,7 @@ class QETProject : public QObject
 		QDomDocument toXml();
 		bool close();
 		QETResult write();
+		bool autosave();
 		bool isReadOnly() const;
 		void setReadOnly(bool);
 		bool isEmpty() const;
@@ -354,6 +355,8 @@ class QETProject : public QObject
 		static bool m_backup_enabled;
 			/// Something changed since the last backup, see writeBackup()
 		bool m_backup_needed = true;
+			/// Something changed since the last write(), see autosave()
+		bool m_autosave_needed = true;
 			/// File path this project is saved to
 		QString m_file_path;
 			/// Current state of the project

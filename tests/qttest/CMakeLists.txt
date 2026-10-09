@@ -1116,6 +1116,22 @@ add_test(NAME tst_imagedrop COMMAND tst_imagedrop)
 target_include_directories(tst_imagedrop PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_imagedrop PRIVATE Qt::Test Qt::Gui)
 
+# Autosave writes a project only when it changed since the last write
+# (discussion #800). QETProject needs most of the application, so the test
+# links the application's own objects, all but main.cpp's, with the same
+# definitions, include folders and libraries.
+add_executable(tst_projectautosave tst_projectautosave.cpp
+  "$<FILTER:$<TARGET_OBJECTS:qelectrotech>,EXCLUDE,/sources/main\\.cpp\\.o(bj)?$>")
+add_test(NAME tst_projectautosave COMMAND tst_projectautosave)
+target_compile_definitions(tst_projectautosave PRIVATE
+  $<TARGET_PROPERTY:qelectrotech,COMPILE_DEFINITIONS>)
+target_include_directories(tst_projectautosave PRIVATE ${QET_DIR}/sources
+  $<TARGET_PROPERTY:qelectrotech,INCLUDE_DIRECTORIES>)
+target_link_libraries(tst_projectautosave PRIVATE Qt::Test
+  $<TARGET_PROPERTY:qelectrotech,LINK_LIBRARIES>)
+set_tests_properties(tst_projectautosave PROPERTIES
+  ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+
 # Qt 6.4.2 writes the attributes of an element in an order that changes from
 # one process to the next, so a project saved twice by two runs of the binary
 # differs in bytes only (seen on projects without any numbering, too). A fixed
