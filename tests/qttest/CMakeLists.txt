@@ -1069,6 +1069,31 @@ add_test(NAME tst_conductormultiedit COMMAND tst_conductormultiedit)
 target_include_directories(tst_conductormultiedit PRIVATE ${QET_DIR}/sources)
 target_link_libraries(tst_conductormultiedit PRIVATE Qt::Test Qt::Widgets Qt::Xml pugixml::pugixml)
 
+# SearchAndReplaceWorker::replaceAdvanced() for wires -- every field the
+# "Advanced" dialog of Search and replace offers is replaced, and nothing
+# else ("Tension / protocol" was silently ignored). The worker's other
+# functions reach into the whole scene, so the test stubs the scene symbols
+# they call; only the static replaceAdvanced() runs.
+add_executable(
+  tst_searchreplaceconductor
+  tst_searchreplaceconductor.cpp
+  ${QET_DIR}/sources/SearchAndReplace/searchandreplaceworker.cpp
+  ${QET_DIR}/sources/conductorproperties.cpp
+  ${QET_DIR}/sources/titleblockproperties.cpp
+  ${QET_DIR}/sources/diagramcontext.cpp
+  ${QET_DIR}/sources/qetinformation.cpp
+  ${QET_DIR}/sources/QPropertyUndoCommand/qpropertyundocommand.cpp
+  ${QET_DIR}/sources/qet.cpp
+  ${QET_DIR}/sources/qeticons.cpp
+  ${QET_DIR}/sources/shortcutmanager.cpp)
+add_test(NAME tst_searchreplaceconductor COMMAND tst_searchreplaceconductor)
+# sources/ui: the scene headers include "../qetgraphicsitem/..."
+target_include_directories(tst_searchreplaceconductor PRIVATE
+  ${QET_DIR}/sources ${QET_DIR}/sources/ui ${QET_DIR}/sources/ui/nokde)
+target_compile_definitions(tst_searchreplaceconductor PRIVATE BUILD_WITHOUT_KF)
+target_link_libraries(tst_searchreplaceconductor PRIVATE
+  Qt::Test Qt::Widgets Qt::Xml Qt::Sql pugixml::pugixml)
+
 # DiagramContext::fromXml() -- the two readers (QDom for projects, pugixml
 # for element definitions in the collection) give the same values: stray
 # spaces trimmed, accents kept.

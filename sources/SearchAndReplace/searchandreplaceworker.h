@@ -82,11 +82,13 @@ class SearchAndReplaceWorker
 				const ConductorProperties &change);
 		static QString applyChange(const QString &original,
 					   const QString &change);
+		static ConductorProperties replaceAdvanced(
+				ConductorProperties properties,
+				const advancedReplaceStruct &advanced);
 		
 	private:
 		TitleBlockProperties replaceAdvanced (Diagram *diagram);
 		DiagramContext       replaceAdvanced (Element *element);
-		ConductorProperties  replaceAdvanced (Conductor *conductor);
 		
 		TitleBlockProperties m_titleblock_properties;
 		DiagramContext m_element_context;

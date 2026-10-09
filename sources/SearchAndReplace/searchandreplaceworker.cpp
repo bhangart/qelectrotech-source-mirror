@@ -338,7 +338,8 @@ void SearchAndReplaceWorker::replaceAdvanced(
 		for (Conductor *conductor : conductors)
 		{
 			ConductorProperties old_properties = conductor->properties();
-			ConductorProperties new_properties = replaceAdvanced(conductor);
+			ConductorProperties new_properties = replaceAdvanced(
+						old_properties, m_advanced_struct);
 			if (old_properties != new_properties)
 			{
 				QSet <Conductor *> potential_conductors = conductor->relatedPotentialConductors(true);
@@ -534,33 +535,35 @@ DiagramContext SearchAndReplaceWorker::replaceAdvanced(Element *element)
 
 /**
 	@brief SearchAndReplaceWorker::replaceAdvanced
-	@param conductor
+	@param properties : the properties of a conductor
+	@param advanced : the advanced change, as set in replaceAdvancedDialog
 	@return the conductor properties with the change applied,
-	according to the state of m_advanced_struct
+	according to the state of advanced
 */
 ConductorProperties SearchAndReplaceWorker::replaceAdvanced(
-		Conductor *conductor)
+		ConductorProperties properties,
+		const advancedReplaceStruct &advanced)
 {
-	ConductorProperties properties = conductor->properties();
-
-	if (m_advanced_struct.who == 2)
+	if (advanced.who == 2)
 	{
-		QRegularExpression rx(m_advanced_struct.search);
+		QRegularExpression rx(advanced.search);
 		if (!rx.isValid())
 		{
 			qWarning() <<QObject::tr("this is an error in the code")
 				  << rx.errorString()
 				  << rx.patternErrorOffset();
 		}
-		QString what = m_advanced_struct.what;
-		QString replace = m_advanced_struct.replace;
+		QString what = advanced.what;
+		QString replace = advanced.replace;
 
-		if (what == "formula")               {properties.m_formula.replace(rx, replace);}
-		else if (what == "text")             {properties.text.replace(rx, replace);}
-		else if (what == "function")         {properties.m_function.replace(rx, replace);}
-		else if (what == "tension/protocol") {properties.m_tension_protocol.replace(rx, replace);}
-		else if (what == "conductor_color") {properties.m_wire_color.replace(rx, replace);}
-		else if (what == "conductor_section") {properties.m_wire_section.replace(rx, replace);}
+			//The same keys as the "what" combo box of the dialog
+		using namespace QETInformation;
+		if (what == COND_FORMULA)               {properties.m_formula.replace(rx, replace);}
+		else if (what == COND_TEXT)             {properties.text.replace(rx, replace);}
+		else if (what == COND_FUNCTION)         {properties.m_function.replace(rx, replace);}
+		else if (what == COND_TENSION_PROTOCOL) {properties.m_tension_protocol.replace(rx, replace);}
+		else if (what == COND_COLOR)            {properties.m_wire_color.replace(rx, replace);}
+		else if (what == COND_SECTION)          {properties.m_wire_section.replace(rx, replace);}
 	}
 
 	return properties;
