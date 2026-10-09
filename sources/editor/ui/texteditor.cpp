@@ -62,6 +62,9 @@ void TextEditor::updateForm()
 	m_y_sb -> setValue(m_text -> pos().y());
 	m_rotation_sb -> setValue(m_text -> rotation());
 	m_size_sb -> setValue(m_text -> font().pointSize());
+		//Rounded as the width box compares it; setValue(int) would
+		//truncate 61.7 to 61. -1 shows "Auto".
+	m_width_sb -> setValue(qRound(m_text -> userTextWidth()));
 	m_font_pb -> setText(m_text -> font().family());
 #ifdef BUILD_WITHOUT_KF
 #else
@@ -81,6 +84,7 @@ void TextEditor::setUpChangeConnection(QPointer<PartText> part)
 	m_change_connection << connect(part, &PartText::rotationChanged,  this, &TextEditor::updateForm);
 	m_change_connection << connect(part, &PartText::fontChanged,      this, &TextEditor::updateForm);
 	m_change_connection << connect(part, &PartText::colorChanged,     this, &TextEditor::updateForm);
+	m_change_connection << connect(part, &PartText::textWidthChanged, this, &TextEditor::updateForm);
 }
 
 void TextEditor::disconnectChangeConnection()
@@ -247,6 +251,27 @@ void TextEditor::setUpEditConnection()
 		}
 		m_size_sb->setFocus();
 	});
+
+		//Without keyboard tracking: a typed width is applied once, when
+		//it is complete, not one digit after the other
+	m_edit_connection << connect(m_width_sb, QOverload<int>::of(&QSpinBox::valueChanged), [this]() {
+			//-1 is "Auto"; 0, the only other value <= 0, is automatic too
+		const int value = m_width_sb -> value() > 0 ? m_width_sb -> value() : -1;
+		for (int i=0; i < m_parts.length(); i++) {
+			PartText* partText = m_parts[i];
+				//The box shows whole pixels: a width of 61.7 is not
+				//rounded just by leaving the box
+			if (value != qRound(partText -> userTextWidth())) {
+				QPropertyUndoCommand *undo = new QPropertyUndoCommand(
+					partText, "textWidth", partText -> userTextWidth(), qreal(value));
+				undo -> setText(tr("Change the width of a text"));
+				undoStack().push(undo);
+			}
+		}
+			//Shows "Auto" for 0 if nothing changed
+		updateForm();
+		m_width_sb->setFocus();
+	});
 }
 
 /**
@@ -397,6 +422,20 @@ void TextEditor::setUpWidget(QWidget *parent)
 	});
 
 	gridLayout->addWidget(alignment_pb, 3, 0, 1, 2);
+
+	QLabel *width_label = new QLabel(tr("Width :"), parent);
+	gridLayout->addWidget(width_label, 3, 2, 1, 1);
+
+	m_width_sb = new QSpinBox(parent);
+	m_width_sb->setObjectName(QString::fromUtf8("m_width_sb"));
+	m_width_sb->setRange(-1, 10000);
+	m_width_sb->setValue(-1);
+	m_width_sb->setSpecialValueText(tr("Auto"));
+	m_width_sb->setSuffix(tr(" px"));
+	m_width_sb->setKeyboardTracking(false);
+	m_width_sb->setToolTip(tr("Width the text wraps to. "
+							  "Auto: the text is not wrapped"));
+	gridLayout->addWidget(m_width_sb, 3, 3, 1, 1);
 
 	QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 

@@ -35,12 +35,14 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 	Q_PROPERTY(QString text READ toPlainText WRITE setPlainText NOTIFY plainTextChanged)
 	Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
 	Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
+	Q_PROPERTY(qreal textWidth READ userTextWidth WRITE setUserTextWidth NOTIFY textWidthChanged)
 
 	signals:
 		void fontChanged(const QFont &font);
 		void colorChanged(const QColor &color);
 		void plainTextChanged(const QString &text);
 		void alignmentChanged(Qt::Alignment alignment);
+		void textWidthChanged(qreal width);
 
 		// constructors, destructor
 	public:
@@ -85,6 +87,10 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 		void setFont(const QFont &font);
 		void setAlignment(const Qt::Alignment &alignment);
 		Qt::Alignment alignment() const {return m_alignment;}
+			//Not textWidth()/setTextWidth(): QGraphicsTextItem has these,
+			//not virtual, for the width of the document
+		qreal userTextWidth() const {return m_text_width;}
+		void setUserTextWidth(qreal width);
 
 	public slots:
 		void adjustItemPosition(int = 0);
@@ -110,6 +116,7 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 		void prepareAlignment();
 		void finishAlignment();
 		QPointF anchorOffset() const;
+		qreal boxWidth() const;
 		QString previous_text;
 		qreal real_font_size_;
 		QPointF saved_point_;
@@ -117,6 +124,8 @@ class PartText : public QGraphicsTextItem, public CustomElementPart {
 		QGraphicsItem *decorator_;
 		QPointF m_origin_pos;
 		Qt::Alignment m_alignment = (Qt::AlignTop | Qt::AlignLeft);
+			/// The width the text wraps to, -1 = automatic (text_width)
+		qreal m_text_width = -1;
 		QRectF m_alignment_rect;
 			/// x/y in the .elmt are the aligned point, not the
 			/// baseline-left (anchor="alignment", #1251)

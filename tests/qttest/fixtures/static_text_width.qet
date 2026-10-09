@@ -1,0 +1,68 @@
+<project title="Static texts with a width" uuid="{7d2b3c4e-0577-4d2f-8a68-4a1e1a1b8c10}" version="0.200.1">
+    <properties>
+        <property name="saveddate" show="1">10/2/26</property>
+        <property name="saveddate-eu" show="1">02-10-2026</property>
+        <property name="saveddate-us" show="1">2026-10-02</property>
+        <property name="savedfilename" show="1">static_text_width</property>
+        <property name="savedtime" show="1">18:39</property>
+    </properties>
+    <usage enabled="true" time_spent="0"/>
+    <newdiagrams>
+        <border cols="17" colsize="60" displaycols="true" displayrows="true" rows="8" rowsize="80"/>
+        <inset author="" auto_page_num="" date="null" displayAt="bottom" filename="" folio="" indexrev="" locmach="" plant="" title="" version=""/>
+        <conductors bicolor="false" bus="" cable="" color2="#000000" condsize="1" conductor_color="" conductor_section="" dash-size="1" displaytext="1" formula="" function="" horizontal-alignment="AlignBottom" horizrotatetext="0" num="_" numsize="7" onetextperfolio="0" tension_protocol="" text_color="#000000" type="multi" vertical-alignment="AlignRight" vertirotatetext="270"/>
+        <report label="%f-%l%c"/>
+        <xrefs>
+            <xref delayprefix="" displayhas="cross" master_label="%f-%l%c" offset="0" powerprefix="" showallconfiguredslaves="false" showpowerctc="true" showterminalname="true" slave_label="(%f-%l%c)" slave_offset="0" snapto="label" switchprefix="" type="coil" xrefpos="AlignBottom"/>
+            <xref delayprefix="" displayhas="cross" master_label="%f-%l%c" offset="0" powerprefix="" showallconfiguredslaves="false" showpowerctc="true" showterminalname="true" slave_label="(%f-%l%c)" slave_offset="0" snapto="label" switchprefix="" type="commutator" xrefpos="AlignBottom"/>
+            <xref delayprefix="" displayhas="cross" master_label="%f-%l%c" offset="0" powerprefix="" showallconfiguredslaves="false" showpowerctc="true" showterminalname="true" slave_label="(%f-%l%c)" slave_offset="0" snapto="label" switchprefix="" type="plc" xrefpos="AlignBottom"/>
+            <xref delayprefix="" displayhas="cross" master_label="%f-%l%c" offset="0" powerprefix="" showallconfiguredslaves="false" showpowerctc="true" showterminalname="true" slave_label="(%f-%l%c)" slave_offset="0" snapto="label" switchprefix="" type="protection" xrefpos="AlignBottom"/>
+        </xrefs>
+        <conductors_autonums auto_break_conductors="false" current_autonum="" freeze_new_conductors="false"/>
+        <folio_autonums/>
+        <element_autonums current_autonum="" freeze_new_elements="false"/>
+        <guides/>
+    </newdiagrams>
+        <diagram author="" auto_page_num="" cols="17" colsize="60" date="null" displayAt="bottom" displaycols="true" displayrows="true" filename="" folio="" freezeNewConductor="false" freezeNewElement="false" height="660" indexrev="" locmach="" order="1" plant="" rows="8" rowsize="80" title="" uuid="{7d2b3c4e-0577-4d2f-8a68-4a1e1a1b8b01}" version="0.200.1-dev">
+        <elements>
+            <element freezeLabel="false" is_movable="1" orientation="0" prefix="" type="embed://import/width.elmt" uuid="{7d2b3c4e-0577-4d2f-8a68-4a1e1a1b8b02}" x="300" y="300" z="10">
+                <terminals/>
+                <inputs/>
+                <dynamic_texts/>
+                <texts_groups/>
+            </element>
+        </elements>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="en">Imported elements</name>
+            </names>
+            <element name="width.elmt">
+                <definition height="160" hotspot_x="100" hotspot_y="10" link_type="simple" type="element" version="0.100.0" width="200">
+                    <uuid uuid="{7d2b3c4e-0577-4d2f-8a68-4a1e1a1b8b05}"/>
+                    <names>
+                        <name lang="en">Static texts with a width</name>
+                    </names>
+                    <description>
+                        <line antialias="false" end1="none" end2="none" length1="1.5" length2="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" x2="0" y1="0" y2="60"/>
+                        <text text="A000Alpha A000Beta A000Gamma A000Delta A000Epsilon" x="0" y="10" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="W613Alpha W613Beta W613Gamma W613Delta W613Epsilon" x="0" y="20" text_width="61.3" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="W617Alpha W617Beta W617Gamma W617Delta W617Epsilon" x="0" y="30" text_width="61.7" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="W800Alpha W800Beta W800Gamma W800Delta W800Epsilon" x="0" y="40" text_width="80" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="W900Alpha W900Beta W900Gamma W900Delta W900Epsilon" x="0" y="50" text_width="90" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="ZeroAlpha ZeroBeta ZeroGamma ZeroDelta ZeroEpsilon" x="0" y="60" text_width="0" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="NegsAlpha NegsBeta NegsGamma NegsDelta NegsEpsilon" x="0" y="70" text_width="-1" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="NansAlpha NansBeta NansGamma NansDelta NansEpsilon" x="0" y="80" text_width="nan" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="InfsAlpha InfsBeta InfsGamma InfsDelta InfsEpsilon" x="0" y="90" text_width="inf" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="R090Alpha R090Beta R090Gamma R090Delta R090Epsilon" x="0" y="100" text_width="80" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="90"/>
+                        <text text="R037Alpha R037Beta R037Gamma R037Delta R037Epsilon" x="0" y="110" text_width="80" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="37"/>
+                        <text text="LeftAlpha LeftBeta LeftGamma LeftDelta LeftEpsilon" x="0" y="120" text_width="80" anchor="alignment" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="RghtAlpha RghtBeta RghtGamma RghtDelta RghtEpsilon" x="0" y="130" text_width="80" Halignment="AlignRight" anchor="alignment" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                        <text text="CentAlpha CentBeta CentGamma CentDelta CentEpsilon" x="0" y="140" text_width="80" Halignment="AlignHCenter" anchor="alignment" font="Liberation Sans,9,-1,5,50,0,0,0,0,0,Regular" color="#000000" rotation="0"/>
+                    </description>
+                </definition>
+            </element>
+        </category>
+    </collection>
+</project>

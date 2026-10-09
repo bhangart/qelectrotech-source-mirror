@@ -63,6 +63,7 @@ class TextEditor : public ElementItemEditor {
 		QSpinBox *m_rotation_sb;
 		QSpinBox *m_x_sb;
 		QSpinBox *m_size_sb;
+		QSpinBox *m_width_sb;
 		QLineEdit *m_line_edit;
 		QPushButton *m_font_pb;
 #ifdef BUILD_WITHOUT_KF

@@ -633,6 +633,20 @@ target_link_libraries(tst_statictextanchor PRIVATE Qt::Test)
 target_compile_definitions(tst_statictextanchor PRIVATE
   "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
 
+# A static text of a symbol with text_width wraps to it (statictextwidth.h):
+# the folio breaks its lines as the element editor does, --export-dxf writes
+# one text per line, and anchor="alignment" uses the box of the width.
+add_executable(
+  tst_statictextwidth
+  tst_statictextwidth.cpp)
+add_test(NAME tst_statictextwidth COMMAND tst_statictextwidth)
+set_tests_properties(tst_statictextwidth PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+add_dependencies(tst_statictextwidth qelectrotech)
+target_include_directories(tst_statictextwidth PRIVATE ${QET_DIR}/sources)
+target_link_libraries(tst_statictextwidth PRIVATE Qt::Test Qt::Gui Qt::Xml)
+target_compile_definitions(tst_statictextwidth PRIVATE
+  "QET_TEST_BINARY_PATH=\"$<TARGET_FILE:qelectrotech>\"")
+
 # --export-dxf --dxf-blocks: a symbol placed twice is one BLOCK and two
 # INSERTs (issue #1339).
 add_executable(

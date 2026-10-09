@@ -20,6 +20,7 @@
 #include "../../QPropertyUndoCommand/qpropertyundocommand.h"
 #include <QApplication>
 #include "../../qetapp.h"
+#include "../../statictextwidth.h"
 #include "../elementprimitivedecorator.h"
 #include "../elementscene.h"
 #include "../ui/texteditor.h"
@@ -35,7 +36,7 @@ PartText::PartText(QETElementEditor *editor, QGraphicsItem *parent) :
 	CustomElementPart(editor),
 	previous_text()
 {
-	document() -> setDocumentMargin(1.0);
+	document() -> setDocumentMargin(StaticTextWidth::editorMargin);
 	setDefaultTextColor(Qt::black);
 	setFont(QETApp::diagramTextsFont());
 	real_font_size_ = font().pointSize();
@@ -89,8 +90,9 @@ void PartText::mirror(qreal axis_x) {
 	// at first: rotate the text:
 	QGraphicsObject::setRotation(QET::correctAngle((360-rotation()), true));
 	// then see, where we need to re-position depending on text, font ...
-	// (the widest line, not the whole text measured as one line)
-	qreal textwidth  = document()->idealWidth() - 2 * document()->documentMargin();
+	// (the widest line, not the whole text measured as one line, or the
+	// width the text wraps to)
+	qreal textwidth  = boxWidth() - 2 * document()->documentMargin();
 	// ... and angle!!!
 	qreal rot = qRound(QET::correctAngle(rotation(), true));
 	qreal c = qCos(qDegreesToRadians(rot));
@@ -160,6 +162,7 @@ void PartText::fromXml(const QDomElement &xml_element) {
 			me.keyToValue(xml_element.attribute("Valignment").toStdString().data()))
 			| (alignment_ & Qt::AlignHorizontal_Mask);
 	setAlignment(alignment_);
+	setUserTextWidth(StaticTextWidth::fromXml(xml_element));
 
 	setPos(xml_element.attribute("x").toDouble(),
 			xml_element.attribute("y").toDouble());
@@ -205,6 +208,7 @@ const QDomElement PartText::toXml(QDomDocument &xml_document) const
 		xml_element.setAttribute("Valignment", me.valueToKey(Qt::AlignVCenter));
 	if (m_anchor_to_alignment)
 		xml_element.setAttribute("anchor", "alignment");
+	StaticTextWidth::toXml(xml_element, m_text_width);
 
 	return(xml_element);
 }
@@ -384,20 +388,45 @@ void PartText::setAlignment(const Qt::Alignment &alignment)
 }
 
 /**
+	@brief PartText::setUserTextWidth
+	Set the width this text wraps to (-1 = automatic width, also for 0, a
+	negative value, nan and inf). The point of the text chosen by its
+	alignment stays in place.
+	@param width
+*/
+void PartText::setUserTextWidth(qreal width)
+{
+	width = StaticTextWidth::normalized(width);
+	if (qFuzzyCompare(width, m_text_width))
+		return;
+
+	prepareAlignment();
+	m_text_width = width;
+	applyLineAlignment();
+	finishAlignment();
+	emit textWidthChanged(m_text_width);
+}
+
+/**
 	@brief PartText::applyLineAlignment
 	Align the lines of a multi-line text relative to each other according
-	to the horizontal part of the alignment property. QGraphicsTextItem
-	only honors the document text option when a text width is set, hence
-	the idealWidth() dance; -1 restores the free (historical) layout.
+	to the horizontal part of the alignment property, and wrap the text to
+	its width, if it has one. QGraphicsTextItem only honors the document
+	text option when a text width is set, hence the idealWidth() dance; -1
+	restores the free (historical) layout.
 */
 void PartText::applyLineAlignment()
 {
 	QTextOption option = document()->defaultTextOption();
 	option.setAlignment(m_alignment & Qt::AlignHorizontal_Mask);
+		//As on the folio: a word longer than the width is not broken
+	option.setWrapMode(QTextOption::WordWrap);
 	document()->setDefaultTextOption(option);
 
 	setTextWidth(-1);
-	if (m_alignment & (Qt::AlignHCenter | Qt::AlignRight))
+	if (m_text_width > 0)
+		setTextWidth(m_text_width);
+	else if (m_alignment & (Qt::AlignHCenter | Qt::AlignRight))
 		setTextWidth(document()->idealWidth());
 }
 
@@ -462,13 +491,23 @@ void PartText::finishAlignment()
 */
 QPointF PartText::anchorOffset() const
 {
-	qreal width = document()->idealWidth() - 2 * document()->documentMargin();
+	qreal width = boxWidth() - 2 * document()->documentMargin();
 	qreal dx = 0;
 	if (m_alignment & Qt::AlignRight)
 		dx = width;
 	else if (m_alignment & Qt::AlignHCenter)
 		dx = width / 2;
 	return QTransform().rotate(rotation()).map(QPointF(dx, 0));
+}
+
+/**
+	@brief PartText::boxWidth
+	@return the width of the box of the text, margins included: the width
+	it wraps to, or else its widest line.
+*/
+qreal PartText::boxWidth() const
+{
+	return m_text_width > 0 ? m_text_width : document()->idealWidth();
 }
 
 void PartText::setFont(const QFont &font) {
@@ -570,9 +609,14 @@ void PartText::startEdition()
 	previous_text = toPlainText();
 
 	// Anchor the aligned point across the whole inline edition; free the
-	// text width so typing is not wrapped at the previous block width.
+	// text width so typing is not wrapped at the previous block width,
+	// unless the text has a width of its own: it wraps to it while typed.
 	prepareAlignment();
-	setTextWidth(-1);
+	setTextWidth(m_text_width);
+
+		//No resize handles while the text is typed in
+	if (auto *element_scene = qobject_cast<ElementScene *>(scene()))
+		element_scene->updateTextResizeHandles();
 }
 
 /**
@@ -604,4 +648,7 @@ void PartText::endEdition()
 		applyLineAlignment();
 		finishAlignment();
 	}
+
+	if (auto *element_scene = qobject_cast<ElementScene *>(scene()))
+		element_scene->updateTextResizeHandles();
 }

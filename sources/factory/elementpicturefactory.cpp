@@ -22,6 +22,8 @@
 #include "../properties/elementdata.h"
 #include "../qetapp.h"
 #include "../qetversion.h"
+#include "../statictextwidth.h"
+#include "../textlines.h"
 #include "../utils/qetutils.h"
 
 #include <QAbstractTextDocumentLayout>
@@ -704,6 +706,15 @@ void ElementPictureFactory::parseText(const QDomElement &dom, QPainter &painter,
 		//adjusts the offset by the margin of the text document
 	text_document.setDocumentMargin(0.0);
 
+		//Optional width the text wraps to, as in the element editor
+	const qreal text_width = StaticTextWidth::fromXml(dom);
+	if (text_width > 0) {
+		QTextOption option = text_document.defaultTextOption();
+		option.setWrapMode(QTextOption::WordWrap);
+		text_document.setDefaultTextOption(option);
+		text_document.setTextWidth(StaticTextWidth::lineWidth(text_width));
+	}
+
 		//Optional line alignment of multi-line texts. The document only
 		//honours the text option once a text width is set.
 		//x/y are the baseline-left of the text block, unless
@@ -717,11 +728,12 @@ void ElementPictureFactory::parseText(const QDomElement &dom, QPainter &painter,
 			QTextOption option = text_document.defaultTextOption();
 			option.setAlignment(h_alignment & Qt::AlignHorizontal_Mask);
 			text_document.setDefaultTextOption(option);
-			text_document.setTextWidth(text_document.idealWidth());
+			if (text_width <= 0)
+				text_document.setTextWidth(text_document.idealWidth());
 			if (dom.attribute("anchor") == QLatin1String("alignment"))
 				qpainter_offset.rx() -= h_alignment & Qt::AlignRight
-						? text_document.idealWidth()
-						: text_document.idealWidth() / 2;
+						? text_document.textWidth()
+						: text_document.textWidth() / 2;
 		}
 	}
 
@@ -753,7 +765,10 @@ void ElementPictureFactory::parseText(const QDomElement &dom, QPainter &painter,
 
 		//A very dirty workaround for export this text to dxf
 	QGraphicsSimpleTextItem *qgsti = new QGraphicsSimpleTextItem();
-	qgsti->setText(dom.attribute("text"));
+		//A wrapped text is written line by line, as drawn
+	qgsti->setText(text_width > 0
+				   ? TextLines::layoutLines(&text_document).join(QLatin1Char('\n'))
+				   : dom.attribute("text"));
 	qgsti->setFont(font_);
 	qgsti->setPos(baseline_left);
 	qgsti->setRotation(dom.attribute("rotation", "0").toDouble());

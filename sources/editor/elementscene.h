@@ -183,6 +183,7 @@ class ElementScene : public QGraphicsScene
 		void slot_editProperties();
 		void managePrimitivesGroups();
 		void manageTextResizeHandles(const QList<QGraphicsItem *> &selected_items);
+		void updateTextResizeHandles();
 		void stackAction(ElementEditionCommand *);
 	
 	signals:
