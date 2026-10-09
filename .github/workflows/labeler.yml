@@ -1,0 +1,24 @@
+# Labels each pull request from its branch name and changed files, using the
+# rules in .github/labeler.yml.
+#
+# pull_request_target, not pull_request: a pull request from a fork only gets
+# a read-only token under pull_request, and could not be labelled. This is safe
+# here because the job checks out nothing and runs no code from the pull
+# request; the labeler reads the rules from the base branch and the branch
+# name and file list from the API.
+name: Label pull requests
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/labeler v7.0.0
+      - uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13

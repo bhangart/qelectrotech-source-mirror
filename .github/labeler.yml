@@ -1,0 +1,34 @@
+# Labels for pull requests, read by .github/workflows/labeler.yml.
+#
+# Most contributors already name their branches fix/..., feature/... or ci/...,
+# so the branch name says what kind of change a PR is. The labels make the
+# merged pull requests easy to sort when the release notes are written.
+#
+# Only labels that already exist in the repository are used. A label added by
+# hand is kept; the action never removes one.
+
+bug:
+  - head-branch: ['^fix[/-]']
+
+enhancement:
+  - head-branch: ['^feat(ure)?[/-]']
+
+cicd:
+  - any:
+    - head-branch: ['^ci[/-]', '^build[/-]']
+    - changed-files:
+      - any-glob-to-all-files:
+        - '.github/**'
+        - 'build-aux/**'
+        - 'packaging_script_*'
+
+documentation:
+  - any:
+    - head-branch: ['^docs?[/-]']
+    - changed-files:
+      - any-glob-to-all-files:
+        - 'doc/**'
+        - 'docs/**'
+        - 'man/**'
+        - '*.md'
+        - 'README*'
