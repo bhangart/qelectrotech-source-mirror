@@ -1,0 +1,29 @@
+# Sections for GitHub's "Generate release notes" button on a new release.
+#
+# Merged pull requests are listed by title, in the first section whose label
+# they carry; pull requests without one of these labels go to "Other changes".
+# The list is a starting point for the ChangeLog text, not a replacement.
+
+changelog:
+  exclude:
+    labels:
+      - invalid
+      - duplicate
+      - wontfix
+  categories:
+    - title: New features
+      labels:
+        - enhancement
+    - title: Bug fixes
+      labels:
+        - bug
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Build, packaging and CI
+      labels:
+        - cicd
+        - snap
+    - title: Other changes
+      labels:
+        - "*"
